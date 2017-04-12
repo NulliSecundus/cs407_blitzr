@@ -1,0 +1,57 @@
+/* HOME */
+#home.pane {
+  background-color: darkcyan;
+}
+
+#home_title {
+  font-family:'LobsterRegular';
+  font-size: 110px;
+  color: #eeeeee;
+  text-shadow: 4px 3px #595959;
+  font-weight: bold;
+  font-style: normal;
+  margin-top: 9vw;
+  margin-left: 15vw;
+}
+
+#home_background_shape1 {
+  position: absolute;
+  height: 420px;
+  width: 300px;
+  background-color: #ffab40;
+  border-radius: 15px 15px 0px 0px;
+  margin-top:45vw;
+  margin-left:10vw;
+  z-index: 0;
+}
+
+#home_background_shape2 {
+  position: absolute;
+  height: 365px;
+  width: 250px;
+  background-color: #eeeeee;
+  border-radius: 15px 15px 0px 0px;
+  margin-top:52vw;
+  margin-left: 16.5vw;
+  z-index:1;
+}
+
+#start_ride_the_bus {
+  margin-top:33vw;
+  margin-left: 33vw;
+  background-color: white;
+  color: black;
+  border: 2px solid #595959;
+  z-index: 2;
+}
+
+#home_fake_button {
+  border-radius: 50%;
+  background-color: lightgreen;
+  border: 2px solid darkgreen;
+  z-index: 2;
+  margin-top: 20vw;
+  margin-left: 30vw;
+}
+
+/* Players */
