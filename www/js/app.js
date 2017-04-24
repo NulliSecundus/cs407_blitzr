@@ -21,7 +21,79 @@ var starter = angular.module('starter', ['ionic'])
       StatusBar.styleDefault();
     }
   });
-})
+});
+
+starter.factory('Card', function(){
+  var face = null;
+  var suit = "spade";
+  var number = 2;
+  var color = "black";
+
+  function init(_face, _suit, _number, _color){
+    if(_face==null){
+      suit = _suit;
+      number = _number;
+      color = _color;
+    }else{
+      face = _face;
+      suit = _suit;
+      color = _color;
+      number = _number;
+    }
+  }
+
+  init();
+
+  return {
+    face:this.face,
+    suit:this.suit,
+    number:this.number,
+    color:this.color
+  }
+
+});
+
+starter.factory('CardDeck', function(){
+  var deck = new Array(52);
+  var suits = ["spade", "club", "heart", "diamond"];
+
+  function fillDeck(){
+    var suit = null;
+    var color = null;
+    for(var s = 0; s < 4; s++){
+      suit = suits[s];
+      if(suit=="spade" || suit=="club"){
+        color = "black";
+      }else{
+        color = "red";
+      }
+
+      for(var i = 0; i < 13; i++){
+        var index = s*13 + i;
+        deck[index] = new Card(null, suit, i, color);
+      }
+
+    }
+  }
+
+  fillDeck();
+
+  function getTopCard(){
+    //Note: pulls card from back of deck
+    return deck[deck.length];
+  }
+
+  //TODO: complete function
+  function shuffleDeck(){
+
+  }
+
+
+  return {
+    getTopCard:this.getTopCard,
+    shuffleDeck:this.shuffleDeck
+  }
+});
 
 starter.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -29,22 +101,49 @@ starter.config(function($stateProvider, $urlRouterProvider) {
     url: '/',
     templateUrl: 'home.html'
   })
-    .state('players', {
-      url: '/players',
-      controller: 'playersCtrl',
-      templateUrl: 'players.html'
-    })
+   .state('players', {
+     url: '/players',
+     controller: 'playersCtrl',
+     templateUrl: 'players.html'
+   })
+    .state('rideTheBus', {
+      url: '/rideTheBus',
+      controller: 'rideTheBusCtrl',
+      templateUrl: 'rideTheBus.html'
+    });
   $urlRouterProvider.otherwise('/');
-})
+});
 
 starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoading) {
   $scope.toPlayersState = function() {
     $state.go("players")
   }
-})
+});
 
 starter.controller('playersCtrl', function($scope, $state, $ionicModal, $ionicLoading) {
 $scope.toHome = function() {
   $state.go("index")
-}
+};
+  $scope.toTheBus = function() {
+    $state.go("rideTheBus")
+  };
 });
+
+starter.controller('rideTheBusCtrl', function($scope, $state, $ionicModal, $ionicLoading){
+  $scope.toHome = function() {
+    $state.go("index")
+  };
+  $scope.exampleCard = null;
+  $scope.deck = null;
+  $scope.init = function(){
+    var newDeck = new CardDeck();
+    $scope.deck = newDeck;
+  };
+
+  $scope.getCard = function(){
+    $scope.exampleCard = $scope.deck.getTopCard();
+  }
+
+});
+
+
