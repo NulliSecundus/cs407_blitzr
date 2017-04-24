@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="starter">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
+
+  <link rel="manifest" href="manifest.json">
+
+  <!-- un-comment this code to enable service worker
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(() => console.log('service worker installed'))
+        .catch(err => console.log('Error', err));
+    }
+  </script>-->
+
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/lobster" type="text/css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Pacifico">
+
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <link href="css/ionic.app.css" rel="stylesheet">
+  -->
+
+  <!-- ionic/angularjs js -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="cordova.js"></script>
+
+  <!-- your app's js -->
+  <script src="js/app.js"></script>
+</head>
+<ion-view ion-title="players" id="players">
+  <body>
+  <i class="icon ion-ios-arrow-back" id="players_back" ng-click="toHome()"></i>
+    <h1 id="players_title">Blitzr</h1>
+      <div style="width: 60%;" id="answer_player_one" >
+        <label class="item item-input">
+          <input type="text" name="answer_one"
+                 ng-model="$parent.answer_one" placeholder="Player One">
+          </label>
+      </div>
+      <div style="width: 60%;" id="answer_player_two" >
+        <label class="item item-input">
+          <input type="text" name="answer_two"
+             ng-model="$parent.answer_two" placeholder="Player Two">
+        </label>
+      </div>
+
+  </body>
+</ion-view>
+</html>
