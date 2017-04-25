@@ -162,6 +162,7 @@
 
 @media screen and (orientation: portrait) {
   #players_back {
+    position: absolute;
     font-size: 8vh;
     color: white;
     margin-left: 4vw;
@@ -183,24 +184,29 @@
   }
 
   #answer_player_one {
+    position: absolute;
     width: 60vw;
-    margin-top: 15vw;
-    margin-left: 20vw;
+    margin-top: 5vw;
+    left: 50%;
+    transform: translate(-50%);
     border: 1vw solid black;
   }
 
   #answer_player_two {
+    position: absolute;
     width: 60vw;
-    margin-top: 4vw;
-    margin-left: 20vw;
+    margin-top: 25vw;
+    left: 50%;
+    transform: translate(-50%);
     border: 1vw solid black;
   }
 
   #goToRideTheBus {
+    position: absolute;
     width: 50vw;
     left: 50%;
     transform: translate(-50%);
-    bottom: -30vh;
+    bottom: 10vh;
     font-family: Helvetica;
     font-style: italic;
     font-weight: bold;
@@ -217,13 +223,13 @@
 
 @media screen and (orientation: landscape) {
   #players_back {
+    position: absolute;
     font-size: 8vw;
     color: white;
     margin-left: 2vw;
   }
 
   #players_title {
-    margin-top: -10vh;
     font-family: LobsterRegular;
     font-size: 15vw;
     font-weight: bold;
@@ -238,6 +244,7 @@
   }
 
   #answer_player_one {
+    position: absolute;
     width: 60vw;
     margin-top: 5vh;
     margin-left: 20vw;
@@ -245,6 +252,7 @@
   }
 
   #answer_player_two {
+    position: absolute;
     width: 60vw;
     margin-top: 1vh;
     margin-left: 20vw;
@@ -252,10 +260,11 @@
   }
 
   #goToRideTheBus {
+    position: absolute;
     width: 50vw;
     left: 50%;
     transform: translate(-50%);
-    bottom: -10vh;
+    bottom: 5vh;
     font-family: Helvetica;
     font-style: italic;
     font-weight: bold;
@@ -270,12 +279,14 @@
   }
 }
 
+/* Ride the Bus */
 #rideTheBus.pane{
   background-color: darkcyan;
 }
 
 @media screen and (orientation: portrait) {
   #rideTheBus_title {
+    position: absolute;
     font-family: LobsterRegular;
     font-size: 20vw;
     font-weight: bold;
@@ -287,6 +298,12 @@
     1px -1px 0 #000,
     -1px 1px 0 #000,
     1px 1px 0 #000;
+  }
+
+  #card1 {
+    position: absolute;
+    height: 30vh;
+    bottom: 10vh;
   }
 }
 
@@ -304,9 +321,11 @@
     -1px 1px 0 #000,
     1px 1px 0 #000;
   }
-}
 
-#exampleCard {
-  color:black;
-  background-color: #8f8f8f;
+  #card1 {
+    position: absolute;
+    height: 25vh;
+    margin-left: 5vw;
+    bottom: 10vh;
+  }
 }

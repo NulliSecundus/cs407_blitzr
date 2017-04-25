@@ -29,16 +29,30 @@ starter.factory('Card', function(){
     var suit = "";
     var number = 0;
     var color = "";
+    var rank = "0";
     var used = false;
 
     /* constructor */
     function init() {
         suit = _suit;
-        if(_suit == "spade" || _suit == "club")
+        if(_suit == "spades" || _suit == "clubs")
           color = "black";
         else
           color = "red";
         number = _number;
+
+        /* get the rank as a string */
+        if(number > 1 && number < 11)
+          rank = number.toString();
+        else if(number == 1)
+          rank = "ace";
+        else if(number == 11)
+          rank = "jack";
+        else if(number == 12)
+          rank = "queen";
+        else
+          rank = "king";
+
         used = false;
     }
 
@@ -50,6 +64,7 @@ starter.factory('Card', function(){
       suit: suit,
       number: number,
       color: color,
+      rank: rank,
       used: used
     };
   };
@@ -61,7 +76,7 @@ starter.factory('CardDeck', function(Card){
     /* array to store cards */
     var cards = [];
     /* array of suit names */
-    var suits = ["spade", "club", "heart", "diamond"];
+    var suits = ["spades", "clubs", "hearts", "diamonds"];
 
     /* create cards and store in cards array */
     function fillDeck() {
@@ -152,6 +167,10 @@ starter.controller('rideTheBusCtrl', function($scope, $state, $ionicModal, $ioni
 
   $scope.getCard = function() {
     $scope.exampleCard = $scope.deck.getTopCard();
+    if($scope.exampleCard != null)
+      $scope.cardImage = "PNG-cards-1.3/" + $scope.exampleCard.rank + "_of_" + $scope.exampleCard.suit + ".png";
+    else
+      $scope.cardImage = "PNG-cards-1.3/red_joker.png"
   }
 });
 
