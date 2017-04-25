@@ -36,21 +36,22 @@
 </head>
 <ion-view ion-title="players" id="players">
   <body>
-  <i class="icon ion-ios-arrow-back" id="players_back" ng-click="toHome()"></i>
-    <h1 id="players_title">Blitzr</h1>
-      <div style="width: 60%;" id="answer_player_one" >
-        <label class="item item-input">
-          <input type="text" name="answer_one"
+    <i class="icon ion-ios-arrow-back" id="players_back" ng-click="toHome()"></i>
+      <h1 id="players_title">Blitzr</h1>
+        <div style="width: 60%;" id="answer_player_one" >
+          <label class="item item-input">
+            <input type="text" name="answer_one"
                  ng-model="$parent.answer_one" placeholder="Player One">
           </label>
-      </div>
-      <div style="width: 60%;" id="answer_player_two" >
-        <label class="item item-input">
-          <input type="text" name="answer_two"
+        </div>
+        <div style="width: 60%;" id="answer_player_two" >
+          <label class="item item-input">
+            <input type="text" name="answer_two"
              ng-model="$parent.answer_two" placeholder="Player Two">
-        </label>
-      </div>
-
+          </label>
+        </div>
+    <button class="button icon ion-ios-contact" id="players_add_button" ng-click="toPlayersState()"> Add Player</button>
+    <button class="button" id="players_start_button" style="width:150px;height:100px;">Start</button>
   </body>
 </ion-view>
 </html>

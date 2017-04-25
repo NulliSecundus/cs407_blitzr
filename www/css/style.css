@@ -89,3 +89,15 @@
 input::-webkit-input-placeholder {
   color: black;
 }
+
+#players_add_button {
+  margin-top: 4vw;
+  margin-left: 18.5vw;
+}
+
+#players_start_button {
+  border-radius: 50%;
+  margin-top: 19vw;
+  margin-left: 30vw;
+}
+
