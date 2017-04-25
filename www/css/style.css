@@ -3,89 +3,244 @@
   background-color: darkcyan;
 }
 
-#home_title {
-  font-family:'LobsterRegular';
-  font-size: 110px;
-  color: #eeeeee;
-  text-shadow: 4px 3px #595959;
-  font-weight: bold;
-  font-style: normal;
-  margin-top: 9vw;
-  margin-left: 15vw;
+@media screen and (orientation: portrait) {
+
+  #home_title {
+    font-family: LobsterRegular;
+    font-size: 35vw;
+    font-weight: bold;
+    font-style: normal;
+    margin-top: 0vh;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #home_background_shape1 {
+    position: absolute;
+    height: 70vh;
+    width: 80vw;
+    background-color: #ffab40;
+    border-radius: 5vw 5vw 5vw 5vw;
+    z-index: 0;
+    left: 50%;
+    transform: translate(-50%);
+    top: 25vh;
+  }
+
+  #home_background_shape2 {
+    position: absolute;
+    height: 60vh;
+    width: 70vw;
+    background-color: #eeeeee;
+    border-radius: 5vw 5vw 5vw 5vw;
+    left: 50%;
+    transform: translate(-50%);
+    top: 30vh;
+    z-index: 1;
+  }
+
+  #start_ride_the_bus {
+    position: absolute;
+    height: 10vh;
+    width: 50vw;
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 5vw;
+    background-color: white;
+    color: black;
+    border: 1vw solid black;
+    left: 50%;
+    transform: translate(-50%);
+    top: 40vh;
+    z-index: 2;
+  }
+
+  #home_fake_button {
+    position: absolute;
+    height: 20vh;
+    width: 50vw;
+    font-family: Helvetica;
+    font-weight: bolder;
+    font-size: 8vw;
+    background-color: lightgreen;
+    color: black;
+    border: 1vw solid black;
+    left: 50%;
+    transform: translate(-50%);
+    top: 65vh;
+    border-radius: 50%;
+    z-index: 2;
+  }
 }
 
-#home_background_shape1 {
-  position: absolute;
-  height: 420px;
-  width: 300px;
-  background-color: #ffab40;
-  border-radius: 15px 15px 0px 0px;
-  margin-top:45vw;
-  margin-left:10vw;
-  z-index: 0;
+@media screen and (orientation: landscape) {
+
+  #home_title {
+    font-family: LobsterRegular;
+    font-size: 20vw;
+    font-weight: bold;
+    font-style: normal;
+    margin-top: 0vh;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #home_background_shape1 {
+    position: absolute;
+    height: 55vh;
+    width: 80vw;
+    background-color: #ffab40;
+    border-radius: 5vw 5vw 5vw 5vw;
+    z-index: 0;
+    left: 50%;
+    transform: translate(-50%);
+    top: 40vh;
+  }
+
+  #home_background_shape2 {
+    position: absolute;
+    height: 45vh;
+    width: 70vw;
+    background-color: #eeeeee;
+    border-radius: 5vw 5vw 5vw 5vw;
+    left: 50%;
+    transform: translate(-50%);
+    top: 45vh;
+    z-index: 1;
+  }
+
+  #start_ride_the_bus {
+    position: absolute;
+    height: 3vh;
+    width: 50vw;
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 5vh;
+    background-color: white;
+    color: black;
+    border: 1vh solid black;
+    left: 50%;
+    transform: translate(-50%);
+    top: 50vh;
+    z-index: 2;
+  }
+
+  #home_fake_button {
+    position: absolute;
+    height: 20vh;
+    width: 50vw;
+    font-family: Helvetica;
+    font-weight: bolder;
+    font-size: 8vh;
+    background-color: lightgreen;
+    color: black;
+    border: 1vh solid black;
+    left: 50%;
+    transform: translate(-50%);
+    top: 65vh;
+    border-radius: 50%;
+    z-index: 2;
+  }
 }
 
-#home_background_shape2 {
-  position: absolute;
-  height: 365px;
-  width: 250px;
-  background-color: #eeeeee;
-  border-radius: 15px 15px 0px 0px;
-  margin-top:52vw;
-  margin-left: 16.5vw;
-  z-index:1;
-}
-
-#start_ride_the_bus {
-  margin-top:33vw;
-  margin-left: 33vw;
-  background-color: white;
-  color: black;
-  border: 2px solid #595959;
-  z-index: 2;
-}
-
-#home_fake_button {
-  border-radius: 50%;
-  background-color: lightgreen;
-  border: 2px solid darkgreen;
-  z-index: 2;
-  margin-top: 20vw;
-  margin-left: 30vw;
-}
-
-/* Players */
+/* Players Screen */
 #players.pane {
   background-color: darkcyan;
 }
 
-#players_back {
-  font-size: 52px;
-  color: white;
-  margin-left: 4vw;
+@media screen and (orientation: portrait) {
+  #players_back {
+    font-size: 8vh;
+    color: white;
+    margin-left: 4vw;
+  }
+
+  #players_title {
+    font-family: LobsterRegular;
+    font-size: 35vw;
+    font-weight: bold;
+    font-style: normal;
+    margin-top: 0vh;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #answer_player_one {
+    width: 60vw;
+    margin-top: 15vw;
+    margin-left: 20vw;
+    border: 1vw solid black;
+  }
+
+  #answer_player_two {
+    width: 60vw;
+    margin-top: 4vw;
+    margin-left: 20vw;
+    border: 1vw solid black;
+  }
+
+  input::-webkit-input-placeholder {
+    color: black;
+  }
 }
 
-#players_title {
-  font-family:'LobsterRegular';
-  font-size: 110px;
-  color: #eeeeee;
-  text-shadow: 4px 3px #595959;
-  font-weight: bold;
-  font-style: normal;
-  margin-top: 6vw;
-  margin-left: 15vw;
+@media screen and (orientation: landscape) {
+  #players_back {
+    font-size: 8vw;
+    color: white;
+    margin-left: 2vw;
+  }
+
+  #players_title {
+    margin-top: -10vh;
+    font-family: LobsterRegular;
+    font-size: 15vw;
+    font-weight: bold;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #answer_player_one {
+    width: 60vw;
+    margin-top: 5vh;
+    margin-left: 20vw;
+    border: 1vh solid black;
+  }
+
+  #answer_player_two {
+    width: 60vw;
+    margin-top: 1vh;
+    margin-left: 20vw;
+    border: 1vh solid black;
+  }
+
+  input::-webkit-input-placeholder {
+    color: black;
+  }
 }
 
-#answer_player_one {
-  margin-top: 15vw;
-  margin-left: 19vw;
-}
-
-#answer_player_two {
-  margin-top: 4vw;
-  margin-left: 19vw;
-}
-
-input::-webkit-input-placeholder {
-  color: black;
+#exampleCard {
+  color:black;
+  background-color: #8f8f8f;
 }
