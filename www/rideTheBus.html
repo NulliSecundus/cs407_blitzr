@@ -40,12 +40,12 @@
 
   <button class="button" id="get card" ng-click="getCard()">Get top card</button>
 
-  <button class="button" id="exampleCard" ng-click="toHome()">
+  <div class="rectangle" id="exampleCard" ng-click="toHome()">
     <p>Card Example</p>
-    <p>Color: {exampleCard.color}</p>
-    <p>Number</p>
-    <p>Suit</p>
-  </button>
+    <p>Color: {{exampleCard.color}}</p>
+    <p>Number: {{exampleCard.number}}</p>
+    <p>Suit: {{exampleCard.suit}}</p>
+  </div>
 
 
 

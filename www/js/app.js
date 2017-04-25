@@ -25,32 +25,20 @@ var starter = angular.module('starter', ['ionic'])
 
 starter.factory('Card', function(){
   return function() {
-    var face = null;
-    var suit = "spade";
-    var number = 2;
-    var color = "black";
+    self.suit = "spade";
+    self.number = 2;
+    self.color = "black";
+    self.used = false;
 
-    function init(_face, _suit, _number, _color) {
-      if (_face == null) {
-        suit = _suit;
-        number = _number;
-        color = _color;
-      } else {
-        face = _face;
-        suit = _suit;
-        color = _color;
-        number = _number;
-      }
+    self.init = function(_suit, _number, _color) {
+      self.suit = _suit;
+      console.log(self.suit);
+        self.color = _color;
+        self.number = _number;
+        self.used = false;
     }
 
-    init();
-
-    return {
-      face: this.face,
-      suit: this.suit,
-      number: this.number,
-      color: this.color
-    }
+    return self;
   }
 });
 
@@ -59,7 +47,7 @@ starter.factory('CardDeck', function(Card){
     var deck = new Array(52);
     var suits = ["spade", "club", "heart", "diamond"];
 
-    function fillDeck() {
+    self.fillDeck = function() {
       var suit = null;
       var color = null;
       for (var s = 0; s < 4; s++) {
@@ -72,28 +60,25 @@ starter.factory('CardDeck', function(Card){
 
         for (var i = 0; i < 13; i++) {
           var index = s * 13 + i;
-          deck[index] = new Card(null, suit, i, color);
+          deck[index] = new Card();
+          deck[index].init(suit, i, color);
         }
       }
-    }
+    };
 
-    fillDeck();
+    self.fillDeck();
 
-    function getTopCard() {
+    self.getTopCard = function() {
       //Note: pulls card from back of deck
-      return deck[deck.length];
-    }
+      return deck[deck.length - 1];
+    };
 
     //TODO: complete function
-    function shuffleDeck() {
+    self.shuffleDeck = function() {
 
-    }
+    };
 
-
-    return {
-      getTopCard: this.getTopCard,
-      shuffleDeck: this.shuffleDeck
-    }
+    return self;
   }
 });
 
@@ -137,11 +122,14 @@ starter.controller('rideTheBusCtrl', function($scope, $state, $ionicModal, $ioni
   };
   $scope.exampleCard = null;
   $scope.deck = new CardDeck();
+  $scope.testCard = new Card();
+  $scope.testCard.init("club", 5, "black");
+  console.log($scope.testCard.color);
 
   $scope.getCard = function(){
     $scope.exampleCard = $scope.deck.getTopCard();
+    console.log($scope.exampleCard.number);
   }
-
 });
 
 
