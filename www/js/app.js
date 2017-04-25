@@ -166,11 +166,12 @@ starter.controller('rideTheBusCtrl', function($scope, $state, $ionicModal, $ioni
   $scope.deck = new CardDeck();
 
   $scope.getCard = function() {
-    $scope.exampleCard = $scope.deck.getTopCard();
-    if($scope.exampleCard != null)
-      $scope.cardImage = "PNG-cards-1.3/" + $scope.exampleCard.rank + "_of_" + $scope.exampleCard.suit + ".png";
+    $scope.firstCard = $scope.deck.getTopCard();
+    if($scope.firstCard != null) {
+      $scope.firstCardImage = "PNG-cards-1.3/" + $scope.firstCard.rank + "_of_" + $scope.firstCard.suit + ".png";
+    }
     else
-      $scope.cardImage = "PNG-cards-1.3/red_joker.png"
+      $scope.firstCardImage = "PNG-cards-1.3/red_joker.png";
   }
 });
 
