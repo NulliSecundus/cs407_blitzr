@@ -23,100 +23,96 @@ var starter = angular.module('starter', ['ionic'])
   });
 });
 
+/* factory for a single card */
 starter.factory('Card', function(){
-  return function() {
-    self.suit = "spade";
-    self.number = 1;
-    self.color = "black";
-    self.used = false;
+  var card = function(_suit, _number) {
+    var suit = "";
+    var number = 0;
+    var color = "";
+    var used = false;
 
-    self.init = function(_suit, _number) {
-        self.suit = _suit;
+    /* constructor */
+    function init() {
+        suit = _suit;
         if(_suit == "spade" || _suit == "club")
-          self.color = "black";
+          color = "black";
         else
-          self.color = "red";
-        self.number = _number;
-        self.used = false;
+          color = "red";
+        number = _number;
+        used = false;
     }
-    return self;
-  }
+
+    /* call constructor */
+    init();
+
+    /* accessible variables */
+    return {
+      suit: suit,
+      number: number,
+      color: color,
+      used: used
+    };
+  };
+  /* card object */
+  return card;
 });
 
+/* factory for a card deck */
 starter.factory('CardDeck', function(Card){
-  return function() {
-    var deck = [];
+  var deck = function() {
+    /* array to store cards */
+    var cards = [];
+    /* array of suit names */
     var suits = ["spade", "club", "heart", "diamond"];
 
-    self.fillDeck = function() {
+    /* create cards and store in cards array */
+    function fillDeck() {
       var index = 0;
       for(var s = 0; s < suits.length; s++) {
           for(var i = 0; i < 13; i++) {
           var suit = suits[s];
-          deck[index] = new Card();
-          deck[index].init(suit, i+1);
-          console.log(deck[index].suit, deck[index].number, deck[index].color, deck[index].used);
+          cards[index] = new Card(suit, i+1);
           index++;
         }
       }
+      for(i = 0; i < cards.length; i++)
+        console.log(cards[i].suit, cards[i].number, cards[i].color, cards[i].used);
+    }
 
-      for(index = 0; index < deck.length; index++)
-      console.log(deck[index].suit, deck[index].number, deck[index].color, deck[index].used);
-
-      // create cards by by suit and number
-      /*for (var s = 0; s < 4; s++) {
-        suit = suits[s];
-        if (suit == "spade" || suit == "club") {
-          color = "black";
-        } else {
-          color = "red";
-        }
-
-        // count by card number
-        for (var i = 0; i < 13; i++) {
-          var index = s * 13 + i;
-          deck[index] = new Card();
-          deck[index].init(suit, i + 1, color);
-        }
-      } */
-    };
-
-    /*self.getTopCard = function() {
-      //Note: pulls card from back of deck
-      for(var i = 0; i < 52; i++){
-        if(deck[i].used==false){
-          deck[i].used = true;
-          return deck[i];
+    /* get the next card, returns null if empty */
+    function getTopCard() {
+      /* Note: pulls card from back of deck */
+      for(var i = 0; i < 52; i++) {
+        if(cards[i].used == false) {
+          cards[i].used = true;
+          return cards[i];
         }
       }
-      //if all the cards are used, reset used to false (multiple decks)
-      for(var i = 0; i < 52; i++){
-        deck[i].used = false;
-      }
-      // pull the back card
-      deck[0].used = true;
-      return deck[0];
-    };
+      return null;
+    }
 
-    self.shuffleDeck = function() {
-      var numOne;
-      var numTwo;
-
+    /* shuffle the deck */
+    function shuffleDeck() {
       for(var i = 0; i < 1000; i++){
-        numOne = Math.floor(Math.random() * 52);
-        numTwo = Math.floor(Math.random() * 52);
-        var temp = deck[numOne];
-        deck[numOne] = deck[numTwo];
-        deck[numTwo] = temp;
+        var numOne = Math.floor(Math.random() * 52);
+        var numTwo = Math.floor(Math.random() * 52);
+        var temp = cards[numOne];
+        cards[numOne] = cards[numTwo];
+        cards[numTwo] = temp;
       }
-    }; */
+    }
 
-    // fill and shuffle once the deck is created
-    self.fillDeck();
-    //self.shuffleDeck();
+    /* fill and shuffle once the deck is created */
+    fillDeck();
+    shuffleDeck();
 
-    return self;
-  }
+    /* accessible functions */
+    return {
+      getTopCard: getTopCard
+    }
+  };
+  /* deck object */
+  return deck;
 });
 
 starter.config(function($stateProvider, $urlRouterProvider) {
@@ -157,9 +153,10 @@ starter.controller('rideTheBusCtrl', function($scope, $state, $ionicModal, $ioni
   $scope.toHome = function() {
     $state.go("index")
   };
+
   $scope.deck = new CardDeck();
 
-  $scope.getCard = function(){
+  $scope.getCard = function() {
     $scope.exampleCard = $scope.deck.getTopCard();
   }
 });
