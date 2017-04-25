@@ -25,7 +25,7 @@ var starter = angular.module('starter', ['ionic'])
 
 /* factory for a single card */
 starter.factory('Card', function(){
-  var card = function(_suit, _number) {
+  return function(_suit, _number) {
     var suit = "";
     var number = 0;
     var color = "";
@@ -53,13 +53,11 @@ starter.factory('Card', function(){
       used: used
     };
   };
-  /* card object */
-  return card;
 });
 
 /* factory for a card deck */
 starter.factory('CardDeck', function(Card){
-  var deck = function() {
+  return function() {
     /* array to store cards */
     var cards = [];
     /* array of suit names */
@@ -75,8 +73,6 @@ starter.factory('CardDeck', function(Card){
           index++;
         }
       }
-      for(i = 0; i < cards.length; i++)
-        console.log(cards[i].suit, cards[i].number, cards[i].color, cards[i].used);
     }
 
     /* get the next card, returns null if empty */
@@ -111,8 +107,6 @@ starter.factory('CardDeck', function(Card){
       getTopCard: getTopCard
     }
   };
-  /* deck object */
-  return deck;
 });
 
 starter.config(function($stateProvider, $urlRouterProvider) {
