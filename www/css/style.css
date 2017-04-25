@@ -10,7 +10,6 @@
     font-size: 35vw;
     font-weight: bold;
     font-style: normal;
-    margin-top: 0vh;
     text-align: center;
     color: white;
     text-shadow: 3px 3px 0 #000,
@@ -237,6 +236,42 @@
 
   input::-webkit-input-placeholder {
     color: black;
+  }
+}
+
+#rideTheBus.pane{
+  background-color: darkcyan;
+}
+
+@media screen and (orientation: portrait) {
+  #rideTheBus_title {
+    font-family: LobsterRegular;
+    font-size: 20vw;
+    font-weight: bold;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  #rideTheBus_title {
+    font-family: LobsterRegular;
+    font-size: 10vw;
+    font-weight: bold;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
   }
 }
 
