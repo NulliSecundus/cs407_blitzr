@@ -26,31 +26,45 @@ var starter = angular.module('starter', ['ionic'])
 starter.factory('Card', function(){
   return function() {
     self.suit = "spade";
-    self.number = 2;
+    self.number = 1;
     self.color = "black";
     self.used = false;
 
-    self.init = function(_suit, _number, _color) {
-      self.suit = _suit;
-      console.log(self.suit);
-        self.color = _color;
+    self.init = function(_suit, _number) {
+        self.suit = _suit;
+        if(_suit == "spade" || _suit == "club")
+          self.color = "black";
+        else
+          self.color = "red";
         self.number = _number;
         self.used = false;
     }
-
     return self;
   }
 });
 
 starter.factory('CardDeck', function(Card){
   return function() {
-    var deck = new Array(52);
+    var deck = [];
     var suits = ["spade", "club", "heart", "diamond"];
 
     self.fillDeck = function() {
-      var suit = null;
-      var color = null;
-      for (var s = 0; s < 4; s++) {
+      var index = 0;
+      for(var s = 0; s < suits.length; s++) {
+          for(var i = 0; i < 13; i++) {
+          var suit = suits[s];
+          deck[index] = new Card();
+          deck[index].init(suit, i+1);
+          console.log(deck[index].suit, deck[index].number, deck[index].color, deck[index].used);
+          index++;
+        }
+      }
+
+      for(index = 0; index < deck.length; index++)
+      console.log(deck[index].suit, deck[index].number, deck[index].color, deck[index].used);
+
+      // create cards by by suit and number
+      /*for (var s = 0; s < 4; s++) {
         suit = suits[s];
         if (suit == "spade" || suit == "club") {
           color = "black";
@@ -58,17 +72,16 @@ starter.factory('CardDeck', function(Card){
           color = "red";
         }
 
+        // count by card number
         for (var i = 0; i < 13; i++) {
           var index = s * 13 + i;
           deck[index] = new Card();
           deck[index].init(suit, i + 1, color);
         }
-      }
+      } */
     };
 
-    self.fillDeck();
-
-    self.getTopCard = function() {
+    /*self.getTopCard = function() {
       //Note: pulls card from back of deck
       for(var i = 0; i < 52; i++){
         if(deck[i].used==false){
@@ -76,6 +89,13 @@ starter.factory('CardDeck', function(Card){
           return deck[i];
         }
       }
+      //if all the cards are used, reset used to false (multiple decks)
+      for(var i = 0; i < 52; i++){
+        deck[i].used = false;
+      }
+      // pull the back card
+      deck[0].used = true;
+      return deck[0];
     };
 
     self.shuffleDeck = function() {
@@ -89,7 +109,11 @@ starter.factory('CardDeck', function(Card){
         deck[numOne] = deck[numTwo];
         deck[numTwo] = temp;
       }
-    };
+    }; */
+
+    // fill and shuffle once the deck is created
+    self.fillDeck();
+    //self.shuffleDeck();
 
     return self;
   }
@@ -133,15 +157,10 @@ starter.controller('rideTheBusCtrl', function($scope, $state, $ionicModal, $ioni
   $scope.toHome = function() {
     $state.go("index")
   };
-  $scope.exampleCard = null;
   $scope.deck = new CardDeck();
-  $scope.testCard = new Card();
-  $scope.testCard.init("club", 5, "black");
-  console.log($scope.testCard.color);
 
   $scope.getCard = function(){
     $scope.exampleCard = $scope.deck.getTopCard();
-    console.log($scope.exampleCard.number);
   }
 });
 
