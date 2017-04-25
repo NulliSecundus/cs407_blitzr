@@ -136,11 +136,7 @@ starter.controller('rideTheBusCtrl', function($scope, $state, $ionicModal, $ioni
     $state.go("index")
   };
   $scope.exampleCard = null;
-  $scope.deck = null;
-  $scope.init = function(){
-    var newDeck = new CardDeck();
-    $scope.deck = newDeck;
-  };
+  $scope.deck = new CardDeck();
 
   $scope.getCard = function(){
     $scope.exampleCard = $scope.deck.getTopCard();
