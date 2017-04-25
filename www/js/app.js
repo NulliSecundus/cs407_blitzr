@@ -61,7 +61,7 @@ starter.factory('CardDeck', function(Card){
         for (var i = 0; i < 13; i++) {
           var index = s * 13 + i;
           deck[index] = new Card();
-          deck[index].init(suit, i, color);
+          deck[index].init(suit, i + 1, color);
         }
       }
     };
@@ -70,12 +70,25 @@ starter.factory('CardDeck', function(Card){
 
     self.getTopCard = function() {
       //Note: pulls card from back of deck
-      return deck[deck.length - 1];
+      for(var i = 0; i < 52; i++){
+        if(deck[i].used==false){
+          deck[i].used = true;
+          return deck[i];
+        }
+      }
     };
 
-    //TODO: complete function
     self.shuffleDeck = function() {
+      var numOne;
+      var numTwo;
 
+      for(var i = 0; i < 1000; i++){
+        numOne = Math.floor(Math.random() * 52);
+        numTwo = Math.floor(Math.random() * 52);
+        var temp = deck[numOne];
+        deck[numOne] = deck[numTwo];
+        deck[numTwo] = temp;
+      }
     };
 
     return self;
