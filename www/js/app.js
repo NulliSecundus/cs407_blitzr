@@ -222,6 +222,7 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
 
   /* create a new back of card */
   $scope.cardBack = new Card("", 0);
+  $scope.firstCard = $scope.cardBack;
 
   $scope.getCard = function() {
     $scope.firstCard = $scope.deck.getTopCard();
