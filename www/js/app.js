@@ -51,11 +51,18 @@ starter.factory('Card', function(){
           rank = "jack";
         else if(number == 12)
           rank = "queen";
-        else
+        else if(number == 13)
           rank = "king";
+        else
+          rank = "back";
 
         used = false;
-        image = "PNG-cards-1.3/" + rank + "_of_" + suit + ".png";
+
+        /* get the image file */
+        if(rank == "back")
+          image = "PNG-cards-1.3/card_back.png";
+        else
+          image = "PNG-cards-1.3/" + rank + "_of_" + suit + ".png";
     }
 
     /* call constructor */
@@ -210,9 +217,15 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     $state.go("index")
   };
 
+  /* create a new deck */
   $scope.deck = new CardDeck();
+
+  /* create a new back of card */
+  $scope.cardBack = new Card("", 0);
 
   $scope.getCard = function() {
     $scope.firstCard = $scope.deck.getTopCard();
+    if($scope.firstCard == null)
+      $scope.firstCard = $scope.cardBack;
   }
 });
