@@ -124,6 +124,50 @@ starter.factory('CardDeck', function(Card){
   };
 });
 
+starter.factory('Player', function() {
+  return function(_name) {
+    /* array to store players cards */
+    var name = "";
+    var cards = [];
+    var drinksTaken = 0;
+    var drinksGiven = 0;
+
+    /* constructor */
+    function init() {
+      name = _name;
+      cards = [];
+      drinksTaken = 0;
+      drinksGiven = 0;
+    }
+
+    /* call constructor */
+    init();
+
+    /* increment drinks taken */
+    function takeADrink() {
+      drinksTaken++;
+    }
+
+    /* increment drinks given and give a drink */
+    function giveADrink(player) {
+      drinksGiven++;
+      player.takeADrink();
+    }
+
+    /* add card */
+    function addCard(card) {
+      cards.add(card);
+    }
+
+    /* accessible functions */
+    return {
+      takeADrink: takeADrink,
+      giveADrink: giveADrink,
+      addCard: addCard
+    }
+  }
+});
+
 starter.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('index', {
@@ -149,7 +193,7 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
   }
 });
 
-starter.controller('playersCtrl', function($scope, $state, $ionicModal, $ionicLoading) {
+starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading) {
 $scope.toHome = function() {
   $state.go("index")
 };
@@ -158,7 +202,7 @@ $scope.toHome = function() {
   };
 });
 
-starter.controller('rideTheBusCtrl', function($scope, $state, $ionicModal, $ionicLoading, Card, CardDeck){
+starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck){
   $scope.toHome = function() {
     $state.go("index")
   };
@@ -174,5 +218,3 @@ starter.controller('rideTheBusCtrl', function($scope, $state, $ionicModal, $ioni
       $scope.firstCardImage = "PNG-cards-1.3/red_joker.png";
   }
 });
-
-
