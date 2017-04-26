@@ -148,7 +148,7 @@ starter.factory('Player', function() {
       drinksTaken++;
     }
 
-    /* increment drinks given and give a drink */
+    /* increment drinks given and give a drink to another player */
     function giveADrink(player) {
       drinksGiven++;
       player.takeADrink();
