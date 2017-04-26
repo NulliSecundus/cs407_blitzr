@@ -31,6 +31,7 @@ starter.factory('Card', function(){
     var color = "";
     var rank = "0";
     var used = false;
+    var image = "";
 
     /* constructor */
     function init() {
@@ -54,6 +55,7 @@ starter.factory('Card', function(){
           rank = "king";
 
         used = false;
+        image = "PNG-cards-1.3/" + rank + "_of_" + suit + ".png";
     }
 
     /* call constructor */
@@ -65,7 +67,8 @@ starter.factory('Card', function(){
       number: number,
       color: color,
       rank: rank,
-      used: used
+      used: used,
+      image: image
     };
   };
 });
@@ -211,10 +214,5 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
 
   $scope.getCard = function() {
     $scope.firstCard = $scope.deck.getTopCard();
-    if($scope.firstCard != null) {
-      $scope.firstCardImage = "PNG-cards-1.3/" + $scope.firstCard.rank + "_of_" + $scope.firstCard.suit + ".png";
-    }
-    else
-      $scope.firstCardImage = "PNG-cards-1.3/red_joker.png";
   }
 });
