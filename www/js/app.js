@@ -154,6 +154,11 @@ starter.factory('Player', function() {
     /* call constructor */
     init();
 
+    /* get name */
+    function getName() {
+      return name;
+    }
+
     /* increment drinks taken */
     function takeADrink() {
       drinksTaken++;
@@ -172,6 +177,7 @@ starter.factory('Player', function() {
 
     /* accessible functions */
     return {
+      getName: getName,
       takeADrink: takeADrink,
       giveADrink: giveADrink,
       addCard: addCard
@@ -203,14 +209,22 @@ starter.factory('Round', function() {
         buttons = ["inside_button", "outside_button"];
         round = 3;
       }
-      else {
+      else if(_roundNumber == 4) {
         buttons = ["spades_button", "clubs_button", "hearts_button", "diamonds_button"];
         round = 4;
+      }
+      else {
       }
     }
 
     /* call constructor */
     init();
+
+    /* accessible variables */
+    return {
+      buttons: buttons,
+      round: round
+    }
   }
 });
 
@@ -256,15 +270,23 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
   };
 });
 
-starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck, Player){
+starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                              Player, Round){
   $scope.toHome = function() {
     $state.go("index");
   };
 
-  /* create a player for each user input
-  $rootScope.players = [];
+  /* create a player for each user input */
+  $scope.players = [];
   for(var i = 0; i < 1; i++)
-    $rootScope.players[i] = new Player($rootScope.playerNames[i]); */
+    $scope.players[i] = new Player($rootScope.playerNames[i]);
+
+  /* create a round for each round */
+  $scope.rounds = [];
+  for(i = 0; i < 5; i++)
+    $scope.rounds[i] = new Round(i);
+
+  //document.getElementById($scope.rounds[1].buttons[0]).style.display = "none";
 
   /* create a new deck */
   $scope.deck = new CardDeck();
@@ -281,6 +303,17 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       $scope.nextCard = $scope.cardBack;
   };
 
+  $scope.guessedRed = function() {
+    $scope.guessedColor = "red";
+    $scope.guessColor();
+  };
+
+  $scope.guessedBlack = function() {
+    $scope.guessedColor = "black";
+    $scope.guessColor();
+  };
+
+
   /* first card, red or black */
   $scope.guessColor = function() {
     /* get the next card */
@@ -288,14 +321,11 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
 
     /* check if the guess is correct */
     if($scope.guessedColor == $scope.nextCard.color) {
-      $scope.currentPlayer.giveADrink();
+      console.log("correct");
     }
     else {
-      $scope.currentPlayer.takeADrink();
+      console.log("incorrect");
     }
-
-    /* add card to players hand */
-    $scope.currentPlayer.addCard($scope.nextCard);
   };
 
   /* second card, higher or lower */

@@ -28,8 +28,8 @@
       <file leaf-file-name="rideTheBus.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/rideTheBus.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="392">
-              <caret line="43" column="58" lean-forward="false" selection-start-line="43" selection-start-column="58" selection-end-line="43" selection-end-column="58" />
+            <state relative-caret-position="422">
+              <caret line="45" column="67" lean-forward="true" selection-start-line="45" selection-start-column="67" selection-end-line="45" selection-end-column="67" />
               <folding />
             </state>
           </provider>
@@ -38,8 +38,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="191" column="18" lean-forward="false" selection-start-line="191" selection-start-column="18" selection-end-line="191" selection-end-column="18" />
+            <state relative-caret-position="446">
+              <caret line="341" column="33" lean-forward="true" selection-start-line="341" selection-start-column="33" selection-end-line="341" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -106,8 +106,8 @@
         <option value="$PROJECT_DIR$/rideTheBus.html" />
         <option value="$PROJECT_DIR$/www/players.html" />
         <option value="$PROJECT_DIR$/www/home.html" />
-        <option value="$PROJECT_DIR$/www/rideTheBus.html" />
         <option value="$PROJECT_DIR$/www/css/style.css" />
+        <option value="$PROJECT_DIR$/www/rideTheBus.html" />
         <option value="$PROJECT_DIR$/www/js/app.js" />
       </list>
     </option>
@@ -647,12 +647,12 @@
       <workItem from="1493128428155" duration="3852000" />
       <workItem from="1493132398386" duration="7903000" />
       <workItem from="1493149762043" duration="4287000" />
-      <workItem from="1493166072470" duration="10573000" />
+      <workItem from="1493166072470" duration="15454000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55685000" />
+    <option name="totallyTimeSpent" value="60566000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="50" y="23" width="1390" height="803" extended-state="0" />
@@ -1155,16 +1155,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/rideTheBus.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="43" column="58" lean-forward="false" selection-start-line="43" selection-start-column="58" selection-end-line="43" selection-end-column="58" />
+        <state relative-caret-position="422">
+          <caret line="45" column="67" lean-forward="true" selection-start-line="45" selection-start-column="67" selection-end-line="45" selection-end-column="67" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="191" column="18" lean-forward="false" selection-start-line="191" selection-start-column="18" selection-end-line="191" selection-end-column="18" />
+        <state relative-caret-position="446">
+          <caret line="341" column="33" lean-forward="true" selection-start-line="341" selection-start-column="33" selection-end-line="341" selection-end-column="33" />
           <folding />
         </state>
       </provider>
