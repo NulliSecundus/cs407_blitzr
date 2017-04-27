@@ -134,6 +134,7 @@ starter.factory('CardDeck', function(Card){
   };
 });
 
+/* factory for a player */
 starter.factory('Player', function() {
   return function(_name) {
     /* array to store players cards */
@@ -204,29 +205,43 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
 });
 
 starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading) {
-$scope.toHome = function() {
-  $state.go("index")
-};
+  /* back to home page */
+  $scope.toHome = function() {
+    $state.go("index")
+  };
+
+  /* start RTB, store player names */
   $scope.toTheBus = function() {
+    /* store player names */
+    $rootScope.playerNames = [];
+    for(var i = 0; i < 1; i++)
+      $rootScope.playerNames[i] = "";
+
     $state.go("rideTheBus")
   };
 });
 
-starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck){
+starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck, Player){
   $scope.toHome = function() {
     $state.go("index")
   };
+
+  /* create a player for each user input */
+  $rootScope.players = [];
+  for(var i = 0; i < 1; i++)
+    $rootScope.players[i] = new Player($rootScope.playerNames[i]);
 
   /* create a new deck */
   $scope.deck = new CardDeck();
 
   /* create a new back of card */
   $scope.cardBack = new Card("", 0);
-  $scope.firstCard = $scope.cardBack;
+  $scope.nextCard = $scope.cardBack;
 
+  /* get the next card from the deck */
   $scope.getCard = function() {
-    $scope.firstCard = $scope.deck.getTopCard();
-    if($scope.firstCard == null)
-      $scope.firstCard = $scope.cardBack;
+    $scope.nextCard = $scope.deck.getTopCard();
+    if($scope.nextCard == null)
+      $scope.nextCard = $scope.cardBack;
   }
 });
