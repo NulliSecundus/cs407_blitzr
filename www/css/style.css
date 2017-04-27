@@ -300,10 +300,44 @@
     1px 1px 0 #000;
   }
 
+  #red_button {
+    position: absolute;
+    height: 10vh;
+    width: 50vw;
+    left: 50%;
+    transform: translate(-50%);
+    top: 30vh;
+    font-family: Helvetica;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 5vh;
+    background-color: red;
+    color: white;
+    border: 1vh solid white;
+  }
+
+  #black_button {
+    position: absolute;
+    height: 10vh;
+    width: 50vw;
+    left: 50%;
+    transform: translate(-50%);
+    top: 45vh;
+    font-family: Helvetica;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 5vh;
+    background-color: black;
+    color: white;
+    border: 1vh solid white;
+  }
+
   #card1 {
     position: absolute;
     height: 30vh;
     bottom: 10vh;
+    left: 50%;
+    transform: translate(-50%);
   }
 }
 

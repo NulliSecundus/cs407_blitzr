@@ -38,9 +38,12 @@
   <body>
   <h1 id="rideTheBus_title">Ride The Bus!</h1>
 
-  <button class="button" id="get card" ng-click="getCard()">Get top card</button>
+  <button class="button" id="get card" ng-click="toHome()">Go Home</button>
 
-  <img src= "{{nextCard.image}}" id = "card1" ng-click="toHome()">
+  <button class ="button-balanced" id="red_button">RED</button>
+  <button class ="button-balanced" id="black_button">BLACK</button>
+
+  <img src= "{{nextCard.image}}" id = "card1" ng-click="getCard()">
   </body>
 </ion-view>
 </html>

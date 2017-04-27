@@ -114,7 +114,7 @@ starter.factory('CardDeck', function(Card){
 
     /* shuffle the deck */
     function shuffleDeck() {
-      for(var i = 0; i < 1000; i++){
+      for(var i = 0; i < 10000; i++){
         var numOne = Math.floor(Math.random() * 52);
         var numTwo = Math.floor(Math.random() * 52);
         var temp = cards[numOne];
@@ -179,6 +179,41 @@ starter.factory('Player', function() {
   }
 });
 
+/* factory for information about each round */
+starter.factory('Round', function() {
+  return function(_roundNumber) {
+    var round = 0;
+    var buttons = [];
+
+    /* constructor */
+    function init() {
+      if(_roundNumber == 0) {
+        buttons = ["play_button"];
+        round = 0;
+      }
+      else if(_roundNumber == 1) {
+        buttons = ["red_button", "black_button"];
+        round = 1;
+      }
+      else if(_roundNumber == 2) {
+        buttons = ["higher_button", "lower_button"];
+        round = 2;
+      }
+      else if(_roundNumber == 3) {
+        buttons = ["inside_button", "outside_button"];
+        round = 3;
+      }
+      else {
+        buttons = ["spades_button", "clubs_button", "hearts_button", "diamonds_button"];
+        round = 4;
+      }
+    }
+
+    /* call constructor */
+    init();
+  }
+});
+
 starter.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('index', {
@@ -226,10 +261,10 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     $state.go("index");
   };
 
-  /* create a player for each user input */
+  /* create a player for each user input
   $rootScope.players = [];
   for(var i = 0; i < 1; i++)
-    $rootScope.players[i] = new Player($rootScope.playerNames[i]);
+    $rootScope.players[i] = new Player($rootScope.playerNames[i]); */
 
   /* create a new deck */
   $scope.deck = new CardDeck();
@@ -241,9 +276,10 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
   /* get the next card from the deck */
   $scope.getCard = function() {
     $scope.nextCard = $scope.deck.getTopCard();
+    console.log($scope.nextCard.number);
     if($scope.nextCard == null)
       $scope.nextCard = $scope.cardBack;
-  }
+  };
 
   /* first card, red or black */
   $scope.guessColor = function() {
@@ -260,17 +296,17 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
 
     /* add card to players hand */
     $scope.currentPlayer.addCard($scope.nextCard);
-  }
+  };
 
   /* second card, higher or lower */
   $scope.guessHigherOrLower = function() {
 
-  }
+  };
 
   /* third card, inside or outside */
   $scope.guessInsideOrOutside = function() {
 
-  }
+  };
 
   /* fourth card, suit */
   $scope.guessSuit = function() {
