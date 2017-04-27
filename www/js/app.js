@@ -200,14 +200,14 @@ starter.config(function($stateProvider, $urlRouterProvider) {
 
 starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoading) {
   $scope.toPlayersState = function() {
-    $state.go("players")
+    $state.go("players");
   }
 });
 
 starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading) {
   /* back to home page */
   $scope.toHome = function() {
-    $state.go("index")
+    $state.go("index");
   };
 
   /* start RTB, store player names */
@@ -215,15 +215,15 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     /* store player names */
     $rootScope.playerNames = [];
     for(var i = 0; i < 1; i++)
-      $rootScope.playerNames[i] = "";
+      $rootScope.playerNames[i] = $scope.answer_one;
 
-    $state.go("rideTheBus")
+    $state.go("rideTheBus");
   };
 });
 
 starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck, Player){
   $scope.toHome = function() {
-    $state.go("index")
+    $state.go("index");
   };
 
   /* create a player for each user input */
@@ -243,5 +243,37 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     $scope.nextCard = $scope.deck.getTopCard();
     if($scope.nextCard == null)
       $scope.nextCard = $scope.cardBack;
+  }
+
+  /* first card, red or black */
+  $scope.guessColor = function() {
+    /* get the next card */
+    $scope.getCard();
+
+    /* check if the guess is correct */
+    if($scope.guessedColor == $scope.nextCard.color) {
+      $scope.currentPlayer.giveADrink();
+    }
+    else {
+      $scope.currentPlayer.takeADrink();
+    }
+
+    /* add card to players hand */
+    $scope.currentPlayer.addCard($scope.nextCard);
+  }
+
+  /* second card, higher or lower */
+  $scope.guessHigherOrLower = function() {
+
+  }
+
+  /* third card, inside or outside */
+  $scope.guessInsideOrOutside = function() {
+
+  }
+
+  /* fourth card, suit */
+  $scope.guessSuit = function() {
+
   }
 });
