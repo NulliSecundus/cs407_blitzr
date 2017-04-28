@@ -199,49 +199,6 @@ starter.factory('Player', function() {
   }
 });
 
-/* factory for information about each round */
-starter.factory('Round', function() {
-  return function(_roundNumber) {
-    var round = 0;
-    var buttons = [];
-
-    /* constructor */
-    function init() {
-      if(_roundNumber == 0) {
-        buttons = ["play_button"];
-        round = 0;
-      }
-      else if(_roundNumber == 1) {
-        buttons = ["red_button", "black_button"];
-        round = 1;
-      }
-      else if(_roundNumber == 2) {
-        buttons = ["higher_button", "lower_button"];
-        round = 2;
-      }
-      else if(_roundNumber == 3) {
-        buttons = ["inside_button", "outside_button"];
-        round = 3;
-      }
-      else if(_roundNumber == 4) {
-        buttons = ["spades_button", "clubs_button", "hearts_button", "diamonds_button"];
-        round = 4;
-      }
-      else {
-      }
-    }
-
-    /* call constructor */
-    init();
-
-    /* accessible variables */
-    return {
-      buttons: buttons,
-      round: round
-    }
-  }
-});
-
 starter.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('index', {
@@ -253,9 +210,24 @@ starter.config(function($stateProvider, $urlRouterProvider) {
      controller: 'playersCtrl',
      templateUrl: 'players.html'
    })
-    .state('rideTheBus', {
-      url: '/rideTheBus',
-      controller: 'rideTheBusCtrl',
+    .state('guessColor', {
+      url: '/guessColor',
+      controller: 'guessColorCtrl',
+      templateUrl: 'rideTheBus.html'
+    })
+    .state('highOrLow', {
+      url: '/highOrLow',
+      controller: 'highOrLowCtrl',
+      templateUrl: 'rideTheBus.html'
+    })
+    .state('inOrOut', {
+      url: '/inOrOut',
+      controller: 'inOrOutCtrl',
+      templateUrl: 'rideTheBus.html'
+    })
+    .state('guessSuit', {
+      url: '/guessSuit',
+      controller: 'guessSuitCtrl',
       templateUrl: 'rideTheBus.html'
     });
   $urlRouterProvider.otherwise('/');
@@ -280,12 +252,13 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     for(var i = 0; i < 1; i++)
       $rootScope.playerNames[i] = $scope.answer_one;
 
-    $state.go("rideTheBus");
+    $state.go("guessColor");
   };
 });
 
-starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                              Player, Round){
+/* first round (guess color) controller */
+starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                              Player){
   $scope.toHome = function() {
     $state.go("index");
   };
@@ -335,20 +308,28 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     else {
       $rootScope.players[currPlayer].takeADrink();
     }
+
+    /* increment the player number */
+    currPlayer++;
+
+    /* if the last player of the round has played, go to the next state */
+    if(currPlayer == $rootScope.players.length) {
+      $timeout(function(){$state.go("highOrLow")}, 3000);
+    }
   };
+});
 
-  /* second card, higher or lower */
-  $scope.guessHigherOrLower = function() {
+/* second round (guess higher or lower) controller */
+starter.controller('highOrLowCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                              Player) {
+});
 
-  };
+/* third round (guess in or out) controller */
+starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                             Player) {
+});
 
-  /* third card, inside or outside */
-  $scope.guessInsideOrOutside = function() {
-
-  };
-
-  /* fourth card, suit */
-  $scope.guessSuit = function() {
-
-  }
+/* fourth round (guess suit) controller */
+starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                             Player) {
 });
