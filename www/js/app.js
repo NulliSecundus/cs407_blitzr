@@ -162,12 +162,26 @@ starter.factory('Player', function() {
     /* increment drinks taken */
     function takeADrink() {
       drinksTaken++;
+      document.getElementById("wrong").style.display = "";
+      document.getElementById("takeADrink").style.display = "";
+      setTimeout(resetDisplay, 3000);
     }
 
     /* increment drinks given and give a drink to another player */
     function giveADrink(player) {
       drinksGiven++;
-      player.takeADrink();
+      document.getElementById("correct").style.display = "";
+      document.getElementById("giveADrink").style.display = "";
+      setTimeout(resetDisplay, 3000);
+      //player.takeADrink();
+    }
+
+    /* reset take and give display */
+    function resetDisplay() {
+      document.getElementById("wrong").style.display = "none";
+      document.getElementById("takeADrink").style.display = "none";
+      document.getElementById("correct").style.display = "none";
+      document.getElementById("giveADrink").style.display = "none";
     }
 
     /* add card */
@@ -277,19 +291,12 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
   };
 
   /* create a player for each user input */
-  $scope.players = [];
+  $rootScope.players = [];
   for(var i = 0; i < 1; i++)
-    $scope.players[i] = new Player($rootScope.playerNames[i]);
-
-  /* create a round for each round */
-  $scope.rounds = [];
-  for(i = 0; i < 5; i++)
-    $scope.rounds[i] = new Round(i);
-
-  //document.getElementById($scope.rounds[1].buttons[0]).style.display = "none";
+    $rootScope.players[i] = new Player($rootScope.playerNames[i]);
 
   /* create a new deck */
-  $scope.deck = new CardDeck();
+  $rootScope.deck = new CardDeck();
 
   /* create a new back of card */
   $scope.cardBack = new Card("", 0);
@@ -303,28 +310,30 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       $scope.nextCard = $scope.cardBack;
   };
 
-  $scope.guessedRed = function() {
-    $scope.guessedColor = "red";
-    $scope.guessColor();
-  };
+  /* initialize current player to 0 */
+  var currPlayer = 0;
 
-  $scope.guessedBlack = function() {
-    $scope.guessedColor = "black";
-    $scope.guessColor();
-  };
-
+  /* hide the take and give prompts */
+  document.getElementById("wrong").style.display = "none";
+  document.getElementById("takeADrink").style.display = "none";
+  document.getElementById("correct").style.display = "none";
+  document.getElementById("giveADrink").style.display = "none";
 
   /* first card, red or black */
-  $scope.guessColor = function() {
+  $scope.guessColor = function(color) {
     /* get the next card */
     $scope.getCard();
 
-    /* check if the guess is correct */
-    if($scope.guessedColor == $scope.nextCard.color) {
-      console.log("correct");
+    /* hide the red and black buttons */
+    document.getElementById("red_button").style.display = "none";
+    document.getElementById("black_button").style.display = "none";
+
+    /* check if the guess is correct and display correct */
+    if(color == $scope.nextCard.color) {
+      $rootScope.players[currPlayer].giveADrink();
     }
     else {
-      console.log("incorrect");
+      $rootScope.players[currPlayer].takeADrink();
     }
   };
 

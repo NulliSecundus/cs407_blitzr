@@ -40,10 +40,17 @@
 
   <button class="button" id="get card" ng-click="toHome()">Go Home</button>
 
-  <button class ="button-balanced" id="red_button" ng-click="guessedRed()">RED</button>
-  <button class ="button-balanced" id="black_button" ng-click="guessedBlack()">BLACK</button>
+  <!-- take and give drink display -->
+  <h1 id="wrong">WRONG!</h1>
+  <h1 id="takeADrink">Take A Drink!</h1>
+  <h1 id="correct">CORRECT!</h1>
+  <h1 id="giveADrink">Give A Drink!</h1>
 
-  <img src= "{{nextCard.image}}" id = "card1" ng-click="getCard()">
+  <!-- red and black display -->
+  <button class ="button-balanced" id="red_button" ng-click="guessColor('red')">RED</button>
+  <button class ="button-balanced" id="black_button" ng-click="guessColor('black')">BLACK</button>
+
+  <img src= "{{nextCard.image}}" id = "card1">
   </body>
 </ion-view>
 </html>
