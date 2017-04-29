@@ -280,7 +280,7 @@
 }
 
 /* Ride the Bus */
-#rideTheBus.pane{
+#guessColor.pane{
   background-color: darkcyan;
 }
 
@@ -408,7 +408,15 @@
     border: 1vh solid white;
   }
 
-  #card1 {
+  #cardBack {
+    position: absolute;
+    height: 30vh;
+    bottom: 5vh;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  #nextCard {
     position: absolute;
     height: 30vh;
     bottom: 5vh;
@@ -432,7 +440,14 @@
     1px 1px 0 #000;
   }
 
-  #card1 {
+  #nextCard {
+    position: absolute;
+    height: 25vh;
+    margin-left: 5vw;
+    bottom: 10vh;
+  }
+
+  #cardBack {
     position: absolute;
     height: 25vh;
     margin-left: 5vw;

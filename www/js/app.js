@@ -164,6 +164,7 @@ starter.factory('Player', function() {
       drinksTaken++;
       document.getElementById("wrong").style.display = "";
       document.getElementById("takeADrink").style.display = "";
+      document.getElementById("cardBack").style.display = "none";
       setTimeout(resetDisplay, 3000);
     }
 
@@ -172,6 +173,7 @@ starter.factory('Player', function() {
       drinksGiven++;
       document.getElementById("correct").style.display = "";
       document.getElementById("giveADrink").style.display = "";
+      document.getElementById("cardBack").style.display = "none";
       setTimeout(resetDisplay, 3000);
       //player.takeADrink();
     }
@@ -182,6 +184,8 @@ starter.factory('Player', function() {
       document.getElementById("takeADrink").style.display = "none";
       document.getElementById("correct").style.display = "none";
       document.getElementById("giveADrink").style.display = "none";
+      document.getElementById("nextCard").style.display = "none";
+      document.getElementById("cardBack").style.display = "";
     }
 
     /* add card */
@@ -201,8 +205,8 @@ starter.factory('Player', function() {
 
 starter.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-  .state('index', {
-    url: '/',
+  .state('home', {
+    url: '/blizr',
     templateUrl: 'home.html'
   })
    .state('players', {
@@ -213,24 +217,24 @@ starter.config(function($stateProvider, $urlRouterProvider) {
     .state('guessColor', {
       url: '/guessColor',
       controller: 'guessColorCtrl',
-      templateUrl: 'rideTheBus.html'
+      templateUrl: 'guessColor.html'
     })
     .state('highOrLow', {
       url: '/highOrLow',
       controller: 'highOrLowCtrl',
-      templateUrl: 'rideTheBus.html'
+      templateUrl: 'highOrLow.html'
     })
     .state('inOrOut', {
       url: '/inOrOut',
       controller: 'inOrOutCtrl',
-      templateUrl: 'rideTheBus.html'
+      templateUrl: 'inOrOut.html'
     })
     .state('guessSuit', {
       url: '/guessSuit',
       controller: 'guessSuitCtrl',
-      templateUrl: 'rideTheBus.html'
+      templateUrl: 'guessSuit.html'
     });
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/blizr');
 });
 
 starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoading) {
@@ -242,7 +246,7 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
 starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading) {
   /* back to home page */
   $scope.toHome = function() {
-    $state.go("index");
+    $state.go("home");
   };
 
   /* start RTB, store player names */
@@ -252,6 +256,7 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     for(var i = 0; i < 1; i++)
       $rootScope.playerNames[i] = $scope.answer_one;
 
+    /* go to RTB */
     $state.go("guessColor");
   };
 });
@@ -260,7 +265,7 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
 starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player){
   $scope.toHome = function() {
-    $state.go("index");
+    $state.go("home");
   };
 
   /* create a player for each user input */
@@ -286,7 +291,7 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
   /* initialize current player to 0 */
   var currPlayer = 0;
 
-  /* hide the take and give prompts */
+  /* hide the take/give and give prompts */
   document.getElementById("wrong").style.display = "none";
   document.getElementById("takeADrink").style.display = "none";
   document.getElementById("correct").style.display = "none";
@@ -302,20 +307,14 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
     document.getElementById("black_button").style.display = "none";
 
     /* check if the guess is correct and display correct */
-    if(color == $scope.nextCard.color) {
+    if(color == $scope.nextCard.color)
       $rootScope.players[currPlayer].giveADrink();
-    }
-    else {
+    else
       $rootScope.players[currPlayer].takeADrink();
-    }
 
     /* increment the player number */
     currPlayer++;
 
-    /* if the last player of the round has played, go to the next state */
-    if(currPlayer == $rootScope.players.length) {
-      $timeout(function(){$state.go("highOrLow")}, 3000);
-    }
   };
 });
 
