@@ -253,6 +253,21 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
       $rootScope.playerNames[0] = $scope.answer_one;
       $rootScope.playerNames[1] = $scope.answer_two;
 
+    $scope.listOfPlayers = [{
+      value: null
+    }];
+
+    $scope.addPlayer = function () {
+      $scope.listOfPlayers.push({
+        value: null
+      });
+    };
+
+    $scope.removePlayer = function (index) {
+      $scope.listOfPlayers.splice(index, 1);
+    };
+
+
     /* create a player for each user input */
     $rootScope.players = [];
     for(var i = 0; i < $rootScope.playerNames.length; i++)
