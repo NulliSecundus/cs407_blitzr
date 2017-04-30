@@ -219,10 +219,10 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       controller: 'guessColorCtrl',
       templateUrl: 'guessColor.html'
     })
-    .state('highOrLow', {
-      url: '/highOrLow',
-      controller: 'highOrLowCtrl',
-      templateUrl: 'highOrLow.html'
+    .state('overOrUnder', {
+      url: '/overOrUnder',
+      controller: 'overOrUnderCtrl',
+      templateUrl: 'overOrUnder.html'
     })
     .state('inOrOut', {
       url: '/inOrOut',
@@ -237,12 +237,15 @@ starter.config(function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/blizr');
 });
 
+/* main page controller */
 starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoading) {
   $scope.toPlayersState = function() {
     $state.go("players");
   }
 });
 
+
+/* players pane controller */
 starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading) {
   /* back to home page */
   $scope.toHome = function() {
@@ -264,9 +267,14 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
 /* first round (guess color) controller */
 starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player){
-  $scope.toHome = function() {
-    $state.go("home");
-  };
+  /* initialize round number to 1 */
+  $rootScope.roundNumber = 1;
+
+  /* update the current round name */
+  $rootScope.roundName = "Guess the Color!";
+
+  /* display next round information */
+  $ionicLoading.show({templateUrl: "roundTransition.html", noBackdrop: true, duration: 3000});
 
   /* create a player for each user input */
   $rootScope.players = [];
@@ -277,15 +285,15 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
   $rootScope.deck = new CardDeck();
 
   /* create a new back of card */
-  $scope.cardBack = new Card("", 0);
-  $scope.nextCard = $scope.cardBack;
+  $rootScope.cardBack = new Card("", 0);
+  $scope.nextCard = $rootScope.cardBack;
 
   /* get the next card from the deck */
   $scope.getCard = function() {
     $scope.nextCard = $scope.deck.getTopCard();
     console.log($scope.nextCard.number);
     if($scope.nextCard == null)
-      $scope.nextCard = $scope.cardBack;
+      $scope.nextCard = $rootScope.cardBack;
   };
 
   /* initialize current player to 0 */
@@ -315,20 +323,43 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
     /* increment the player number */
     currPlayer++;
 
+    console.log(currPlayer);
+
+    /* if the last player has went, go to the next round */
+    if(currPlayer == $rootScope.players.length)
+      $state.go("overOrUnder");
   };
 });
 
 /* second round (guess higher or lower) controller */
-starter.controller('highOrLowCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player) {
+  /* update the round info */
+  $rootScope.roundNumber++;
+  $rootScope.roundName = "Over or Under?";
+
+  /* display next round information */
+  $ionicLoading.show({templateUrl: "roundTransition.html", noBackdrop: false, duration: 3000});
 });
 
 /* third round (guess in or out) controller */
 starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                              Player) {
+  /* update the round info */
+  $rootScope.roundNumber++;
+  $rootScope.roundName = "Inside or Outside?";
+
+  /* display next round information */
+  $ionicLoading.show({templateUrl: "roundTransition.html", noBackdrop: true, duration: 3000});
 });
 
 /* fourth round (guess suit) controller */
 starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                              Player) {
+  /* update the round info */
+  $rootScope.roundNumber++;
+  $rootScope.roundName = "Guess the Suit!";
+
+  /* display next round information */
+  $ionicLoading.show({templateUrl: "roundTransition.html", noBackdrop: true, duration: 3000});
 });

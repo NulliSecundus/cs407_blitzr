@@ -279,7 +279,51 @@
   }
 }
 
+/* round transition */
+#roundTransition.pane {
+  background-color: darkcyan;
+}
+
+#roundNumber {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 15vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 35vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}
+
+#roundName {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 12vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 45vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /* Ride the Bus */
+/* guess the color */
 #guessColor.pane{
   background-color: darkcyan;
 }
@@ -453,4 +497,41 @@
     margin-left: 5vw;
     bottom: 10vh;
   }
+}
+
+/* over or under */
+#overOrUnder.pane {
+  background-color: darkcyan;
+}
+
+#over_button {
+  position: absolute;
+  height: 10vh;
+  width: 50vw;
+  left: 50%;
+  transform: translate(-50%);
+  top: 30vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 5vh;
+  background-color: white;
+  color: black;
+  border: 1vh solid black;
+}
+
+#under_button {
+  position: absolute;
+  height: 10vh;
+  width: 50vw;
+  left: 50%;
+  transform: translate(-50%);
+  top: 45vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 5vh;
+  background-color: white;
+  color: black;
+  border: 1vh solid black;
 }
