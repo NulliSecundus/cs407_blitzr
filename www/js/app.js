@@ -160,13 +160,13 @@ starter.factory('Player', function() {
     }
 
     /* increment drinks taken */
-    function takeADrink() {
-      drinksTaken++;
+    function takeADrink(drinks) {
+      drinksTaken += drinks;
     }
 
     /* increment drinks given and give a drink to another player */
-    function giveADrink(player) {
-      drinksGiven++;
+    function giveADrink(player, drinks) {
+      drinksGiven += drinks;
       //player.takeADrink();
     }
 
@@ -385,15 +385,15 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
     /* add the card to the player's hand */
     $rootScope.currentPlayer.addCard($rootScope.nextCard);
 
-    /* check if the guess is correct and set prompt, go to the correct or wrong state */
+    /* check if the guess is correct and set prompt */
     if(color == $scope.nextCard.color) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink();
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 1);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give A Drink!";
       $state.go("correctOrWrong");
     }
     else {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink();
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(1);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take A Drink!";
       $state.go("correctOrWrong");
@@ -420,18 +420,27 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
     /* add the card to the player's hand */
     $rootScope.currentPlayer.addCard($rootScope.nextCard);
 
+    /* get the first card number */
+    var firstCardNumber = $rootScope.currentPlayer.getCards()[0].number;
+
     /* check if the guess is correct and set prompt, go to the correct or wrong state */
-    if((guess == "over" && $rootScope.nextCard.number > $rootScope.currentPlayer.getCards()[0].number) ||
-      (guess == "under" && $rootScope.nextCard.number < $rootScope.currentPlayer.getCards()[0].number)) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink();
+    if((guess == "over" && $rootScope.nextCard.number > firstCardNumber) ||
+      (guess == "under" && $rootScope.nextCard.number < firstCardNumber)) {
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 2);
       $rootScope.correctOrWrong = "CORRECT!";
-      $rootScope.takeOrGive = "Give A Drink!";
+      $rootScope.takeOrGive = "Give Two Drinks!";
+      $state.go("correctOrWrong");
+    }
+    else if($rootScope.nextCard.number == firstCardNumber) {
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(4);
+      $rootScope.correctOrWrong = "WRONG!";
+      $rootScope.takeOrGive = "Take Four Drinks!";
       $state.go("correctOrWrong");
     }
     else {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink();
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(2);
       $rootScope.correctOrWrong = "WRONG!";
-      $rootScope.takeOrGive = "Take A Drink!";
+      $rootScope.takeOrGive = "Take Two Drinks!";
       $state.go("correctOrWrong");
     }
   };
@@ -456,22 +465,37 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
     /* add the card to the player's hand */
     $rootScope.currentPlayer.addCard($rootScope.nextCard);
 
-    /* get the bounds on the guess */
-    var max = Math.max($rootScope.currentPlayer.getCards()[0].number, $rootScope.currentPlayer.getCards()[1].number);
-    var min = Math.min($rootScope.currentPlayer.getCards()[0].number, $rootScope.currentPlayer.getCards()[1].number);
+    /* get the first two cards on the guess */
+    var firstCardNumber = $rootScope.currentPlayer.getCards()[0].number;
+    var secondCardNumber = $rootScope.currentPlayer.getCards()[1].number;
 
-    /* check if the guess is correct and set prompt, go to the correct or wrong state */
-    if((guess == "inside" && ($rootScope.nextCard.number < max || $rootScope.nextCard.number > min))||
-      (guess == "outside" && ($rootScope.nextCard.number > max || $rootScope.nextCard.number < min))) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink();
+    /* get the bounds */
+    var upper = Math.max(firstCardNumber, secondCardNumber);
+    var lower = Math.min(firstCardNumber, secondCardNumber);
+
+    /* check if the guess is correct and set prompt */
+    if(guess == "outside" && ($rootScope.nextCard.number < lower || $rootScope.nextCard.number > upper)) {
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 3);
       $rootScope.correctOrWrong = "CORRECT!";
-      $rootScope.takeOrGive = "Give A Drink!";
+      $rootScope.takeOrGive = "Give Three Drinks!";
+      $state.go("correctOrWrong");
+    }
+    else if((guess == "inside" && ($rootScope.nextCard.number > lower && $rootScope.nextCard.number < upper))) {
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 3);
+      $rootScope.correctOrWrong = "CORRECT!";
+      $rootScope.takeOrGive = "Give Three Drinks!";
+      $state.go("correctOrWrong");
+    }
+    else if($rootScope.nextCard.number == lower || $rootScope.nextCard.number == upper) {
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(6);
+      $rootScope.correctOrWrong = "WRONG!";
+      $rootScope.takeOrGive = "Take Six Drinks!";
       $state.go("correctOrWrong");
     }
     else {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink();
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(3);
       $rootScope.correctOrWrong = "WRONG!";
-      $rootScope.takeOrGive = "Take A Drink!";
+      $rootScope.takeOrGive = "Take Three Drinks!";
       $state.go("correctOrWrong");
     }
   };
@@ -481,4 +505,34 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
 starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                              Player) {
 
+  /* get the next card from the deck */
+  $scope.getCard = function() {
+    $rootScope.nextCard = $rootScope.deck.getTopCard();
+    console.log($rootScope.nextCard.number);
+    if($rootScope.nextCard == null)
+      $rootScope.nextCard = $rootScope.cardBack;
+  };
+
+  /* first card, red or black */
+  $scope.guessSuit = function(suit) {
+    /* get the next card */
+    $scope.getCard();
+
+    /* add the card to the player's hand */
+    $rootScope.currentPlayer.addCard($rootScope.nextCard);
+
+    /* check if the guess is correct and set prompt */
+    if(suit == $rootScope.nextCard.suit) {
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 4);
+      $rootScope.correctOrWrong = "CORRECT!";
+      $rootScope.takeOrGive = "Give Four Drinks!";
+      $state.go("correctOrWrong");
+    }
+    else {
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(4);
+      $rootScope.correctOrWrong = "WRONG!";
+      $rootScope.takeOrGive = "Take Four Drinks!";
+      $state.go("correctOrWrong");
+    }
+  };
 });
