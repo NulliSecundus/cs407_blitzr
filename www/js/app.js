@@ -233,7 +233,7 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
 
 
 /* players pane controller */
-starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading) {
+starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Player) {
   /* back to home page */
   $scope.toHome = function() {
     $state.go("home");
@@ -245,6 +245,19 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     $rootScope.playerNames = [];
     for(var i = 0; i < 1; i++)
       $rootScope.playerNames[i] = $scope.answer_one;
+
+    /* create a player for each user input */
+    $rootScope.players = [];
+    for(var i = 0; i < 1; i++)
+      $rootScope.players[i] = new Player($rootScope.playerNames[i]);
+
+    console.log($rootScope.players[0]);
+
+    /* initialize current player to first player */
+    $rootScope.currentPlayer = $rootScope.players[0];
+
+    /* initialize current player number to 1 */
+    $rootScope.currentPlayerNumber = 1;
 
     /* go to RTB */
     $state.go("guessColor");
@@ -269,11 +282,6 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
   /* display next round information */
   $ionicLoading.show({templateUrl: "roundTransition.html", noBackdrop: true, duration: 3000});
 
-  /* create a player for each user input */
-  $rootScope.players = [];
-  for(var i = 0; i < 1; i++)
-    $rootScope.players[i] = new Player($rootScope.playerNames[i]);
-
   /* create a new deck */
   $rootScope.deck = new CardDeck();
 
@@ -289,9 +297,6 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
       $rootScope.nextCard = $rootScope.cardBack;
   };
 
-  /* initialize current player to 0 */
-  var currPlayer = 0;
-
   /* first card, red or black */
   $scope.guessColor = function(color) {
     /* get the next card */
@@ -299,12 +304,12 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
 
     /* check if the guess is correct and set prompt */
     if(color == $scope.nextCard.color) {
-      $rootScope.players[currPlayer].giveADrink();
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink();
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give A Drink!";
     }
     else {
-      $rootScope.players[currPlayer].takeADrink();
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink();
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take A Drink!";
     }
@@ -312,14 +317,18 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
     /* transition to correct/wrong prompt */
     $ionicLoading.show({templateUrl: "correctOrWrong.html", noBackdrop: true, duration: 3000});
 
-    /* increment the player number */
-    currPlayer++;
-
-    console.log(currPlayer);
-
-    /* if the last player has went, go to the next round */
-    if(currPlayer == $rootScope.players.length)
+    /* if the player is the last one, proceed to next round and start with first player, otherwise increment the player
+     * number */
+    if($rootScope.currentPlayerNumber == $rootScope.players.length) {
+      $rootScope.currentPlayerNumber = 1;
       $rootScope.roundNumber = 2;
+      $rootScope.currentPlayer = $rootScope.players[0];
+    }
+    else {
+      $rootScope.currentPlayer = $rootScope.players[currentPlayerNumber];
+      $rootScope.currentPlayerNumber++;
+    }
+
   };
 });
 

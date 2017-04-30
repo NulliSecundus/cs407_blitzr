@@ -322,6 +322,27 @@
   white-space: nowrap;
 }
 
+#nextPlayer {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 12vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 60vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /* correct or wrong */
 #rightOrWrong {
   background-color: darkcyan;
