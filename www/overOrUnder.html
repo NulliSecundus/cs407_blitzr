@@ -9,12 +9,13 @@
   <body>
   <h1 id="rideTheBus_title">Ride The Bus!</h1>
 
-  <!-- red and black display -->
+  <!-- over or under display -->
   <button class ="button-balanced" id="over_button" ng-click="overOrUnder('over')">HIGHER</button>
   <button class ="button-balanced" id="under_button" ng-click="overOrUnder('under')">LOWER</button>
 
   <img src= "{{cardBack.image}}" id= "cardBack2">
   <img src ="{{currentPlayer.getCards()[0].image}}" id= "hand1">
+
   </body>
 </ion-view>
 </html>

@@ -617,3 +617,66 @@
   top: 65%;
   margin-left: 3vw;
 }
+
+/* inside or outside */
+
+/* guess suit */
+#spades_button {
+  position: absolute;
+  height: 10vh;
+  width: 30vw;
+  margin-left: 5vw;
+  top: 40vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 5vw;
+  background-color: white;
+  color: black;
+  border: 1vh solid black;
+}
+
+#hearts_button {
+  position: absolute;
+  height: 10vh;
+  width: 30vw;
+  margin-right: 5vw;
+  top: 40vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 5vw;
+  background-color: white;
+  color: red;
+  border: 1vh solid red;
+}
+
+#clubs_button {
+  position: absolute;
+  height: 10vh;
+  width: 30vw;
+  margin-left: 5vw;
+  top: 55vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 5vw;
+  background-color: white;
+  color: black;
+  border: 1vh solid black;
+}
+
+#diamonds_button {
+  position: absolute;
+  height: 10vh;
+  width: 30vw;
+  margin-right: 4vw;
+  top: 55vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 3.5vw;
+  background-color: white;
+  color: red;
+  border: 1vh solid red;
+}
