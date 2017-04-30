@@ -1,0 +1,693 @@
+/* HOME */
+@media screen and (orientation: portrait) {
+
+  #home_title {
+    font-family: LobsterRegular;
+    font-size: 35vw;
+    font-weight: bold;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #home_background_shape1 {
+    position: absolute;
+    height: 70vh;
+    width: 80vw;
+    background-color: #ffab40;
+    border-radius: 5vw 5vw 5vw 5vw;
+    z-index: 0;
+    left: 50%;
+    transform: translate(-50%);
+    top: 25vh;
+  }
+
+  #home_background_shape2 {
+    position: absolute;
+    height: 60vh;
+    width: 70vw;
+    background-color: #eeeeee;
+    border-radius: 5vw 5vw 5vw 5vw;
+    left: 50%;
+    transform: translate(-50%);
+    top: 30vh;
+    z-index: 1;
+  }
+
+  #start_ride_the_bus {
+    position: absolute;
+    height: 10vh;
+    width: 50vw;
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 5vw;
+    font-style: italic;
+    background-color: white;
+    color: black;
+    border: 1vw solid black;
+    left: 50%;
+    transform: translate(-50%);
+    top: 40vh;
+    z-index: 2;
+  }
+
+  #home_fake_button {
+    position: absolute;
+    height: 20vh;
+    width: 50vw;
+    font-family: Helvetica;
+    font-weight: bolder;
+    font-size: 8vw;
+    font-style: italic;
+    background-color: lightgreen;
+    color: black;
+    border: 1vw solid black;
+    left: 50%;
+    transform: translate(-50%);
+    top: 65vh;
+    border-radius: 50%;
+    z-index: 2;
+  }
+
+  #fbButton {
+    margin-top: 54vw;
+    margin-left: 25vw;
+    width: 50vw;
+    z-index: 2;
+  }
+
+  .popup-container {
+    background-color: darkcyan;
+  }
+}
+
+@media screen and (orientation: landscape) {
+
+  #home_title {
+    font-family: LobsterRegular;
+    font-size: 20vw;
+    font-weight: bold;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #home_background_shape1 {
+    position: absolute;
+    height: 55vh;
+    width: 80vw;
+    background-color: #ffab40;
+    border-radius: 5vw 5vw 5vw 5vw;
+    z-index: 0;
+    left: 50%;
+    transform: translate(-50%);
+    top: 40vh;
+  }
+
+  #home_background_shape2 {
+    position: absolute;
+    height: 45vh;
+    width: 70vw;
+    background-color: #eeeeee;
+    border-radius: 5vw 5vw 5vw 5vw;
+    left: 50%;
+    transform: translate(-50%);
+    top: 45vh;
+    z-index: 1;
+  }
+
+  #start_ride_the_bus {
+    position: absolute;
+    height: 3vh;
+    width: 50vw;
+    font-family: Helvetica;
+    font-weight: bold;
+    font-size: 5vh;
+    font-style: italic;
+    background-color: white;
+    color: black;
+    border: 1vh solid black;
+    left: 50%;
+    transform: translate(-50%);
+    top: 50vh;
+    z-index: 2;
+  }
+
+  #home_fake_button {
+    position: absolute;
+    height: 20vh;
+    width: 50vw;
+    font-family: Helvetica;
+    font-weight: bolder;
+    font-size: 8vh;
+    font-style: italic;
+    background-color: lightgreen;
+    color: black;
+    border: 1vh solid black;
+    left: 50%;
+    transform: translate(-50%);
+    top: 65vh;
+    border-radius: 50%;
+    z-index: 2;
+  }
+}
+
+/* Players Screen */
+
+#playerList {
+  margin-top: 40vh;
+
+}
+
+@media screen and (orientation: portrait) {
+  #players_back {
+    position: absolute;
+    font-size: 8vh;
+    color: white;
+    margin-left: 4vw;
+  }
+
+  #players_title {
+    font-family: LobsterRegular;
+    font-size: 35vw;
+    font-weight: bold;
+    font-style: normal;
+    margin-top: 0vh;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #answer_player_one {
+    position: absolute;
+    width: 60vw;
+    margin-top: 5vw;
+    left: 50%;
+    transform: translate(-50%);
+    border: 1vw solid black;
+  }
+
+  #answer_player_two {
+    position: absolute;
+    width: 60vw;
+    margin-top: 25vw;
+    left: 50%;
+    transform: translate(-50%);
+    border: 1vw solid black;
+  }
+
+  #goToRideTheBus {
+    position: absolute;
+    width: 50vw;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 10vh;
+    font-family: Helvetica;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 5vh;
+    background-color: white;
+    color: black;
+    border: 1vw solid black;
+  }
+
+  input::-webkit-input-placeholder {
+    color: black;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  #players_back {
+    position: absolute;
+    font-size: 8vw;
+    color: white;
+    margin-left: 2vw;
+  }
+
+  #players_title {
+    font-family: LobsterRegular;
+    font-size: 15vw;
+    font-weight: bold;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #answer_player_one {
+    position: absolute;
+    width: 60vw;
+    margin-top: 5vh;
+    margin-left: 20vw;
+    border: 1vh solid black;
+  }
+
+  #answer_player_two {
+    position: absolute;
+    width: 60vw;
+    margin-top: 1vh;
+    margin-left: 20vw;
+    border: 1vh solid black;
+  }
+
+  #goToRideTheBus {
+    position: absolute;
+    width: 50vw;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 5vh;
+    font-family: Helvetica;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 5vh;
+    background-color: white;
+    color: black;
+    border: 1vh solid black;
+  }
+
+  input::-webkit-input-placeholder {
+    color: black;
+  }
+}
+
+/* round transition */
+#roundNumber {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 12vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 35vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}
+
+#roundName {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 10vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 45vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#nextPlayer {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 10vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 60vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+#transClick {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 10vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 70vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* correct or wrong */
+#correctOrWrong {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 15vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 35vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}
+
+#takeOrGive {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 12vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 45vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Ride the Bus */
+/* guess the color */
+@media screen and (orientation: portrait) {
+  #rideTheBus_title {
+    position: absolute;
+    font-family: LobsterRegular;
+    font-size: 20vw;
+    font-weight: bold;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #wrong {
+    position: absolute;
+    font-family: LobsterRegular;
+    font-size: 15vw;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    left: 50%;
+    transform: translate(-50%);
+    top: 35vh;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #takeADrink {
+    position: absolute;
+    font-family: LobsterRegular;
+    font-size: 12vw;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    left: 50%;
+    transform: translate(-50%);
+    top: 45vh;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+    clear: both;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  #correct {
+    position: absolute;
+    font-family: LobsterRegular;
+    font-size: 15vw;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    left: 50%;
+    transform: translate(-50%);
+    top: 35vh;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #giveADrink {
+    position: absolute;
+    font-family: LobsterRegular;
+    font-size: 12vw;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    left: 50%;
+    transform: translate(-50%);
+    top: 45vh;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+    clear: both;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  #red_button {
+    position: absolute;
+    height: 10vh;
+    width: 50vw;
+    left: 50%;
+    transform: translate(-50%);
+    top: 30vh;
+    font-family: Helvetica;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 5vh;
+    background-color: red;
+    color: white;
+    border: 1vh solid white;
+  }
+
+  #black_button {
+    position: absolute;
+    height: 10vh;
+    width: 50vw;
+    left: 50%;
+    transform: translate(-50%);
+    top: 45vh;
+    font-family: Helvetica;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 5vh;
+    background-color: black;
+    color: white;
+    border: 1vh solid white;
+  }
+
+  #cardBack1 {
+    position: absolute;
+    height: 30vh;
+    bottom: 5vh;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  #nextCard {
+    position: absolute;
+    height: 30vh;
+    bottom: 5vh;
+    left: 50%;
+    transform: translate(-50%);
+  }
+}
+
+@media screen and (orientation: landscape) {
+  #rideTheBus_title {
+    font-family: LobsterRegular;
+    font-size: 10vw;
+    font-weight: bold;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #nextCard {
+    position: absolute;
+    height: 25vh;
+    margin-left: 5vw;
+    bottom: 10vh;
+  }
+
+  #cardBack1 {
+    position: absolute;
+    height: 25vh;
+    margin-left: 5vw;
+    bottom: 10vh;
+  }
+}
+
+/* over or under */
+#over_button {
+  position: absolute;
+  height: 10vh;
+  width: 50vw;
+  left: 50%;
+  transform: translate(-50%);
+  top: 30vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 5vh;
+  background-color: white;
+  color: black;
+  border: 1vh solid black;
+}
+
+#under_button {
+  position: absolute;
+  height: 10vh;
+  width: 50vw;
+  left: 50%;
+  transform: translate(-50%);
+  top: 45vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 5vh;
+  background-color: white;
+  color: black;
+  border: 1vh solid black;
+}
+
+#cardBack2 {
+  position: absolute;
+  height: 30vh;
+  bottom: 5vh;
+  left: 50%;
+  transform: translate(20%);
+}
+
+#hand1 {
+  position: absolute;
+  height: 15vh;
+  top: 65%;
+  margin-left: 3vw;
+}
+
+/* inside or outside */
+
+/* guess suit */
+#spades_button {
+  position: absolute;
+  height: 10vh;
+  width: 30vw;
+  margin-left: 5vw;
+  top: 40vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 5vw;
+  background-color: white;
+  color: black;
+  border: 1vh solid black;
+}
+
+#hearts_button {
+  position: absolute;
+  height: 10vh;
+  width: 30vw;
+  margin-right: 5vw;
+  top: 40vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 5vw;
+  background-color: white;
+  color: red;
+  border: 1vh solid red;
+}
+
+#clubs_button {
+  position: absolute;
+  height: 10vh;
+  width: 30vw;
+  margin-left: 5vw;
+  top: 55vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 5vw;
+  background-color: white;
+  color: black;
+  border: 1vh solid black;
+}
+
+#diamonds_button {
+  position: absolute;
+  height: 10vh;
+  width: 30vw;
+  margin-right: 4vw;
+  top: 55vh;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 3.5vw;
+  background-color: white;
+  color: red;
+  border: 1vh solid red;
+}
