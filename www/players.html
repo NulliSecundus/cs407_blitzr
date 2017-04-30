@@ -7,15 +7,6 @@
 
   <link rel="manifest" href="manifest.json">
 
-  <!-- un-comment this code to enable service worker
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('service worker installed'))
-        .catch(err => console.log('Error', err));
-    }
-  </script>-->
-
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/lobster" type="text/css">
@@ -34,7 +25,7 @@
   <!-- your app's js -->
   <script src="js/app.js"></script>
 </head>
-<ion-view ion-title="players" id="players">
+<ion-view ion-title="players" id="players" style="background-color: darkcyan">
   <body>
   <i class="icon ion-ios-arrow-back" id="players_back" ng-click="toHome()"></i>
     <h1 id="players_title">Blitzr</h1>

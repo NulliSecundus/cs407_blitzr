@@ -1,8 +1,4 @@
 /* HOME */
-#home.pane {
-  background-color: darkcyan;
-}
-
 @media screen and (orientation: portrait) {
 
   #home_title {
@@ -156,9 +152,6 @@
 }
 
 /* Players Screen */
-#players.pane {
-  background-color: darkcyan;
-}
 
 @media screen and (orientation: portrait) {
   #players_back {
@@ -280,10 +273,6 @@
 }
 
 /* round transition */
-#roundTransition.pane {
-  background-color: darkcyan;
-}
-
 #roundNumber {
   position: absolute;
   font-family: LobsterRegular;
@@ -343,11 +332,28 @@
   white-space: nowrap;
 }
 
-/* correct or wrong */
-#rightOrWrong {
-  background-color: darkcyan;
+#transClick {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 10vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 70vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
+/* correct or wrong */
 #correctOrWrong {
   position: absolute;
   font-family: LobsterRegular;
@@ -388,10 +394,6 @@
 
 /* Ride the Bus */
 /* guess the color */
-#guessColor.pane{
-  background-color: darkcyan;
-}
-
 @media screen and (orientation: portrait) {
   #rideTheBus_title {
     position: absolute;
@@ -564,10 +566,6 @@
 }
 
 /* over or under */
-#overOrUnder.pane {
-  background-color: darkcyan;
-}
-
 #over_button {
   position: absolute;
   height: 10vh;
