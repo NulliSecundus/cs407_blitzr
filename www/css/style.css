@@ -631,3 +631,38 @@
   top: 70%;
   margin-left: 17vw;
 }
+
+#player_list_title {
+  font-family: LobsterRegular;
+  font-size: 10vw;
+  font-weight: bold;
+  font-style: normal;
+  margin-top: 0vh;
+  text-align: center;
+  color: white;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}
+
+#player_list_disp {
+  margin-left: 15vw;
+  width: 70vw;
+}
+
+#give_drink_counter {
+  font-family: LobsterRegular;
+  font-size: 7vw;
+  font-weight: bold;
+  font-style: normal;
+  margin-top: 0vh;
+  text-align: center;
+  color: white;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}

@@ -142,6 +142,7 @@ starter.factory('Player', function() {
     var cards = [];
     var drinksTaken = 0;
     var drinksGiven = 0;
+    var drinksToGive = 0;
 
     /* constructor */
     function init() {
@@ -149,6 +150,7 @@ starter.factory('Player', function() {
       cards = [];
       drinksTaken = 0;
       drinksGiven = 0;
+      drinksToGive = 0;
     }
 
     /* call constructor */
@@ -164,10 +166,24 @@ starter.factory('Player', function() {
       drinksTaken += drinks;
     }
 
-    /* increment drinks given and give a drink to another player */
-    function giveADrink(player, drinks) {
+    /* increment drinks given and drinks to give */
+    function giveDrinks(drinks) {
       drinksGiven += drinks;
+      drinksToGive += drinks;
       //player.takeADrink();
+    }
+
+    function getDrinksToGive(){
+      return drinksToGive;
+    }
+
+    function decrementDrinksToGive(){
+      drinksToGive--;
+    }
+
+    function givePlayerADrink(player){
+      player.takeADrink(1);
+      decrementDrinksToGive();
     }
 
     /* add card */
@@ -194,11 +210,14 @@ starter.factory('Player', function() {
     return {
       getName: getName,
       takeADrink: takeADrink,
-      giveADrink: giveADrink,
+      giveDrinks: giveDrinks,
       addCard: addCard,
       getCards: getCards,
       getTaken: getTaken,
-      getGiven: getGiven
+      getGiven: getGiven,
+      getDrinksToGive: getDrinksToGive,
+      decrementDrinksToGive: decrementDrinksToGive,
+      givePlayerADrink: givePlayerADrink
     }
   }
 });
@@ -224,6 +243,11 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       controller: 'roundTransitionCtrl',
       templateUrl: 'roundTransition.html'
     })
+    .state('givePlayersDrinks', {
+      url: '/givePlayersDrinks',
+      controller: 'givePlayersDrinksCtrl',
+      templateUrl: 'givePlayersDrinks.html'
+    })
     .state('guessColor', {
       url: '/guessColor',
       controller: 'guessColorCtrl',
@@ -244,6 +268,7 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       controller: 'guessSuitCtrl',
       templateUrl: 'guessSuit.html'
     });
+
   $urlRouterProvider.otherwise('/blizr');
 });
 
@@ -316,6 +341,8 @@ starter.controller('correctOrWrongCtrl', function($rootScope, $scope, $state, $i
   /* go to the next player on a click */
   $scope.toNextPlayer = function() {
     /* determine if the current player is the last in the round, set proper variables */
+    $rootScope.previousPlayer = $rootScope.currentPlayer;
+
     if($rootScope.currentPlayerNumber == $rootScope.players.length) {
       $rootScope.currentPlayerNumber = 1;
       $rootScope.currentPlayer = $rootScope.players[0];
@@ -337,7 +364,12 @@ starter.controller('correctOrWrongCtrl', function($rootScope, $scope, $state, $i
       $rootScope.roundName = "Guess the Suit!";
 
     /* go to the transition page */
-    $state.go("roundTransition");
+    if($rootScope.previousPlayer.getDrinksToGive() > 0){
+      $state.go("givePlayersDrinks");
+    }
+    else{
+      $state.go("roundTransition");
+    }
   };
 
 });
@@ -359,6 +391,27 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
   };
 });
 
+starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                                   Player) {
+  $scope.listOfPlayers = $rootScope.players;
+  $scope.prevPlayer = $rootScope.previousPlayer;
+  $scope.remainingDrinks = 0;
+  $scope.remainingDrinks = $scope.prevPlayer.getDrinksToGive();
+  console.log($scope.prevPlayer.getName());
+
+
+  $scope.giveDrink = function(player){
+    console.log(player.getTaken());
+    $scope.remainingDrinks--;
+    $scope.prevPlayer.givePlayerADrink(player);
+    console.log(player.getTaken());
+
+    if($scope.remainingDrinks<=0){
+      $state.go("roundTransition");
+    }
+  }
+});
+
 /* first round (guess color) controller */
 starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player, $timeout){
@@ -366,7 +419,7 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
-    console.log($rootScope.nextCard.number);
+    //console.log($rootScope.nextCard.number);
     if($rootScope.nextCard == null)
       $rootScope.nextCard = $rootScope.cardBack;
   };
@@ -381,7 +434,7 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
 
     /* check if the guess is correct and set prompt */
     if(color == $scope.nextCard.color) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 1);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveDrinks(1);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give A Drink!";
       $state.go("correctOrWrong");
@@ -420,7 +473,7 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
     /* check if the guess is correct and set prompt, go to the correct or wrong state */
     if((guess == "over" && $rootScope.nextCard.number > firstCardNumber) ||
       (guess == "under" && $rootScope.nextCard.number < firstCardNumber)) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 2);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveDrinks(2);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Two Drinks!";
       $state.go("correctOrWrong");
@@ -469,13 +522,13 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
 
     /* check if the guess is correct and set prompt */
     if(guess == "outside" && ($rootScope.nextCard.number < lower || $rootScope.nextCard.number > upper)) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 3);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveDrinks(3);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Three Drinks!";
       $state.go("correctOrWrong");
     }
     else if((guess == "inside" && ($rootScope.nextCard.number > lower && $rootScope.nextCard.number < upper))) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 3);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveDrinks(3);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Three Drinks!";
       $state.go("correctOrWrong");
@@ -517,7 +570,7 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
 
     /* check if the guess is correct and set prompt */
     if(suit == $rootScope.nextCard.suit) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 4);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveDrinks(4);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Four Drinks!";
       $state.go("correctOrWrong");
