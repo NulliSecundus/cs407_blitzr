@@ -7,15 +7,6 @@
 
   <link rel="manifest" href="manifest.json">
 
-  <!-- un-comment this code to enable service worker
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('service worker installed'))
-        .catch(err => console.log('Error', err));
-    }
-  </script>-->
-
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/lobster" type="text/css">
@@ -34,22 +25,48 @@
   <!-- your app's js -->
   <script src="js/app.js"></script>
 </head>
-<ion-view ion-title="players" id="players">
+<ion-view ion-title="players" id="players" style="background-color: darkcyan">
   <body>
   <i class="icon ion-ios-arrow-back" id="players_back" ng-click="toHome()"></i>
     <h1 id="players_title">Blitzr</h1>
-      <div style="width: 60%;" id="answer_player_one" >
-        <label class="item item-input">
-          <input type="text" name="answer_one"
-                 ng-model="$parent.answer_one" placeholder="Player One">
-          </label>
-      </div>
-      <div style="width: 60%;" id="answer_player_two" >
-        <label class="item item-input">
-          <input type="text" name="answer_two"
-             ng-model="$parent.answer_two" placeholder="Player Two">
-        </label>
-      </div>
+      <!--<div style="width: 60%;" id="answer_player_one" >-->
+        <!--<label class="item item-input">-->
+          <!--<input type="text" name="answer_one"-->
+                 <!--ng-model="$parent.answer_one" placeholder="Player One">-->
+          <!--</label>-->
+      <!--</div>-->
+      <!--<div style="width: 60%;" id="answer_player_two" >-->
+        <!--<label class="item item-input">-->
+          <!--<input type="text" name="answer_two"-->
+             <!--ng-model="$parent.answer_two" placeholder="Player Two">-->
+        <!--</label>-->
+      <!--</div>-->
+
+  <div>
+    <div>
+        <!--Not sure if this ion-scroll tag should have the playerScroll class and be used in the CSS!!!!!!!!!!!!!!!-->
+        <ion-scroll direction="y" scrollbar-y="false" class = "playerScroll">
+          <div class = "scroll-container">
+            <!--//Not sure if this div below should have playerList!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+            <div class="list list-inset" id = "playerList">
+
+
+              <div class="item-input" ng-repeat="player in listOfPlayers">
+                <label class="item-input-wrapper">
+                  <input type="text" placeholder="Type name" ng-model="player.value" />
+                </label>
+                <button class="button button-small button-balanced" ng-if="$index == listOfPlayers.length - 1" ng-click="addPlayer()">
+                  <i class="icon ion-plus"></i>
+                </button>
+                <button class="button button-small button-assertive" ng-if="$index != listOfPlayers.length - 1" ng-click="removePlayer($index)">
+                  <i class="icon ion-minus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </ion-scroll>
+    </div>
+  </div>
 
     <button class="button" id="goToRideTheBus" ng-click="toTheBus()">Ride</button>
 
