@@ -259,6 +259,17 @@
     border: 1vh solid black;
   }
 
+  #playerList {
+    position: absolute;
+    margin-top: 40vh;
+
+  }
+
+  .playerScroll {
+    margin-top: 40vh;
+
+  }
+
   #goToRideTheBus {
     position: absolute;
     width: 50vw;

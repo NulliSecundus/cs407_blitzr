@@ -244,6 +244,21 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
   $scope.toHome = function() {
     $state.go("index");
   };
+//My added code to Mitch's
+  $scope.listOfPlayers = [{
+    value: null
+  }];
+
+  $scope.addPlayer = function () {
+    $scope.listOfPlayers.push({
+      value: null
+    });
+  }
+
+  $scope.removePlayer = function (index) {
+    $scope.listOfPlayers.splice(index, 1);
+  }
+  //End of my added code to Mitch's
 
   /* start RTB, store player names */
   $scope.toTheBus = function() {
