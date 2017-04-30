@@ -214,11 +214,6 @@ starter.config(function($stateProvider, $urlRouterProvider) {
      controller: 'playersCtrl',
      templateUrl: 'players.html'
    })
-    .state('correctOrWrong', {
-      url: '/correctOrWrong',
-      controller: 'correctOrWrongCtrl',
-      templateUrl: 'correctOrWrong.html'
-    })
     .state('roundTransition', {
       url: '/roundTransition',
       controller: 'roundTransitionCtrl',
@@ -309,9 +304,67 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
   };
 });
 
+
 /* correct or wrong controller, also determines next state based on round */
-starter.controller('correctOrWrongCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                              Player) {
+starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                                   Player) {
+
+  /* go to the next round on a click */
+  $scope.toNextRound = function () {
+    /* set the next card to display the back of a card */
+    $rootScope.nextCard = $rootScope.cardBack;
+
+    /* reset correct/wrong and take/give */
+    $rootScope.correctOrWrong = "";
+    $rootScope.takeOrGive = "";
+
+    /* go to the next round and/or player */
+    if ($rootScope.roundNumber == 1)
+      $state.go("guessColor");
+    else if ($rootScope.roundNumber == 2)
+      $state.go("overOrUnder");
+    else if ($rootScope.roundNumber == 3)
+      $state.go("inOrOut");
+    else if ($rootScope.roundNumber == 4)
+      $state.go("guessSuit");
+  };
+});
+
+/* first round (guess color) controller */
+starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                              Player, $timeout){
+
+  /* get the next card from the deck */
+  $scope.getCard = function() {
+    $rootScope.nextCard = $rootScope.deck.getTopCard();
+    if($rootScope.nextCard == null)
+      $rootScope.nextCard = $rootScope.cardBack;
+  };
+
+  /* first card, red or black */
+  $scope.guessColor = function(color) {
+    /* hide the red/black buttons */
+    document.getElementById("red_button").style.visibility = "hidden";
+    document.getElementById("black_button").style.visibility = "hidden";
+
+    /* get the next card */
+    $scope.getCard();
+
+    /* add the card to the player's hand */
+    $rootScope.currentPlayer.addCard($rootScope.nextCard);
+
+    /* check if the guess is correct and set prompt */
+    if(color == $rootScope.nextCard.color) {
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 1);
+      $rootScope.correctOrWrong = "CORRECT!";
+      $rootScope.takeOrGive = "Give A Drink!";
+    }
+    else {
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(1);
+      $rootScope.correctOrWrong = "WRONG!";
+      $rootScope.takeOrGive = "Take A Drink!";
+    }
+  };
 
   /* go to the next player on a click */
   $scope.toNextPlayer = function() {
@@ -339,63 +392,6 @@ starter.controller('correctOrWrongCtrl', function($rootScope, $scope, $state, $i
     /* go to the transition page */
     $state.go("roundTransition");
   };
-
-});
-
-/* correct or wrong controller, also determines next state based on round */
-starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                                   Player) {
-
-  /* go to the next round on a click */
-  $scope.toNextRound = function () {
-    /* set the next card to display the back of a card */
-    $rootScope.nextCard = $rootScope.cardBack;
-
-    /* go to the next round and/or player */
-    if ($rootScope.roundNumber == 1)
-      $state.go("guessColor");
-    else if ($rootScope.roundNumber == 2)
-      $state.go("overOrUnder");
-    else if ($rootScope.roundNumber == 3)
-      $state.go("inOrOut");
-    else if ($rootScope.roundNumber == 4)
-      $state.go("guessSuit");
-  };
-});
-
-/* first round (guess color) controller */
-starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                              Player, $timeout){
-
-  /* get the next card from the deck */
-  $scope.getCard = function() {
-    $rootScope.nextCard = $rootScope.deck.getTopCard();
-    if($rootScope.nextCard == null)
-      $rootScope.nextCard = $rootScope.cardBack;
-  };
-
-  /* first card, red or black */
-  $scope.guessColor = function(color) {
-    /* get the next card */
-    $scope.getCard();
-
-    /* add the card to the player's hand */
-    $rootScope.currentPlayer.addCard($rootScope.nextCard);
-
-    /* check if the guess is correct and set prompt */
-    if(color == $rootScope.nextCard.color) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 1);
-      $rootScope.correctOrWrong = "CORRECT!";
-      $rootScope.takeOrGive = "Give A Drink!";
-      $state.go("correctOrWrong");
-    }
-    else {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(1);
-      $rootScope.correctOrWrong = "WRONG!";
-      $rootScope.takeOrGive = "Take A Drink!";
-      $state.go("correctOrWrong");
-    }
-  };
 });
 
 /* second round (guess higher or lower) controller */
@@ -410,6 +406,10 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
 
   /* second card, over or under */
   $scope.overOrUnder = function(guess) {
+    /* hide the red/black buttons */
+    document.getElementById("over_button").style.visibility = "hidden";
+    document.getElementById("under_button").style.visibility = "hidden";
+
     /* get the next card */
     $scope.getCard();
 
@@ -425,20 +425,44 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
       $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 2);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Two Drinks!";
-      $state.go("correctOrWrong");
     }
     else if($rootScope.nextCard.number == firstCardNumber) {
       $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(4);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Four Drinks!";
-      $state.go("correctOrWrong");
     }
     else {
       $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(2);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Two Drinks!";
-      $state.go("correctOrWrong");
     }
+  };
+
+  /* go to the next player on a click */
+  $scope.toNextPlayer = function() {
+    /* determine if the current player is the last in the round, set proper variables */
+    if($rootScope.currentPlayerNumber == $rootScope.players.length) {
+      $rootScope.currentPlayerNumber = 1;
+      $rootScope.currentPlayer = $rootScope.players[0];
+      $rootScope.roundNumber++;
+    }
+    else {
+      $rootScope.currentPlayer = $rootScope.players[$rootScope.currentPlayerNumber];
+      $rootScope.currentPlayerNumber++;
+    }
+
+    /* update round name */
+    if($rootScope.roundNumber == 1)
+      $rootScope.roundName = "Red or Black?";
+    else if($rootScope.roundNumber == 2)
+      $rootScope.roundName = "Higher or Lower?";
+    else if($rootScope.roundNumber == 3)
+      $rootScope.roundName = "Inside or Outside?";
+    else if($rootScope.roundNumber == 4)
+      $rootScope.roundName = "Guess the Suit!";
+
+    /* go to the transition page */
+    $state.go("roundTransition");
   };
 });
 
@@ -448,13 +472,16 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
-    console.log($rootScope.nextCard.number);
     if($rootScope.nextCard == null)
       $rootScope.nextCard = $rootScope.cardBack;
   };
 
   /* first card, red or black */
   $scope.inOrOut = function(guess) {
+    /* hide the red/black buttons */
+    document.getElementById("over_button").style.visibility = "hidden";
+    document.getElementById("under_button").style.visibility = "hidden";
+
     /* get the next card */
     $scope.getCard();
 
@@ -474,26 +501,49 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
       $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 3);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Three Drinks!";
-      $state.go("correctOrWrong");
     }
     else if((guess == "inside" && ($rootScope.nextCard.number > lower && $rootScope.nextCard.number < upper))) {
       $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 3);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Three Drinks!";
-      $state.go("correctOrWrong");
     }
     else if($rootScope.nextCard.number == lower || $rootScope.nextCard.number == upper) {
       $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(6);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Six Drinks!";
-      $state.go("correctOrWrong");
     }
     else {
       $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(3);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Three Drinks!";
-      $state.go("correctOrWrong");
     }
+  };
+
+  /* go to the next player on a click */
+  $scope.toNextPlayer = function() {
+    /* determine if the current player is the last in the round, set proper variables */
+    if($rootScope.currentPlayerNumber == $rootScope.players.length) {
+      $rootScope.currentPlayerNumber = 1;
+      $rootScope.currentPlayer = $rootScope.players[0];
+      $rootScope.roundNumber++;
+    }
+    else {
+      $rootScope.currentPlayer = $rootScope.players[$rootScope.currentPlayerNumber];
+      $rootScope.currentPlayerNumber++;
+    }
+
+    /* update round name */
+    if($rootScope.roundNumber == 1)
+      $rootScope.roundName = "Red or Black?";
+    else if($rootScope.roundNumber == 2)
+      $rootScope.roundName = "Higher or Lower?";
+    else if($rootScope.roundNumber == 3)
+      $rootScope.roundName = "Inside or Outside?";
+    else if($rootScope.roundNumber == 4)
+      $rootScope.roundName = "Guess the Suit!";
+
+    /* go to the transition page */
+    $state.go("roundTransition");
   };
 });
 
@@ -504,13 +554,18 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
-    console.log($rootScope.nextCard.number);
     if($rootScope.nextCard == null)
       $rootScope.nextCard = $rootScope.cardBack;
   };
 
   /* first card, red or black */
   $scope.guessSuit = function(suit) {
+    /* hide the suit buttons */
+    document.getElementById("diamonds_button").style.visibility = "hidden";
+    document.getElementById("hearts_button").style.visibility = "hidden";
+    document.getElementById("spades_button").style.visibility = "hidden";
+    document.getElementById("clubs_button").style.visibility = "hidden";
+
     /* get the next card */
     $scope.getCard();
 
@@ -522,13 +577,38 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
       $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 4);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Four Drinks!";
-      $state.go("correctOrWrong");
     }
     else {
       $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(4);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Four Drinks!";
-      $state.go("correctOrWrong");
     }
+  };
+
+  /* go to the next player on a click */
+  $scope.toNextPlayer = function() {
+    /* determine if the current player is the last in the round, set proper variables */
+    if($rootScope.currentPlayerNumber == $rootScope.players.length) {
+      $rootScope.currentPlayerNumber = 1;
+      $rootScope.currentPlayer = $rootScope.players[0];
+      $rootScope.roundNumber++;
+    }
+    else {
+      $rootScope.currentPlayer = $rootScope.players[$rootScope.currentPlayerNumber];
+      $rootScope.currentPlayerNumber++;
+    }
+
+    /* update round name */
+    if($rootScope.roundNumber == 1)
+      $rootScope.roundName = "Red or Black?";
+    else if($rootScope.roundNumber == 2)
+      $rootScope.roundName = "Higher or Lower?";
+    else if($rootScope.roundNumber == 3)
+      $rootScope.roundName = "Inside or Outside?";
+    else if($rootScope.roundNumber == 4)
+      $rootScope.roundName = "Guess the Suit!";
+
+    /* go to the transition page */
+    $state.go("roundTransition");
   };
 });

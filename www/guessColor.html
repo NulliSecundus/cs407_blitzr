@@ -14,6 +14,12 @@
   <h1 id="displayTaken">Drinks Taken: {{currentPlayer.getTaken()}}</h1>
   <h1 id="displayGiven">Drinks Given: {{currentPlayer.getGiven()}}</h1>
 
+  <!-- display the round number and name -->
+  <h1 id="correctOrWrong">{{correctOrWrong}}</h1>
+  <h1 id="takeOrGive">{{takeOrGive}}</h1>
+  <button class="button" id="correctButton" ng-click="toNextPlayer()" style="width: 100vw;
+    height: 100vh; background: transparent"></button>
+
   <!-- red and black display -->
   <button class ="button-balanced" id="red_button" ng-click="guessColor('red')">RED</button>
   <button class ="button-balanced" id="black_button" ng-click="guessColor('black')">BLACK</button>

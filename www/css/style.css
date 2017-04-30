@@ -336,7 +336,7 @@
   color: white;
   left: 50%;
   transform: translate(-50%);
-  top: 35vh;
+  top: 40vh;
   text-shadow: 3px 3px 0 #000,
   -1px -1px 0 #000,
   1px -1px 0 #000,
@@ -353,7 +353,7 @@
   color: white;
   left: 50%;
   transform: translate(-50%);
-  top: 45vh;
+  top: 50vh;
   text-shadow: 3px 3px 0 #000,
   -1px -1px 0 #000,
   1px -1px 0 #000,
@@ -371,6 +371,7 @@
     position: absolute;
     font-family: LobsterRegular;
     font-size: 20vw;
+    margin-top: 3vh;
     font-weight: bold;
     font-style: normal;
     text-align: center;
@@ -443,6 +444,7 @@
     color: white;
     border: 1vh solid white;
     white-space: nowrap;
+    text-align: center;
   }
 
   #black_button {
@@ -459,6 +461,7 @@
     color: white;
     border: 1vh solid white;
     white-space: nowrap;
+    text-align: center;
   }
 
   #cardBack1 {
@@ -523,6 +526,7 @@
   color: black;
   border: 1vh solid black;
   white-space: nowrap;
+  text-align: center;
 }
 
 #under_button {
@@ -539,6 +543,7 @@
   color: black;
   border: 1vh solid black;
   white-space: nowrap;
+  text-align: center;
 }
 
 #cardBack2 {
@@ -579,6 +584,7 @@
   color: black;
   border: 1vh solid black;
   white-space: nowrap;
+  text-align: center;
 }
 
 #hearts_button {
@@ -595,6 +601,7 @@
   color: red;
   border: 1vh solid red;
   white-space: nowrap;
+  text-align: center;
 }
 
 #clubs_button {
@@ -611,6 +618,7 @@
   color: black;
   border: 1vh solid black;
   white-space: nowrap;
+  text-align: center;
 }
 
 #diamonds_button {
@@ -627,6 +635,7 @@
   color: red;
   border: 1vh solid red;
   white-space: nowrap;
+  text-align: center;
 }
 
 #hand3 {
