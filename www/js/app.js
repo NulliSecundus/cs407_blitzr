@@ -263,33 +263,27 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     $state.go("home");
   };
 
+  $scope.listOfPlayers = [{
+    value: null
+  }];
+
+  $scope.addPlayer = function () {
+    $scope.listOfPlayers.push({
+      value: null
+    });
+  };
+
+  $scope.removePlayer = function (index) {
+    $scope.listOfPlayers.splice(index, 1);
+  };
+
   /* start RTB, store player names */
   $scope.toTheBus = function() {
-    /* store player names */
-    $rootScope.playerNames = [];
-    /*for(var i = 0; i < 1; i++) */
-      $rootScope.playerNames[0] = $scope.answer_one;
-      $rootScope.playerNames[1] = $scope.answer_two;
-
-    $scope.listOfPlayers = [{
-      value: null
-    }];
-
-    $scope.addPlayer = function () {
-      $scope.listOfPlayers.push({
-        value: null
-      });
-    };
-
-    $scope.removePlayer = function (index) {
-      $scope.listOfPlayers.splice(index, 1);
-    };
-
 
     /* create a player for each user input */
     $rootScope.players = [];
-    for(var i = 0; i < $rootScope.playerNames.length; i++)
-      $rootScope.players[i] = new Player($rootScope.playerNames[i]);
+    for(var i = 0; i < $scope.listOfPlayers.length; i++)
+      $rootScope.players[i] = new Player($scope.listOfPlayers[i].value);
 
     /* initialize current player to first player */
     $rootScope.currentPlayer = $rootScope.players[0];

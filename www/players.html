@@ -29,42 +29,22 @@
   <body>
   <i class="icon ion-ios-arrow-back" id="players_back" ng-click="toHome()"></i>
     <h1 id="players_title">Blitzr</h1>
-      <!--<div style="width: 60%;" id="answer_player_one" >-->
-        <!--<label class="item item-input">-->
-          <!--<input type="text" name="answer_one"-->
-                 <!--ng-model="$parent.answer_one" placeholder="Player One">-->
-          <!--</label>-->
-      <!--</div>-->
-      <!--<div style="width: 60%;" id="answer_player_two" >-->
-        <!--<label class="item item-input">-->
-          <!--<input type="text" name="answer_two"-->
-             <!--ng-model="$parent.answer_two" placeholder="Player Two">-->
-        <!--</label>-->
-      <!--</div>-->
 
   <div>
-    <div>
-        <!--Not sure if this ion-scroll tag should have the playerScroll class and be used in the CSS!!!!!!!!!!!!!!!-->
-        <ion-scroll direction="y" scrollbar-y="false" class = "playerScroll">
-          <div class = "scroll-container">
-            <!--//Not sure if this div below should have playerList!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
-            <div class="list list-inset" id = "playerList">
+    <div class="list list-inset" id = "playerList" style = 'height: 62vh' style = 'background-color: darkcyan'>
+      <div class="item-input" ng-repeat="player in listOfPlayers" style = 'background-color: darkcyan'>
 
+        <label class="item-input-wrapper">
+          <input type="text" placeholder="Type name" ng-model="player.value" />
+        </label>
+        <button class="button button-small button-balanced" ng-if="($index == listOfPlayers.length - 1) && listOfPlayers.length < 10" ng-click="addPlayer()">
+          <i class="icon ion-plus"></i>
+        </button>
 
-              <div class="item-input" ng-repeat="player in listOfPlayers">
-                <label class="item-input-wrapper">
-                  <input type="text" placeholder="Type name" ng-model="player.value" />
-                </label>
-                <button class="button button-small button-balanced" ng-if="$index == listOfPlayers.length - 1" ng-click="addPlayer()">
-                  <i class="icon ion-plus"></i>
-                </button>
-                <button class="button button-small button-assertive" ng-if="$index != listOfPlayers.length - 1" ng-click="removePlayer($index)">
-                  <i class="icon ion-minus"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </ion-scroll>
+        <button class="button button-small button-assertive" ng-if="$index != listOfPlayers.length" ng-click="removePlayer($index)">
+          <i class="icon ion-minus"></i>
+        </button>
+      </div>
     </div>
   </div>
 
