@@ -318,6 +318,9 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
     $rootScope.correctOrWrong = "";
     $rootScope.takeOrGive = "";
 
+    /* disable the button to go to next player */
+    document.getElementById("transButton").disabled = true;
+
     /* go to the next round and/or player */
     if ($rootScope.roundNumber == 1)
       $state.go("guessColor");
@@ -332,7 +335,10 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
 
 /* first round (guess color) controller */
 starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                              Player, $timeout){
+                                              Player){
+
+  /* disable the button to go to next player */
+  $window.document.getElementById("transButton").disabled = true;
 
   /* get the next card from the deck */
   $scope.getCard = function() {
@@ -364,6 +370,9 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take A Drink!";
     }
+
+    /* enable button to go to next player */
+    document.getElementById("transButton").disabled = false;
   };
 
   /* go to the next player on a click */
@@ -397,6 +406,9 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
 /* second round (guess higher or lower) controller */
 starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player) {
+  /* disable the button to go to next player */
+  document.getElementById("transButton").disabled = true;
+
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
@@ -436,6 +448,9 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Two Drinks!";
     }
+
+    /* enable button to go to next player */
+    document.getElementById("transButton").disabled = false;
   };
 
   /* go to the next player on a click */
@@ -469,6 +484,9 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
 /* third round (guess in or out) controller */
 starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                              Player) {
+  /* disable the button to go to next player */
+  document.getElementById("transButton").disabled = true;
+
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
@@ -517,6 +535,9 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Three Drinks!";
     }
+
+    /* enable button to go to next player */
+    document.getElementById("transButton").disabled = false;
   };
 
   /* go to the next player on a click */
@@ -550,6 +571,8 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
 /* fourth round (guess suit) controller */
 starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                              Player) {
+  /* disable the button to go to next player */
+  document.getElementById("transButton").disabled = true;
 
   /* get the next card from the deck */
   $scope.getCard = function() {
@@ -583,6 +606,9 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Four Drinks!";
     }
+
+    /* enable button to go to next player */
+    document.getElementById("transButton").disabled = false;
   };
 
   /* go to the next player on a click */
