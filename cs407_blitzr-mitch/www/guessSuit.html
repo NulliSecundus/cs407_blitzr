@@ -9,13 +9,21 @@
   <body>
   <h1 id="rideTheBus_title">Ride The Bus!</h1>
 
+  <!-- display the current player information -->
+  <h1 id="displayName">Current Player: {{currentPlayer.getName()}}</h1>
+  <h1 id="displayTaken">Drinks Taken: {{currentPlayer.getTaken()}}</h1>
+  <h1 id="displayGiven">Drinks Given: {{currentPlayer.getGiven()}}</h1>
+
   <!-- suit display -->
   <button class ="button-balanced" id="spades_button" ng-click="guessSuit('spades')">SPADES</button>
   <button class ="button-balanced" id="hearts_button" ng-click="guessSuit('hearts')">HEARTS</button>
   <button class ="button-balanced" id="clubs_button" ng-click="guessSuit('clubs')">CLUBS</button>
   <button class ="button-balanced" id="diamonds_button" ng-click="guessSuit('diamonds')">DIAMONDS</button>
 
-  <img src= "{{cardBack.image}}" id = "cardBack1">
+  <img src ="{{cardBack.image}}" id = "cardBack2">
+  <img src ="{{currentPlayer.getCards()[0].image}}" id = "hand1">
+  <img src ="{{currentPlayer.getCards()[1].image}}" id="hand2">
+  <img src="{{currentPlayer.getCards()[2].image}}" id="hand3">
   </body>
 </ion-view>
 </html>

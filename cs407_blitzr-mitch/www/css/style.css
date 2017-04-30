@@ -192,30 +192,17 @@
     1px 1px 0 #000;
   }
 
-  #answer_player_one {
-    position: absolute;
-    width: 60vw;
-    margin-top: 5vw;
-    left: 50%;
-    transform: translate(-50%);
-    border: 1vw solid black;
-  }
-
-  #answer_player_two {
-    position: absolute;
-    width: 60vw;
-    margin-top: 25vw;
-    left: 50%;
-    transform: translate(-50%);
-    border: 1vw solid black;
-  }
+#playerList {
+  margin-top: 0vh;
+  background-color: darkcyan;
+}
 
   #goToRideTheBus {
     position: absolute;
     width: 50vw;
     left: 50%;
     transform: translate(-50%);
-    bottom: 10vh;
+    bottom: 5vh;
     font-family: Helvetica;
     font-style: italic;
     font-weight: bold;
@@ -252,28 +239,12 @@
     1px 1px 0 #000;
   }
 
-  #answer_player_one {
-    position: absolute;
-    width: 60vw;
-    margin-top: 5vh;
-    margin-left: 20vw;
-    border: 1vh solid black;
-  }
-
-  #answer_player_two {
-    position: absolute;
-    width: 60vw;
-    margin-top: 1vh;
-    margin-left: 20vw;
-    border: 1vh solid black;
-  }
-
   #goToRideTheBus {
     position: absolute;
     width: 50vw;
     left: 50%;
     transform: translate(-50%);
-    bottom: 5vh;
+    bottom: 0vh;
     font-family: Helvetica;
     font-style: italic;
     font-weight: bold;
@@ -426,15 +397,30 @@
     1px 1px 0 #000;
   }
 
-  #wrong {
+  #displayName {
     position: absolute;
     font-family: LobsterRegular;
-    font-size: 15vw;
+    font-size: 7vw;
     font-style: normal;
-    text-align: center;
+    text-align: left;
+    margin-left: 5vw;
     color: white;
-    left: 50%;
-    transform: translate(-50%);
+    top: 30vh;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #displayTaken {
+    position: absolute;
+    font-family: LobsterRegular;
+    font-size: 5vw;
+    font-style: normal;
+    text-align: left;
+    margin-left: 5vw;
+    color: white;
     top: 35vh;
     text-shadow: 3px 3px 0 #000,
     -1px -1px 0 #000,
@@ -442,73 +428,28 @@
     -1px 1px 0 #000,
     1px 1px 0 #000;
   }
-
-  #takeADrink {
+  #displayGiven {
     position: absolute;
     font-family: LobsterRegular;
-    font-size: 12vw;
+    font-size: 5vw;
     font-style: normal;
-    text-align: center;
+    text-align: left;
+    margin-left: 55vw;
     color: white;
-    left: 50%;
-    transform: translate(-50%);
-    top: 45vh;
-    text-shadow: 3px 3px 0 #000,
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
-    clear: both;
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-  #correct {
-    position: absolute;
-    font-family: LobsterRegular;
-    font-size: 15vw;
-    font-style: normal;
-    text-align: center;
-    color: white;
-    left: 50%;
-    transform: translate(-50%);
     top: 35vh;
     text-shadow: 3px 3px 0 #000,
     -1px -1px 0 #000,
     1px -1px 0 #000,
     -1px 1px 0 #000,
     1px 1px 0 #000;
-  }
-
-  #giveADrink {
-    position: absolute;
-    font-family: LobsterRegular;
-    font-size: 12vw;
-    font-style: normal;
-    text-align: center;
-    color: white;
-    left: 50%;
-    transform: translate(-50%);
-    top: 45vh;
-    text-shadow: 3px 3px 0 #000,
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
-    clear: both;
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
   }
 
   #red_button {
     position: absolute;
     height: 10vh;
-    width: 50vw;
-    left: 50%;
-    transform: translate(-50%);
-    top: 30vh;
+    width: 40vw;
+    margin-left: 5vw;
+    top: 45vh;
     font-family: Helvetica;
     font-style: italic;
     font-weight: bold;
@@ -521,9 +462,8 @@
   #black_button {
     position: absolute;
     height: 10vh;
-    width: 50vw;
-    left: 50%;
-    transform: translate(-50%);
+    width: 40vw;
+    margin-left: 55vw;
     top: 45vh;
     font-family: Helvetica;
     font-style: italic;
@@ -585,14 +525,13 @@
 #over_button {
   position: absolute;
   height: 10vh;
-  width: 50vw;
-  left: 50%;
-  transform: translate(-50%);
-  top: 30vh;
+  width: 40vw;
+  margin-left: 5vw;
+  top: 45vh;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 5vh;
+  font-size: 4vh;
   background-color: white;
   color: black;
   border: 1vh solid black;
@@ -601,14 +540,13 @@
 #under_button {
   position: absolute;
   height: 10vh;
-  width: 50vw;
-  left: 50%;
-  transform: translate(-50%);
+  width: 40vw;
+  margin-left: 55vw;
   top: 45vh;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 5vh;
+  font-size: 4vh;
   background-color: white;
   color: black;
   border: 1vh solid black;
@@ -617,31 +555,37 @@
 #cardBack2 {
   position: absolute;
   height: 30vh;
-  bottom: 5vh;
+  bottom: 2vh;
   left: 50%;
   transform: translate(20%);
 }
 
 #hand1 {
   position: absolute;
-  height: 15vh;
-  top: 65%;
-  margin-left: 3vw;
+  height: 20vh;
+  top: 70%;
+  margin-left: 5vw;
 }
 
 /* inside or outside */
+#hand2 {
+  position: absolute;
+  height: 20vh;
+  top: 70%;
+  margin-left: 11vw;
+}
 
 /* guess suit */
 #spades_button {
   position: absolute;
   height: 10vh;
-  width: 30vw;
+  width: 35vw;
   margin-left: 5vw;
-  top: 40vh;
+  top: 43vh;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 5vw;
+  font-size: 6vw;
   background-color: white;
   color: black;
   border: 1vh solid black;
@@ -650,13 +594,13 @@
 #hearts_button {
   position: absolute;
   height: 10vh;
-  width: 30vw;
-  margin-right: 5vw;
-  top: 40vh;
+  width: 35vw;
+  top: 43vh;
+  margin-left: 60vw;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 5vw;
+  font-size: 6vw;
   background-color: white;
   color: red;
   border: 1vh solid red;
@@ -665,13 +609,13 @@
 #clubs_button {
   position: absolute;
   height: 10vh;
-  width: 30vw;
-  margin-left: 5vw;
+  width: 35vw;
+  margin-left: 60vw;
   top: 55vh;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 5vw;
+  font-size: 6vw;
   background-color: white;
   color: black;
   border: 1vh solid black;
@@ -680,14 +624,21 @@
 #diamonds_button {
   position: absolute;
   height: 10vh;
-  width: 30vw;
-  margin-right: 4vw;
+  width: 35vw;
+  margin-left: 5vw;
   top: 55vh;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 3.5vw;
+  font-size: 5vw;
   background-color: white;
   color: red;
   border: 1vh solid red;
+}
+
+#hand3 {
+  position: absolute;
+  height: 20vh;
+  top: 70%;
+  margin-left: 17vw;
 }
