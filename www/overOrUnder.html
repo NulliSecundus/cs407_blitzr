@@ -13,8 +13,8 @@
   <button class ="button-balanced" id="over_button" ng-click="guessColor('red')">OVER</button>
   <button class ="button-balanced" id="under_button" ng-click="guessColor('black')">UNDER</button>
 
-  <img src= "{{nextCard.image}}" id = "nextCard">
-  <img src= "{{cardBack.image}}" id = "cardBack">
+  <img src= "{{cardBack.image}}" id = "cardBack2">
+  <img src ="{{currentPlayer.getCards()[0].image}}" id = "hand1">
   </body>
 </ion-view>
 </html>

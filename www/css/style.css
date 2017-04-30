@@ -287,7 +287,7 @@
 #roundNumber {
   position: absolute;
   font-family: LobsterRegular;
-  font-size: 15vw;
+  font-size: 12vw;
   font-style: normal;
   text-align: center;
   color: white;
@@ -304,7 +304,7 @@
 #roundName {
   position: absolute;
   font-family: LobsterRegular;
-  font-size: 12vw;
+  font-size: 10vw;
   font-style: normal;
   text-align: center;
   color: white;
@@ -325,7 +325,7 @@
 #nextPlayer {
   position: absolute;
   font-family: LobsterRegular;
-  font-size: 12vw;
+  font-size: 10vw;
   font-style: normal;
   text-align: center;
   color: white;
@@ -516,7 +516,7 @@
     border: 1vh solid white;
   }
 
-  #cardBack {
+  #cardBack1 {
     position: absolute;
     height: 30vh;
     bottom: 5vh;
@@ -555,7 +555,7 @@
     bottom: 10vh;
   }
 
-  #cardBack {
+  #cardBack1 {
     position: absolute;
     height: 25vh;
     margin-left: 5vw;
@@ -598,4 +598,19 @@
   background-color: white;
   color: black;
   border: 1vh solid black;
+}
+
+#cardBack2 {
+  position: absolute;
+  height: 30vh;
+  bottom: 5vh;
+  left: 50%;
+  transform: translate(20%);
+}
+
+#hand1 {
+  position: absolute;
+  height: 15vh;
+  top: 65%;
+  margin-left: 3vw;
 }
