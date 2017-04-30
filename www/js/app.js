@@ -180,13 +180,25 @@ starter.factory('Player', function() {
       return cards;
     }
 
+    /* get number of drinks taken */
+    function getTaken() {
+      return drinksTaken;
+    }
+
+    /* get number of drinks given */
+    function getGiven() {
+      return drinksGiven;
+    }
+
     /* accessible functions */
     return {
       getName: getName,
       takeADrink: takeADrink,
       giveADrink: giveADrink,
       addCard: addCard,
-      getCards: getCards
+      getCards: getCards,
+      getTaken: getTaken,
+      getGiven: getGiven
     }
   }
 });

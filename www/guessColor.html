@@ -10,9 +10,9 @@
   <h1 id="rideTheBus_title">Ride The Bus!</h1>
 
   <!-- display the current player information -->
-  <h1 id="displayName">{{currentPlayer.getName()}}</h1>
-  <h1 id="displayTaken"></h1>
-  <h1 id="displayGiven"></h1>
+  <h1 id="displayName">Current Player: {{currentPlayer.getName()}}</h1>
+  <h1 id="displayTaken">Drinks Taken: {{currentPlayer.getTaken()}}</h1>
+  <h1 id="displayGiven">Drinks Given: {{currentPlayer.getGiven()}}</h1>
 
   <!-- red and black display -->
   <button class ="button-balanced" id="red_button" ng-click="guessColor('red')">RED</button>

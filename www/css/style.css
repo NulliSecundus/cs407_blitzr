@@ -415,15 +415,30 @@
     1px 1px 0 #000;
   }
 
-  #wrong {
+  #displayName {
     position: absolute;
     font-family: LobsterRegular;
-    font-size: 15vw;
+    font-size: 7vw;
     font-style: normal;
-    text-align: center;
+    text-align: left;
+    margin-left: 5vw;
     color: white;
-    left: 50%;
-    transform: translate(-50%);
+    top: 30vh;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+  }
+
+  #displayTaken {
+    position: absolute;
+    font-family: LobsterRegular;
+    font-size: 5vw;
+    font-style: normal;
+    text-align: left;
+    margin-left: 5vw;
+    color: white;
     top: 35vh;
     text-shadow: 3px 3px 0 #000,
     -1px -1px 0 #000,
@@ -431,73 +446,28 @@
     -1px 1px 0 #000,
     1px 1px 0 #000;
   }
-
-  #takeADrink {
+  #displayGiven {
     position: absolute;
     font-family: LobsterRegular;
-    font-size: 12vw;
+    font-size: 5vw;
     font-style: normal;
-    text-align: center;
+    text-align: left;
+    margin-left: 55vw;
     color: white;
-    left: 50%;
-    transform: translate(-50%);
-    top: 45vh;
-    text-shadow: 3px 3px 0 #000,
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
-    clear: both;
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-  #correct {
-    position: absolute;
-    font-family: LobsterRegular;
-    font-size: 15vw;
-    font-style: normal;
-    text-align: center;
-    color: white;
-    left: 50%;
-    transform: translate(-50%);
     top: 35vh;
     text-shadow: 3px 3px 0 #000,
     -1px -1px 0 #000,
     1px -1px 0 #000,
     -1px 1px 0 #000,
     1px 1px 0 #000;
-  }
-
-  #giveADrink {
-    position: absolute;
-    font-family: LobsterRegular;
-    font-size: 12vw;
-    font-style: normal;
-    text-align: center;
-    color: white;
-    left: 50%;
-    transform: translate(-50%);
-    top: 45vh;
-    text-shadow: 3px 3px 0 #000,
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
-    clear: both;
-    display: inline-block;
-    overflow: hidden;
-    white-space: nowrap;
   }
 
   #red_button {
     position: absolute;
     height: 10vh;
-    width: 50vw;
-    left: 50%;
-    transform: translate(-50%);
-    top: 30vh;
+    width: 40vw;
+    margin-left: 5vw;
+    top: 45vh;
     font-family: Helvetica;
     font-style: italic;
     font-weight: bold;
@@ -510,9 +480,8 @@
   #black_button {
     position: absolute;
     height: 10vh;
-    width: 50vw;
-    left: 50%;
-    transform: translate(-50%);
+    width: 40vw;
+    margin-left: 55vw;
     top: 45vh;
     font-family: Helvetica;
     font-style: italic;
@@ -613,7 +582,7 @@
   position: absolute;
   height: 20vh;
   top: 70%;
-  margin-left: 3vw;
+  margin-left: 5vw;
 }
 
 /* inside or outside */
@@ -621,7 +590,7 @@
   position: absolute;
   height: 20vh;
   top: 70%;
-  margin-left: 10vw;
+  margin-left: 11vw;
 }
 
 /* guess suit */
@@ -630,7 +599,7 @@
   height: 10vh;
   width: 35vw;
   margin-left: 5vw;
-  top: 40vh;
+  top: 43vh;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
@@ -644,7 +613,7 @@
   position: absolute;
   height: 10vh;
   width: 35vw;
-  top: 40vh;
+  top: 43vh;
   margin-left: 60vw;
   font-family: Helvetica;
   font-style: italic;

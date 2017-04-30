@@ -9,6 +9,11 @@
   <body>
   <h1 id="rideTheBus_title">Ride The Bus!</h1>
 
+  <!-- display the current player information -->
+  <h1 id="displayName">Current Player: {{currentPlayer.getName()}}</h1>
+  <h1 id="displayTaken">Drinks Taken: {{currentPlayer.getTaken()}}</h1>
+  <h1 id="displayGiven">Drinks Given: {{currentPlayer.getGiven()}}</h1>
+
   <!-- in or out display -->
   <button class ="button-balanced" id="over_button" ng-click="inOrOut('inside')">INSIDE</button>
   <button class ="button-balanced" id="under_button" ng-click="inOrOut('outside')">OUTSIDE</button>
