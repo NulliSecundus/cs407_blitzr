@@ -15,7 +15,10 @@
   <button class ="button-balanced" id="clubs_button" ng-click="guessSuit('clubs')">CLUBS</button>
   <button class ="button-balanced" id="diamonds_button" ng-click="guessSuit('diamonds')">DIAMONDS</button>
 
-  <img src= "{{cardBack.image}}" id = "cardBack1">
+  <img src ="{{cardBack.image}}" id = "cardBack2">
+  <img src ="{{currentPlayer.getCards()[0].image}}" id = "hand1">
+  <img src ="{{currentPlayer.getCards()[1].image}}" id="hand2">
+  <img src="{{currentPlayer.getCards()[2].image}}" id="hand3">
   </body>
 </ion-view>
 </html>

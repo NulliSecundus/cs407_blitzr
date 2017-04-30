@@ -574,14 +574,13 @@
 #over_button {
   position: absolute;
   height: 10vh;
-  width: 50vw;
-  left: 50%;
-  transform: translate(-50%);
-  top: 30vh;
+  width: 40vw;
+  margin-left: 5vw;
+  top: 45vh;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 5vh;
+  font-size: 4vh;
   background-color: white;
   color: black;
   border: 1vh solid black;
@@ -590,14 +589,13 @@
 #under_button {
   position: absolute;
   height: 10vh;
-  width: 50vw;
-  left: 50%;
-  transform: translate(-50%);
+  width: 40vw;
+  margin-left: 55vw;
   top: 45vh;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 5vh;
+  font-size: 4vh;
   background-color: white;
   color: black;
   border: 1vh solid black;
@@ -606,31 +604,37 @@
 #cardBack2 {
   position: absolute;
   height: 30vh;
-  bottom: 5vh;
+  bottom: 2vh;
   left: 50%;
   transform: translate(20%);
 }
 
 #hand1 {
   position: absolute;
-  height: 15vh;
-  top: 65%;
+  height: 20vh;
+  top: 70%;
   margin-left: 3vw;
 }
 
 /* inside or outside */
+#hand2 {
+  position: absolute;
+  height: 20vh;
+  top: 70%;
+  margin-left: 10vw;
+}
 
 /* guess suit */
 #spades_button {
   position: absolute;
   height: 10vh;
-  width: 30vw;
+  width: 35vw;
   margin-left: 5vw;
   top: 40vh;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 5vw;
+  font-size: 6vw;
   background-color: white;
   color: black;
   border: 1vh solid black;
@@ -639,13 +643,13 @@
 #hearts_button {
   position: absolute;
   height: 10vh;
-  width: 30vw;
-  margin-right: 5vw;
+  width: 35vw;
   top: 40vh;
+  margin-left: 60vw;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 5vw;
+  font-size: 6vw;
   background-color: white;
   color: red;
   border: 1vh solid red;
@@ -654,13 +658,13 @@
 #clubs_button {
   position: absolute;
   height: 10vh;
-  width: 30vw;
-  margin-left: 5vw;
+  width: 35vw;
+  margin-left: 60vw;
   top: 55vh;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 5vw;
+  font-size: 6vw;
   background-color: white;
   color: black;
   border: 1vh solid black;
@@ -669,14 +673,21 @@
 #diamonds_button {
   position: absolute;
   height: 10vh;
-  width: 30vw;
-  margin-right: 4vw;
+  width: 35vw;
+  margin-left: 5vw;
   top: 55vh;
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 3.5vw;
+  font-size: 5vw;
   background-color: white;
   color: red;
   border: 1vh solid red;
+}
+
+#hand3 {
+  position: absolute;
+  height: 20vh;
+  top: 70%;
+  margin-left: 17vw;
 }
