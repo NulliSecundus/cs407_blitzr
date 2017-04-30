@@ -348,6 +348,10 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
 
   /* go to the next round on a click */
   $scope.toNextRound = function () {
+    /* set the next card to display the back of a card */
+    $rootScope.nextCard = $rootScope.cardBack;
+
+    /* go to the next round and/or player */
     if ($rootScope.roundNumber == 1)
       $state.go("guessColor");
     else if ($rootScope.roundNumber == 2)
@@ -366,7 +370,6 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
-    console.log($rootScope.nextCard.number);
     if($rootScope.nextCard == null)
       $rootScope.nextCard = $rootScope.cardBack;
   };
@@ -380,7 +383,7 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
     $rootScope.currentPlayer.addCard($rootScope.nextCard);
 
     /* check if the guess is correct and set prompt */
-    if(color == $scope.nextCard.color) {
+    if(color == $rootScope.nextCard.color) {
       $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 1);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give A Drink!";
@@ -401,7 +404,6 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
-    console.log($rootScope.nextCard.number);
     if($rootScope.nextCard == null)
       $rootScope.nextCard = $rootScope.cardBack;
   };
