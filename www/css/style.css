@@ -323,6 +323,10 @@
 }
 
 /* correct or wrong */
+#rightOrWrong {
+  background-color: darkcyan;
+}
+
 #correctOrWrong {
   position: absolute;
   font-family: LobsterRegular;

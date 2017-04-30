@@ -162,30 +162,12 @@ starter.factory('Player', function() {
     /* increment drinks taken */
     function takeADrink() {
       drinksTaken++;
-      document.getElementById("wrong").style.display = "";
-      document.getElementById("takeADrink").style.display = "";
-      document.getElementById("cardBack").style.display = "none";
-      setTimeout(resetDisplay, 3000);
     }
 
     /* increment drinks given and give a drink to another player */
     function giveADrink(player) {
       drinksGiven++;
-      document.getElementById("correct").style.display = "";
-      document.getElementById("giveADrink").style.display = "";
-      document.getElementById("cardBack").style.display = "none";
-      setTimeout(resetDisplay, 3000);
       //player.takeADrink();
-    }
-
-    /* reset take and give display */
-    function resetDisplay() {
-      document.getElementById("wrong").style.display = "none";
-      document.getElementById("takeADrink").style.display = "none";
-      document.getElementById("correct").style.display = "none";
-      document.getElementById("giveADrink").style.display = "none";
-      document.getElementById("nextCard").style.display = "none";
-      document.getElementById("cardBack").style.display = "";
     }
 
     /* add card */
@@ -214,6 +196,11 @@ starter.config(function($stateProvider, $urlRouterProvider) {
      controller: 'playersCtrl',
      templateUrl: 'players.html'
    })
+    .state('correctOrWrong', {
+      url: '/correctOrWrong',
+      controller: 'correctOrWrongCtrl',
+      templateUrl: 'correctOrWrong.html'
+    })
     .state('guessColor', {
       url: '/guessColor',
       controller: 'guessColorCtrl',
@@ -264,6 +251,12 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
   };
 });
 
+/* correct of wrong controller */
+starter.controller('correctOrWrongCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                              Player) {
+
+});
+
 /* first round (guess color) controller */
 starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player){
@@ -286,39 +279,38 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
 
   /* create a new back of card */
   $rootScope.cardBack = new Card("", 0);
-  $scope.nextCard = $rootScope.cardBack;
+  $rootScope.nextCard = $rootScope.cardBack;
 
   /* get the next card from the deck */
-  $scope.getCard = function() {
-    $scope.nextCard = $scope.deck.getTopCard();
-    console.log($scope.nextCard.number);
-    if($scope.nextCard == null)
-      $scope.nextCard = $rootScope.cardBack;
+  $rootScope.getCard = function() {
+    $rootScope.nextCard = $rootScope.deck.getTopCard();
+    console.log($rootScope.nextCard.number);
+    if($rootScope.nextCard == null)
+      $rootScope.nextCard = $rootScope.cardBack;
   };
 
   /* initialize current player to 0 */
   var currPlayer = 0;
-
-  /* hide the take/give and give prompts */
-  document.getElementById("wrong").style.display = "none";
-  document.getElementById("takeADrink").style.display = "none";
-  document.getElementById("correct").style.display = "none";
-  document.getElementById("giveADrink").style.display = "none";
 
   /* first card, red or black */
   $scope.guessColor = function(color) {
     /* get the next card */
     $scope.getCard();
 
-    /* hide the red and black buttons */
-    document.getElementById("red_button").style.display = "none";
-    document.getElementById("black_button").style.display = "none";
-
-    /* check if the guess is correct and display correct */
-    if(color == $scope.nextCard.color)
+    /* check if the guess is correct and set prompt */
+    if(color == $scope.nextCard.color) {
       $rootScope.players[currPlayer].giveADrink();
-    else
+      $rootScope.correctOrWrong = "CORRECT!";
+      $rootScope.takeOrGive = "Give A Drink!";
+    }
+    else {
       $rootScope.players[currPlayer].takeADrink();
+      $rootScope.correctOrWrong = "WRONG!";
+      $rootScope.takeOrGive = "Take A Drink!";
+    }
+
+    /* transition to correct/wrong prompt */
+    $ionicLoading.show({templateUrl: "correctOrWrong.html", noBackdrop: true, duration: 3000});
 
     /* increment the player number */
     currPlayer++;
@@ -327,7 +319,7 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
 
     /* if the last player has went, go to the next round */
     if(currPlayer == $rootScope.players.length)
-      $state.go("overOrUnder");
+      $rootScope.roundNumber = 2;
   };
 });
 
@@ -335,7 +327,6 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
 starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player) {
   /* update the round info */
-  $rootScope.roundNumber++;
   $rootScope.roundName = "Over or Under?";
 
   /* display next round information */
@@ -346,7 +337,7 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
 starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                              Player) {
   /* update the round info */
-  $rootScope.roundNumber++;
+  $rootScope.roundNumber = 3;
   $rootScope.roundName = "Inside or Outside?";
 
   /* display next round information */
@@ -357,7 +348,7 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
 starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                              Player) {
   /* update the round info */
-  $rootScope.roundNumber++;
+  $rootScope.roundNumber = 4;
   $rootScope.roundName = "Guess the Suit!";
 
   /* display next round information */
