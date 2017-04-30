@@ -153,6 +153,11 @@
 
 /* Players Screen */
 
+#playerList {
+  margin-top: 40vh;
+
+}
+
 @media screen and (orientation: portrait) {
   #players_back {
     position: absolute;
