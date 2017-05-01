@@ -142,6 +142,7 @@ starter.factory('Player', function() {
     var cards = [];
     var drinksTaken = 0;
     var drinksGiven = 0;
+    var drinksToGive = 0;
 
     /* constructor */
     function init() {
@@ -149,6 +150,7 @@ starter.factory('Player', function() {
       cards = [];
       drinksTaken = 0;
       drinksGiven = 0;
+      drinksToGive = 0;
     }
 
     /* call constructor */
@@ -160,14 +162,24 @@ starter.factory('Player', function() {
     }
 
     /* increment drinks taken */
-    function takeADrink(drinks) {
+    function takeDrinks(drinks) {
       drinksTaken += drinks;
     }
 
-    /* increment drinks given and give a drink to another player */
-    function giveADrink(player, drinks) {
-      drinksGiven += drinks;
-      //player.takeADrink();
+    /*  */
+    function giveDrinks(drinks) {
+      drinksToGive = drinks;
+    }
+
+    /* get the number of drinks to give */
+    function getDrinksToGive(){
+      return drinksToGive;
+    }
+
+    function givePlayerADrink(player){
+      player.takeDrinks(1);
+      drinksToGive--;
+      drinksGiven++;
     }
 
     /* add card */
@@ -193,12 +205,14 @@ starter.factory('Player', function() {
     /* accessible functions */
     return {
       getName: getName,
-      takeADrink: takeADrink,
-      giveADrink: giveADrink,
+      takeDrinks: takeDrinks,
+      giveDrinks: giveDrinks,
       addCard: addCard,
       getCards: getCards,
       getTaken: getTaken,
-      getGiven: getGiven
+      getGiven: getGiven,
+      getDrinksToGive: getDrinksToGive,
+      givePlayerADrink: givePlayerADrink
     }
   }
 });
@@ -217,27 +231,38 @@ starter.config(function($stateProvider, $urlRouterProvider) {
     .state('roundTransition', {
       url: '/roundTransition',
       controller: 'roundTransitionCtrl',
-      templateUrl: 'roundTransition.html'
+      templateUrl: 'roundTransition.html',
+      cache: false
+    })
+    .state('givePlayersDrinks', {
+      url: '/givePlayersDrinks',
+      controller: 'givePlayersDrinksCtrl',
+      templateUrl: 'givePlayersDrinks.html',
+      cache: false
     })
     .state('guessColor', {
       url: '/guessColor',
       controller: 'guessColorCtrl',
-      templateUrl: 'guessColor.html'
+      templateUrl: 'guessColor.html',
+      cache: false
     })
     .state('overOrUnder', {
       url: '/overOrUnder',
       controller: 'overOrUnderCtrl',
-      templateUrl: 'overOrUnder.html'
+      templateUrl: 'overOrUnder.html',
+      cache: false
     })
     .state('inOrOut', {
       url: '/inOrOut',
       controller: 'inOrOutCtrl',
-      templateUrl: 'inOrOut.html'
+      templateUrl: 'inOrOut.html',
+      cache: false
     })
     .state('guessSuit', {
       url: '/guessSuit',
       controller: 'guessSuitCtrl',
-      templateUrl: 'guessSuit.html'
+      templateUrl: 'guessSuit.html',
+      cache: false
     });
   $urlRouterProvider.otherwise('/blizr');
 });
@@ -248,7 +273,6 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
     $state.go("players");
   }
 });
-
 
 /* players pane controller */
 starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading,
@@ -333,6 +357,24 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
   };
 });
 
+starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                                     Player) {
+  /* get list of players, previous player, and drinks able to give */
+  $scope.listOfPlayers = $rootScope.players;
+  $scope.prevPlayer = $rootScope.previousPlayer;
+  $scope.remainingDrinks = $scope.prevPlayer.getDrinksToGive();
+
+  /* give a drink to the desired player */
+  $scope.giveDrink = function(player){
+    $scope.remainingDrinks--;
+    $scope.prevPlayer.givePlayerADrink(player);
+    /* if there are no more drinks to give, go to transition page */
+    if($scope.remainingDrinks <= 0){
+      $state.go("roundTransition");
+    }
+  };
+});
+
 /* first round (guess color) controller */
 starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player){
@@ -344,14 +386,19 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
       $rootScope.nextCard = $rootScope.cardBack;
   };
 
-  /* enable next player button */
+  /* enable next player button and hide red/black */
   $scope.enableNext = function() {
     document.getElementById("colorTransButton").disabled = false;
+    document.getElementById("red_button").style.visibility = "hidden";
+    document.getElementById("black_button").style.visibility = "hidden";
   };
 
-  /* disable next player button */
+  /* disable next player button and show red/black */
   $scope.disableNext = function() {
     document.getElementById("colorTransButton").disabled = true;
+    document.getElementById("red_button").style.visibility = "visible";
+    document.getElementById("black_button").style.visibility = "visible";
+    console.log("disabling");
   };
 
   /* every time the page loads, the next player button begins disabled */
@@ -359,9 +406,9 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
 
   /* first card, red or black */
   $scope.guessColor = function(color) {
-    /* hide the red/black buttons */
-    document.getElementById("red_button").style.visibility = "hidden";
-    document.getElementById("black_button").style.visibility = "hidden";
+
+    /* enable the next player button */
+    $scope.enableNext();
 
     /* get the next card */
     $scope.getCard();
@@ -371,22 +418,22 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
 
     /* check if the guess is correct and set prompt */
     if(color == $rootScope.nextCard.color) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 1);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveDrinks(1);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give A Drink!";
     }
     else {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(1);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeDrinks(1);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take A Drink!";
     }
-
-    /* enable the next player button */
-    $scope.enableNext();
   };
 
   /* go to the next player on a click */
   $scope.toNextPlayer = function() {
+    /* store the previous player */
+    $rootScope.previousPlayer = $rootScope.currentPlayer;
+
     /* determine if the current player is the last in the round, set proper variables */
     if($rootScope.currentPlayerNumber == $rootScope.players.length) {
       $rootScope.currentPlayerNumber = 1;
@@ -408,8 +455,11 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
     else if($rootScope.roundNumber == 4)
       $rootScope.roundName = "Guess the Suit!";
 
-    /* go to the transition page */
-    $state.go("roundTransition");
+    /* go to the give drinks page if there are drinks to give, otherwise the transition page */
+    if($rootScope.previousPlayer.getDrinksToGive() > 0)
+      $state.go("givePlayersDrinks");
+    else
+      $state.go("roundTransition");
   };
 });
 
@@ -424,24 +474,28 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
       $rootScope.nextCard = $rootScope.cardBack;
   };
 
-  /* enable next player button */
+  /* enable next player button and hide over/under */
   $scope.enableNext = function() {
     document.getElementById("overOrUnderTransButton").disabled = false;
+    document.getElementById("over_button").style.visibility = "hidden";
+    document.getElementById("under_button").style.visibility = "hidden";
   };
 
-  /* disable next player button */
+  /* disable next player button and show over/under */
   $scope.disableNext = function() {
     document.getElementById("overOrUnderTransButton").disabled = true;
+    document.getElementById("over_button").style.visibility = "visible";
+    document.getElementById("under_button").style.visibility = "visible";
   };
 
   /* every time the page loads, the next player button begins disabled */
-  window.onload = $scope.disableNext();
+  window.onload = $scope.disableNext;
 
   /* second card, over or under */
   $scope.overOrUnder = function(guess) {
-    /* hide the red/black buttons */
-    document.getElementById("over_button").style.visibility = "hidden";
-    document.getElementById("under_button").style.visibility = "hidden";
+
+    /* enable the next player button */
+    $scope.enableNext();
 
     /* get the next card */
     $scope.getCard();
@@ -455,27 +509,27 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
     /* check if the guess is correct and set prompt, go to the correct or wrong state */
     if((guess == "over" && $rootScope.nextCard.number > firstCardNumber) ||
       (guess == "under" && $rootScope.nextCard.number < firstCardNumber)) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 2);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveDrinks(2);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Two Drinks!";
     }
     else if($rootScope.nextCard.number == firstCardNumber) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(4);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeDrinks(4);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Four Drinks!";
     }
     else {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(2);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeDrinks(2);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Two Drinks!";
     }
-
-    /* enable the next player button */
-    $scope.enableNext();
   };
 
   /* go to the next player on a click */
   $scope.toNextPlayer = function() {
+    /* store the previous player */
+    $rootScope.previousPlayer = $rootScope.currentPlayer;
+
     /* determine if the current player is the last in the round, set proper variables */
     if($rootScope.currentPlayerNumber == $rootScope.players.length) {
       $rootScope.currentPlayerNumber = 1;
@@ -497,8 +551,11 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
     else if($rootScope.roundNumber == 4)
       $rootScope.roundName = "Guess the Suit!";
 
-    /* go to the transition page */
-    $state.go("roundTransition");
+    /* go to the give drinks page if there are drinks to give, otherwise the transition page */
+    if($rootScope.previousPlayer.getDrinksToGive() > 0)
+      $state.go("givePlayersDrinks");
+    else
+      $state.go("roundTransition");
   };
 });
 
@@ -513,24 +570,28 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
       $rootScope.nextCard = $rootScope.cardBack;
   };
 
-  /* enable next player button */
+  /* enable next player button and hide in/out buttons*/
   $scope.enableNext = function() {
     document.getElementById("inOrOutTransButton").disabled = false;
+    document.getElementById("over_button").style.visibility = "hidden";
+    document.getElementById("under_button").style.visibility = "hidden";
   };
 
-  /* disable next player button */
+  /* disable next player button and show in/out buttons */
   $scope.disableNext = function() {
     document.getElementById("inOrOutTransButton").disabled = true;
+    document.getElementById("over_button").style.visibility = "visible";
+    document.getElementById("under_button").style.visibility = "visible";
   };
 
   /* every time the page loads, the next player button begins disabled */
-  window.onload = $scope.disableNext();
+  window.onload = $scope.disableNext;
 
   /* third card, inside or outside */
   $scope.inOrOut = function(guess) {
-    /* hide the red/black buttons */
-    document.getElementById("over_button").style.visibility = "hidden";
-    document.getElementById("under_button").style.visibility = "hidden";
+
+    /* enable the next player button */
+    $scope.enableNext();
 
     /* get the next card */
     $scope.getCard();
@@ -548,32 +609,32 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
 
     /* check if the guess is correct and set prompt */
     if(guess == "outside" && ($rootScope.nextCard.number < lower || $rootScope.nextCard.number > upper)) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 3);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveDrinks(3);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Three Drinks!";
     }
     else if((guess == "inside" && ($rootScope.nextCard.number > lower && $rootScope.nextCard.number < upper))) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 3);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveDrinks(3);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Three Drinks!";
     }
     else if($rootScope.nextCard.number == lower || $rootScope.nextCard.number == upper) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(6);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeDrinks(6);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Six Drinks!";
     }
     else {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(3);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeDrinks(3);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Three Drinks!";
     }
-
-    /* enable the next player button */
-    $scope.enableNext();
   };
 
   /* go to the next player on a click */
   $scope.toNextPlayer = function() {
+    /* store the current player */
+    $rootScope.previousPlayer = $rootScope.currentPlayer;
+
     /* determine if the current player is the last in the round, set proper variables */
     if($rootScope.currentPlayerNumber == $rootScope.players.length) {
       $rootScope.currentPlayerNumber = 1;
@@ -595,8 +656,11 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
     else if($rootScope.roundNumber == 4)
       $rootScope.roundName = "Guess the Suit!";
 
-    /* go to the transition page */
-    $state.go("roundTransition");
+    /* go to the give drinks page if there are drinks to give, otherwise the transition page */
+    if($rootScope.previousPlayer.getDrinksToGive() > 0)
+      $state.go("givePlayersDrinks");
+    else
+      $state.go("roundTransition");
   };
 });
 
@@ -611,26 +675,32 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
       $rootScope.nextCard = $rootScope.cardBack;
   };
 
-  /* enable next player button */
+  /* enable next player button and hide suit buttons */
   $scope.enableNext = function() {
     document.getElementById("suitTransButton").disabled = false;
-  };
-
-  /* disable next player button */
-  $scope.disableNext = function() {
-    document.getElementById("suitTransButton").disabled = true;
-  };
-
-  /* every time the page loads, the next player button begins disabled */
-  window.onload = $scope.disableNext();
-
-  /* first card, red or black */
-  $scope.guessSuit = function(suit) {
-    /* hide the suit buttons */
     document.getElementById("diamonds_button").style.visibility = "hidden";
     document.getElementById("hearts_button").style.visibility = "hidden";
     document.getElementById("spades_button").style.visibility = "hidden";
     document.getElementById("clubs_button").style.visibility = "hidden";
+  };
+
+  /* disable next player button and show suit buttons */
+  $scope.disableNext = function() {
+    document.getElementById("suitTransButton").disabled = true;
+    document.getElementById("diamonds_button").style.visibility = "visible";
+    document.getElementById("hearts_button").style.visibility = "visible";
+    document.getElementById("spades_button").style.visibility = "visible";
+    document.getElementById("clubs_button").style.visibility = "visible";
+  };
+
+  /* every time the page loads, the next player button begins disabled */
+  window.onload = $scope.disableNext;
+
+  /* first card, red or black */
+  $scope.guessSuit = function(suit) {
+
+    /* enable the next player button */
+    $scope.enableNext();
 
     /* get the next card */
     $scope.getCard();
@@ -640,22 +710,22 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
 
     /* check if the guess is correct and set prompt */
     if(suit == $rootScope.nextCard.suit) {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveADrink(null, 4);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].giveDrinks(4);
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Give Four Drinks!";
     }
     else {
-      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeADrink(4);
+      $rootScope.players[$rootScope.currentPlayerNumber - 1].takeDrinks(4);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take Four Drinks!";
     }
-
-    /* enable the next player button */
-    $scope.enableNext();
   };
 
   /* go to the next player on a click */
   $scope.toNextPlayer = function() {
+    /* store the current player */
+    $rootScope.previousPlayer = $rootScope.currentPlayer;
+
     /* determine if the current player is the last in the round, set proper variables */
     if($rootScope.currentPlayerNumber == $rootScope.players.length) {
       $rootScope.currentPlayerNumber = 1;
@@ -677,7 +747,10 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
     else if($rootScope.roundNumber == 4)
       $rootScope.roundName = "Guess the Suit!";
 
-    /* go to the transition page */
-    $state.go("roundTransition");
+    /* go to the give drinks page if there are drinks to give, otherwise the transition page */
+    if($rootScope.previousPlayer.getDrinksToGive() > 0)
+      $state.go("givePlayersDrinks");
+    else
+      $state.go("roundTransition");
   };
 });

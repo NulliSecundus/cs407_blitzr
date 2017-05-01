@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html ng-app="starter">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<ion-view ion-title="givePlayersDrinks" id="givePlayersDrinks" style="background-color: darkcyan">
+  <body>
+  <h1 id="player_list_title">Select players to distribute drinks!</h1>
+  <h1 id="give_drink_counter">{{prevPlayer.getName()}}'s remaining drinks: {{remainingDrinks}}</h1>
+
+  <div>
+    <button class="button button-full" id="player_list_disp" ng-repeat="player in listOfPlayers" ng-click="giveDrink(player)">
+      {{player.getName()}}
+    </button>
+  </div>
+
+
+  </body>
+</ion-view>
+</html>
