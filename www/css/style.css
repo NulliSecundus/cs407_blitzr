@@ -3,6 +3,7 @@
 
   #home_title {
     font-family: LobsterRegular;
+    margin-top: 5vh;
     font-size: 35vw;
     font-weight: bold;
     font-style: normal;
@@ -164,21 +165,7 @@
     font-size: 8vh;
     color: white;
     margin-left: 4vw;
-  }
-
-  #players_title {
-    font-family: LobsterRegular;
-    font-size: 35vw;
-    font-weight: bold;
-    font-style: normal;
-    margin-top: 0vh;
-    text-align: center;
-    color: white;
-    text-shadow: 3px 3px 0 #000,
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
+    margin-top: 2vh;
   }
 
   #playerList {
@@ -189,9 +176,10 @@
   #goToRideTheBus {
     position: absolute;
     width: 50vw;
+    height: 5vh;
     left: 50%;
     transform: translate(-50%);
-    bottom: 5vh;
+    bottom: 3vh;
     font-family: Helvetica;
     font-style: italic;
     font-weight: bold;
@@ -371,7 +359,7 @@
     position: absolute;
     font-family: LobsterRegular;
     font-size: 20vw;
-    margin-top: 3vh;
+    margin-top: 5vh;
     font-weight: bold;
     font-style: normal;
     text-align: center;
