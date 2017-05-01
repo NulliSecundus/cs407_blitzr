@@ -304,8 +304,11 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
 
     /* create a player for each user input */
     $rootScope.players = [];
-    for(var i = 0; i < $scope.listOfPlayers.length; i++)
-      $rootScope.players[i] = new Player($scope.listOfPlayers[i].value);
+    for(var i = 0; i < $scope.listOfPlayers.length; i++) {
+      /* if the next player isn't null, add it to the list of players */
+      if($scope.listOfPlayers[i].value != null)
+        $rootScope.players.push(new Player($scope.listOfPlayers[i].value));
+    }
 
     /* initialize current player to first player */
     $rootScope.currentPlayer = $rootScope.players[0];
