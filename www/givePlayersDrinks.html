@@ -10,6 +10,7 @@
   <h1 id="player_list_title">Select players to distribute drinks!</h1>
   <h1 id="give_drink_counter">{{prevPlayer.getName()}}'s remaining drinks: {{remainingDrinks}}</h1>
 
+  <!-- give drink buttons -->
   <div>
     <div class="list list-inset" id = "givePlayerList" style = 'height: 55vh; background-color: darkcyan'>
       <div class="Row" ng-repeat="player in listOfPlayers" ng-if="$index%2 == 0">

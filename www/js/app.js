@@ -416,11 +416,17 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
         $scope.enableNext();
       }
     }
+
+    /* button was clicked, but there are no drinks to give */
+    else{
+      $state.go("roundTransition");
+    }
   };
 
   /* go to the transition page */
   $scope.toNextPlayer = function() {
-    $state.go("roundTransition");
+    if($scope.remainingDrinks == 0)
+      $state.go("roundTransition");
   }
 
 });
