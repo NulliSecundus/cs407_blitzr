@@ -364,15 +364,44 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
   $scope.prevPlayer = $rootScope.previousPlayer;
   $scope.remainingDrinks = $scope.prevPlayer.getDrinksToGive();
 
+  /* placeholder for message to display */
+  $scope.playerDisplay = "";
+
+  /* placeholder for continue message */
+  $scope.continueMessage = "";
+
+  /* enable next player button and disable player buttons */
+  $scope.enableNext = function() {
+    document.getElementById("giveTransButton").disabled = false;
+  };
+
+  /* disable next player button and enable player buttons */
+  $scope.disableNext = function() {
+    document.getElementById("giveTransButton").disabled = true;
+  };
+
+  /* every time the page loads, the next player button begins disabled */
+  window.onload = $scope.disableNext();
+
   /* give a drink to the desired player */
   $scope.giveDrink = function(player){
-    $scope.remainingDrinks--;
-    $scope.prevPlayer.givePlayerADrink(player);
-    /* if there are no more drinks to give, go to transition page */
-    if($scope.remainingDrinks <= 0){
-      $state.go("roundTransition");
+    /* only allow drinks to be given if there are drinks to give */
+    if($scope.remainingDrinks > 0) {
+      $scope.playerDisplay = player.getName() + " Take a Drink!";
+      $scope.remainingDrinks--;
+      $scope.prevPlayer.givePlayerADrink(player);
+      /* if there are no more drinks to give, prompt and enable next page */
+      if ($scope.remainingDrinks <= 0) {
+        $scope.continueMessage = "Tap to Continue";
+        $scope.enableNext();
+      }
     }
   };
+
+  $scope.toNextPlayer = function() {
+    $state.go("roundTransition");
+  }
+
 });
 
 /* first round (guess color) controller */
@@ -489,7 +518,7 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
   };
 
   /* every time the page loads, the next player button begins disabled */
-  window.onload = $scope.disableNext;
+  window.onload = $scope.disableNext();
 
   /* second card, over or under */
   $scope.overOrUnder = function(guess) {
@@ -585,7 +614,7 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
   };
 
   /* every time the page loads, the next player button begins disabled */
-  window.onload = $scope.disableNext;
+  window.onload = $scope.disableNext();
 
   /* third card, inside or outside */
   $scope.inOrOut = function(guess) {
@@ -694,7 +723,7 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
   };
 
   /* every time the page loads, the next player button begins disabled */
-  window.onload = $scope.disableNext;
+  window.onload = $scope.disableNext();
 
   /* first card, red or black */
   $scope.guessSuit = function(suit) {

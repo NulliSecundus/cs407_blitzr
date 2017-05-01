@@ -370,6 +370,9 @@
 #player_list_disp {
   margin-left: 15vw;
   width: 70vw;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
 }
 
 #give_drink_counter {
@@ -385,6 +388,46 @@
   1px -1px 0 #000,
   -1px 1px 0 #000,
   1px 1px 0 #000;
+}
+
+#playerToDrink {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 10vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 70vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+#giveDrinksContinue {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 12vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 80vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 /* Ride the Bus */

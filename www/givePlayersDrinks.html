@@ -11,10 +11,14 @@
   <h1 id="give_drink_counter">{{prevPlayer.getName()}}'s remaining drinks: {{remainingDrinks}}</h1>
 
   <div>
-    <button class="button button-full" id="player_list_disp" ng-repeat="player in listOfPlayers" ng-click="giveDrink(player)">
-      {{player.getName()}}
-    </button>
+    <button class="button button-full" id="player_list_disp" ng-repeat="player in listOfPlayers"
+            ng-click="giveDrink(player)"> {{player.getName()}} </button>
   </div>
+
+  <h1 id="playerToDrink">{{playerDisplay}}</h1>
+  <h1 id="giveDrinksContinue">{{continueMessage}}</h1>
+  <button class="button" id="giveTransButton" ng-click="toNextPlayer()" style="width: 100vw;
+    height: 100vh; background: transparent; position:absolute; z-index: 2"></button>
 
 
   </body>
