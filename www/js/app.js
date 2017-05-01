@@ -811,3 +811,117 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
       $state.go("roundTransition");
   };
 });
+
+
+/* ride the bus controller */
+starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                              Player) {
+
+  /* enable next player button and hide red/black */
+  $scope.enableNext = function () {
+  };
+
+  /* disable next player button and show red/black */
+  $scope.loadRTB = function () {
+    /* new card deck for Riding the Bus */
+    $scope.deck = new CardDeck();
+    /* initialize cards to back of cards */
+    $scope.firstCard = $rootScope.cardBack;
+    $scope.secondCard = $rootScope.cardBack;
+    $scope.thirdCard = $rootScope.cardBack;
+    $scope.fourthCard = $rootScope.cardBack;
+  };
+
+  /* every time the page loads, create a deck and four cards */
+  window.onload = $scope.loadRTB();
+
+  /* get the next card from the deck */
+  $scope.getCard = function() {
+    $scope.nextCard = $scope.deck.getTopCard();
+  };
+
+  /* first card, red or black */
+  $scope.guessColor = function (color) {
+    /* get the next card and set first card to it */
+    $scope.getCard();
+    $scope.firstCard = $scope.nextCard;
+
+    /* check if the guess is correct and set prompt */
+    if(color == $rootScope.nextCard.color) {
+      $rootScope.correctOrWrong = "CORRECT!";
+    }
+    else {
+      $rootScope.currentPlayer.takeDrinks(1);
+      $rootScope.correctOrWrong = "WRONG!";
+      $rootScope.takeOrGive = "Take A Drink!";
+    }
+  };
+
+  /* second card, over or under */
+  $scope.overOrUnder = function(guess) {
+    /* get the next card and set second card to it */
+    $scope.getCard();
+    $scope.secondCard = $scope.nextCard;
+
+    /* get the first two cards on the guess */
+    var firstCardNumber = $scope.firstCard.number;
+
+    /* check if the guess is correct and set prompt */
+    if((guess == "over" && $scope.secondCard.number > firstCardNumber) ||
+      (guess == "under" && $scope.secondCard.number < firstCardNumber)) {
+      $rootScope.correctOrWrong = "CORRECT!";
+    }
+    else {
+      $rootScope.currentPlayer.takeDrinks(1);
+      $rootScope.correctOrWrong = "WRONG!";
+      $rootScope.takeOrGive = "Take A Drink!";
+    }
+  };
+
+
+  /* third card, inside or outside */
+  $scope.inOrOut = function(guess) {
+    /* get the next card and set third card to it */
+    $scope.getCard();
+    $scope.thirdCard = $scope.nextCard;
+
+    /* get the first two cards on the guess */
+    var firstCardNumber = $scope.firstCard.number;
+    var secondCardNumber = $scope.secondCard.number;
+
+    /* get the bounds */
+    var upper = Math.max(firstCardNumber, secondCardNumber);
+    var lower = Math.min(firstCardNumber, secondCardNumber);
+
+    /* check if the guess is correct and set prompt */
+    /* check if the guess is correct and set prompt */
+    if(guess == "outside" && ($scope.thirdCard.number < lower || $scope.thirdCard.number > upper)) {
+      $rootScope.correctOrWrong = "CORRECT!";
+    }
+    else if((guess == "inside" && ($scope.thirdCard.number > lower && $scope.thirdCard.number < upper))) {
+      $rootScope.correctOrWrong = "CORRECT!";
+    }
+    else {
+      $rootScope.currentPlayer.takeDrinks(1);
+      $rootScope.correctOrWrong = "WRONG!";
+      $rootScope.takeOrGive = "Take A Drink!";
+    }
+  };
+
+  /* fourth card, over or under */
+  $scope.guessSuit = function(suit) {
+    /* get the next card and set fourth card to it */
+    $scope.getCard();
+    $scope.fourthCard = $scope.nextCard;
+
+    /* check if the guess is correct and set prompt */
+    if(suit == $scope.fourthCard.suit) {
+      $rootScope.correctOrWrong = "CORRECT!";
+    }
+    else {
+      $rootScope.currentPlayer.takeDrinks(1);
+      $rootScope.correctOrWrong = "WRONG!";
+      $rootScope.takeOrGive = "Take A Drink!";
+    }
+  };
+});
