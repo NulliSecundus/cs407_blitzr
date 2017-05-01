@@ -352,11 +352,11 @@
 
 /* give drinks */
 .Row {
-  height: 12vh;
+  height: 10vh;
   display: table;
   width: 100%; /*Optional*/
   table-layout: fixed; /*Optional*/
-  border-spacing: 2vh; /*Optional*/
+  border-spacing: 1vh; /*Optional*/
 }
 .Column {
   display: table-cell;

@@ -27,19 +27,19 @@
 </head>
 <ion-view ion-title="players" id="players" style="background-color: darkcyan">
   <body>
-  <i class="icon ion-ios-arrow-back" id="players_back" ng-click="toHome()"></i>
-    <h1 id="home_title">Blitzr</h1>
+  <i class="icon ion-ios-arrow-back" id="players_back" ng-click="toHome()" style="margin-top: 2vh"></i>
+    <h1 id="home_title" style="font-size: 10vh; margin-top: 7vh">Ride The Bus!</h1>
 
   <div>
     <div class="list list-inset" id = "playerList" style = 'height: 70vh' style = 'background-color: darkcyan'>
       <div class="item-input" ng-repeat="player in listOfPlayers"
-           style = 'background-color: darkcyan; height: 6vh; margin-bottom: 1vh'>
+           style = 'background-color: darkcyan; height: 5.5vh; margin-bottom: 1vh'>
 
         <label class="item-input-wrapper">
           <input type="text" placeholder="Enter Name" ng-model="player.value"/>
         </label>
         <button class="button button-small button-balanced"
-                ng-if="($index == listOfPlayers.length - 1) && listOfPlayers.length < 8" ng-click="addPlayer()">
+                ng-if="($index == listOfPlayers.length - 1) && listOfPlayers.length < 10" ng-click="addPlayer()">
           <i class="icon ion-plus"></i>
         </button>
 
