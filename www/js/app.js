@@ -267,6 +267,12 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       controller: 'guessSuitCtrl',
       templateUrl: 'guessSuit.html',
       cache: false
+    })
+    .state('rideTheBus', {
+      url: '/rideTheBus',
+      controller: 'rideTheBus',
+      templateUrl: 'rideTheBus.html',
+      cache: false
     });
   $urlRouterProvider.otherwise('/blizr');
 });
