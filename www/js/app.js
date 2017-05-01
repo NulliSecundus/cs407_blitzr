@@ -348,7 +348,7 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
     /* set the next card to display the back of a card */
     $rootScope.nextCard = $rootScope.cardBack;
 
-    /* reset correct/wrong and take/give */
+    /* reset correct/wrong and take/give displays */
     $rootScope.correctOrWrong = "";
     $rootScope.takeOrGive = "";
 
@@ -361,6 +361,8 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
       $state.go("inOrOut");
     else if ($rootScope.roundNumber == 4)
       $state.go("guessSuit");
+    else if ($rootScope.roundNumber == 5)
+      $state.go();
   };
 });
 
@@ -427,7 +429,7 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
   $scope.toNextPlayer = function() {
     if($scope.remainingDrinks == 0)
       $state.go("roundTransition");
-  }
+  };
 
 });
 
