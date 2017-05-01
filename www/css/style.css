@@ -155,7 +155,6 @@
 /* Players Screen */
 #playerList {
   margin-top: 40vh;
-
 }
 
 @media screen and (orientation: portrait) {
@@ -352,12 +351,26 @@
 }
 
 /* give drinks */
+.Row {
+  height: 12vh;
+  display: table;
+  width: 100%; /*Optional*/
+  table-layout: fixed; /*Optional*/
+  border-spacing: 2vh; /*Optional*/
+}
+.Column {
+  display: table-cell;
+  background-color: white; /*Optional*/
+  border: 1vh solid black;
+}
+
 #player_list_title {
+  position: absolute;
   font-family: LobsterRegular;
   font-size: 10vw;
   font-weight: bold;
   font-style: normal;
-  margin-top: 0vh;
+  margin-top: 5vh;
   text-align: center;
   color: white;
   text-shadow: 3px 3px 0 #000,
@@ -383,7 +396,8 @@
   font-size: 7vw;
   font-weight: bold;
   font-style: normal;
-  margin-top: 0vh;
+  margin-top: 20vh;
+  margin-bottom: 2vh;
   text-align: center;
   color: white;
   text-shadow: 3px 3px 0 #000,
@@ -402,7 +416,7 @@
   color: white;
   left: 50%;
   transform: translate(-50%);
-  top: 70vh;
+  top: 77vh;
   text-shadow: 3px 3px 0 #000,
   -1px -1px 0 #000,
   1px -1px 0 #000,
@@ -422,7 +436,7 @@
   color: white;
   left: 50%;
   transform: translate(-50%);
-  top: 80vh;
+  top: 87vh;
   text-shadow: 3px 3px 0 #000,
   -1px -1px 0 #000,
   1px -1px 0 #000,
@@ -512,6 +526,8 @@
     background-color: red;
     color: white;
     border: 1vh solid white;
+    vertical-align: middle;
+    align-content: center;
     white-space: nowrap;
     text-align: center;
   }
@@ -529,6 +545,8 @@
     background-color: black;
     color: white;
     border: 1vh solid white;
+    vertical-align: middle;
+    align-content: center;
     white-space: nowrap;
     text-align: center;
   }
@@ -594,6 +612,8 @@
   background-color: white;
   color: black;
   border: 1vh solid black;
+  vertical-align: middle;
+  align-content: center;
   white-space: nowrap;
   text-align: center;
 }
@@ -611,6 +631,8 @@
   background-color: white;
   color: black;
   border: 1vh solid black;
+  vertical-align: middle;
+  align-content: center;
   white-space: nowrap;
   text-align: center;
 }
@@ -652,6 +674,8 @@
   background-color: white;
   color: black;
   border: 1vh solid black;
+  vertical-align: middle;
+  align-content: center;
   white-space: nowrap;
   text-align: center;
 }
@@ -669,6 +693,8 @@
   background-color: white;
   color: red;
   border: 1vh solid red;
+  vertical-align: middle;
+  align-content: center;
   white-space: nowrap;
   text-align: center;
 }
@@ -686,6 +712,8 @@
   background-color: white;
   color: black;
   border: 1vh solid black;
+  vertical-align: middle;
+  align-content: center;
   white-space: nowrap;
   text-align: center;
 }
@@ -703,6 +731,8 @@
   background-color: white;
   color: red;
   border: 1vh solid red;
+  vertical-align: middle;
+  align-content: center;
   white-space: nowrap;
   text-align: center;
 }

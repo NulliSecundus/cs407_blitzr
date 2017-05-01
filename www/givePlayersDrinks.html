@@ -11,8 +11,18 @@
   <h1 id="give_drink_counter">{{prevPlayer.getName()}}'s remaining drinks: {{remainingDrinks}}</h1>
 
   <div>
-    <button class="button button-full" id="player_list_disp" ng-repeat="player in listOfPlayers"
-            ng-click="giveDrink(player)"> {{player.getName()}} </button>
+    <div class="list list-inset" id = "givePlayerList" style = 'height: 55vh; background-color: darkcyan'>
+      <div class="Row" ng-repeat="player in listOfPlayers" ng-if="$index%2 == 0">
+        <div class="Column" ng-if="listOfPlayers[$index] != null" ng-click="giveDrink(listOfPlayers[$index])"
+             style=" font-family: Helvetica; font-style: italic; font-weight: bold; text-align: center; font-size: 3vh;
+             white-space: nowrap; vertical-align: middle">{{listOfPlayers[$index].getName()}}</div>
+        <div class="Column" ng-if="listOfPlayers[$index + 1] != null" ng-click="giveDrink(listOfPlayers[$index + 1])"
+             style="font-family: Helvetica; font-style: italic; font-weight: bold; text-align: center; font-size: 3vh;
+             white-space: nowrap; vertical-align: middle">{{listOfPlayers[$index+1].getName()}}</div>
+        <div class="Column" ng-if="listOfPlayers[$index] != null && listOfPlayers[$index + 1] == null"
+             style="border: 1vh darkcyan; background-color:darkcyan;"></div>
+      </div>
+    </div>
   </div>
 
   <h1 id="playerToDrink">{{playerDisplay}}</h1>

@@ -143,6 +143,7 @@ starter.factory('Player', function() {
     var drinksTaken = 0;
     var drinksGiven = 0;
     var drinksToGive = 0;
+    var takenFromGiven = 0;
 
     /* constructor */
     function init() {
@@ -151,6 +152,7 @@ starter.factory('Player', function() {
       drinksTaken = 0;
       drinksGiven = 0;
       drinksToGive = 0;
+      takenFromGiven = 0;
     }
 
     /* call constructor */
@@ -166,7 +168,7 @@ starter.factory('Player', function() {
       drinksTaken += drinks;
     }
 
-    /*  */
+    /* initialize drinks to give to proper number */
     function giveDrinks(drinks) {
       drinksToGive = drinks;
     }
@@ -176,6 +178,7 @@ starter.factory('Player', function() {
       return drinksToGive;
     }
 
+    /* give another player a drinks and count it */
     function givePlayerADrink(player){
       player.takeDrinks(1);
       drinksToGive--;
@@ -212,7 +215,8 @@ starter.factory('Player', function() {
       getTaken: getTaken,
       getGiven: getGiven,
       getDrinksToGive: getDrinksToGive,
-      givePlayerADrink: givePlayerADrink
+      givePlayerADrink: givePlayerADrink,
+      takenFromGiven: takenFromGiven
     }
   }
 });
@@ -362,6 +366,10 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
 
 starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                                      Player) {
+  /* reset the taken from given drinks for this page */
+  for(var i = 0; i < $rootScope.players.length; i++)
+    $rootScope.players[i].takenFromGiven = 0;
+
   /* get list of players, previous player, and drinks able to give */
   $scope.listOfPlayers = $rootScope.players;
   $scope.prevPlayer = $rootScope.previousPlayer;
@@ -390,7 +398,16 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
   $scope.giveDrink = function(player){
     /* only allow drinks to be given if there are drinks to give */
     if($scope.remainingDrinks > 0) {
-      $scope.playerDisplay = player.getName() + " Take a Drink!";
+      /* increment the number of drinks the player been given on this prompt */
+      player.takenFromGiven++;
+
+      /* set the proper display */
+      if(player.takenFromGiven == 1)
+        $scope.playerDisplay = player.getName() + " Take A Drink!";
+      else
+        $scope.playerDisplay = player.getName() + " Take " + player.takenFromGiven + " Drinks!";
+
+      /* decrement the number of drinks to give */
       $scope.remainingDrinks--;
       $scope.prevPlayer.givePlayerADrink(player);
       /* if there are no more drinks to give, prompt and enable next page */
@@ -401,6 +418,7 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
     }
   };
 
+  /* go to the transition page */
   $scope.toNextPlayer = function() {
     $state.go("roundTransition");
   }
@@ -430,7 +448,6 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
     document.getElementById("colorTransButton").disabled = true;
     document.getElementById("red_button").style.visibility = "visible";
     document.getElementById("black_button").style.visibility = "visible";
-    console.log("disabling");
   };
 
   /* every time the page loads, the next player button begins disabled */
