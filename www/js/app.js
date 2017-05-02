@@ -153,7 +153,6 @@ starter.factory('Player', function() {
       drinksGiven = 0;
       drinksToGive = 0;
       takenFromGiven = 0;
-      numCards = 0;
     }
 
     /* call constructor */
@@ -189,7 +188,6 @@ starter.factory('Player', function() {
     /* add card */
     function addCard(card) {
       cards.push(card);
-      numCards++;
     }
 
     /* get cards */
@@ -348,6 +346,9 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
         $rootScope.players.push(new Player($scope.listOfPlayers[i].value));
     }
 
+    /* create array for matched player, will be used in wild card round */
+    $rootScope.matchedPlayers = [];
+
     /* initialize current player to first player */
     $rootScope.currentPlayer = $rootScope.players[0];
 
@@ -377,6 +378,23 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
 starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                                    Player) {
 
+  /* check the round to set special displays */
+  $scope.checkRound = function () {
+    if($rootScope.roundNumber == 5) {
+      document.getElementById("roundNumber").style.visibility = "hidden";
+      document.getElementById("nextPlayer").style.visibility = "hidden";
+      $rootScope.roundName = "Wild Card Round!"
+    }
+
+    if($rootScope.roundNumber == 6) {
+      document.getElementById("roundNumber").style.visibility = "hidden";
+      $rootScope.roundName = "Ride The Bus!"
+    }
+  };
+
+  /* check the round when the page loads */
+  window.onload = $scope.checkRound();
+
   /* go to the next round on a click */
   $scope.toNextRound = function () {
     /* set the next card to display the back of a card */
@@ -397,38 +415,49 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
       $state.go("guessSuit");
     else if ($rootScope.roundNumber == 5)
       $state.go("matchCards");
+    else
+      $state.go("rideTheBus");
   };
 });
 
 starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                                      Player) {
-  /* reset the taken from given drinks for this page */
-  for(var i = 0; i < $rootScope.players.length; i++)
-    $rootScope.players[i].takenFromGiven = 0;
-
-  /* get list of players, previous player, and drinks able to give */
-  $scope.listOfPlayers = $rootScope.players;
-  $scope.prevPlayer = $rootScope.previousPlayer;
-  $scope.remainingDrinks = $scope.prevPlayer.getDrinksToGive();
-
-  /* placeholder for message to display */
-  $scope.playerDisplay = "";
-
-  /* placeholder for continue message */
-  $scope.continueMessage = "";
-
   /* enable next player button and disable player buttons */
   $scope.enableNext = function() {
     document.getElementById("giveTransButton").disabled = false;
   };
 
-  /* disable next player button and enable player buttons */
-  $scope.disableNext = function() {
+  /* reset the page */
+  $scope.resetPage = function() {
     document.getElementById("giveTransButton").disabled = true;
+    /* reset the taken from given drinks for this page */
+    for(var i = 0; i < $rootScope.players.length; i++)
+      $rootScope.players[i].takenFromGiven = 0;
+
+    /* get list of players, previous player, and drinks able to give */
+    $scope.listOfPlayers = $rootScope.players;
+
+    /* get the proper player */
+    if($rootScope.matchedPlayers[0] != null) {
+      $scope.prevPlayer = $rootScope.matchedPlayers[0];
+      $scope.matchingRound = true;
+    }
+    else {
+      $scope.prevPlayer = $rootScope.previousPlayer;
+      $scope.matchingRound = false;
+    }
+
+    $scope.remainingDrinks = $scope.prevPlayer.getDrinksToGive();
+
+    /* placeholder for message to display */
+    $scope.playerDisplay = "";
+
+    /* placeholder for continue message */
+    $scope.continueMessage = "";
   };
 
   /* every time the page loads, the next player button begins disabled */
-  window.onload = $scope.disableNext();
+  window.onload = $scope.resetPage();
 
   /* give a drink to the desired player */
   $scope.giveDrink = function(player){
@@ -454,12 +483,30 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
     }
   };
 
-  /* go to the transition page */
+  /* go to the next page */
   $scope.toNextPlayer = function() {
-    if($scope.remainingDrinks == 0)
+    /* if there are no drinks left to give, and it isn't the matching round, go to the round transition page */
+    if($scope.remainingDrinks == 0 && $scope.matchingRound == false)
       $state.go("roundTransition");
+    /* if there are no drinks left and it is the matching round */
+    else if($scope.remainingDrinks == 0 && $scope.matchingRound == true) {
+      /* if the last player has picked drinks, remove them from the list */
+      if($rootScope.matchedPlayers.length == 1) {
+        $rootScope.matchedPlayers.parse(0, 1);
+        /* if the last card was flipped in matchCards, go to the round transition page */
+        if($rootScope.roundNumber == 6)
+          $state.go("roundTransition");
+        /* if the last card hasn't been flipped in matchCards, go to matchCards page */
+        else
+          $state.go("matchCards");
+      }
+      /* there is another player left to pick drinks, remove the most recent player and reset the page */
+      else {
+        $rootScope.matchedPlayers.parse(0, 1);
+        $scope.resetPage();
+      }
+    }
   };
-
 });
 
 /* first round (guess color) controller */
@@ -815,7 +862,6 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
     if($rootScope.roundNumber == 4)
       $rootScope.roundName = "Guess the Suit!";
     else {
-      $rootScope.roundName = "Ride the Bus!";
       $rootScope.currentPlayer = $rootScope.players[0];
     }
 
@@ -964,8 +1010,8 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
 
     /* go to give drinks page if there are drinks to give, otherwise reset display (more cards) or go to round transition
      * (no more cards) */
-    if(($rootScope.matchedPlayers[0] != null) && (($rootScope.roundNumber - 1) % 2 == 0)) {
-      $state.go("giveDrinksToGive");
+    if(($rootScope.matchedPlayers[0] != null) && (($scope.currentCard - 1) % 2 == 0)) {
+      $state.go("givePlayersDrinks");
     }
     else if($rootScope.roundNumber == 5) {
       $scope.resetDisplay();
