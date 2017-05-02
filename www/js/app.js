@@ -1304,7 +1304,7 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     /* check if the guess is correct and set prompt */
     if(suit == $scope.fourthCard.suit) {
       $scope.correctOrWrong = "CONGRATS!";
-      $scope.takeOrGive = "You Have Finished Riding the Bus!";
+      $scope.takeOrGive = "You Have Rode the Bus!";
       $scope.currentCard++;
     }
     else {
