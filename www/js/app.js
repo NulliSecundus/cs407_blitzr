@@ -964,7 +964,7 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
 
     /* go to give drinks page if there are drinks to give, otherwise reset display (more cards) or go to round transition
      * (no more cards) */
-    if($rootScope.matchedPlayers[0].getDrinksToGive() > 0) {
+    if(($rootScope.matchedPlayers[0] != null) && (($rootScope.roundNumber - 1) % 2 == 0)) {
       $state.go("giveDrinksToGive");
     }
     else if($rootScope.roundNumber == 5) {
