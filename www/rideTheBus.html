@@ -7,29 +7,35 @@
 
 <ion-view ion-title="rideTheBus" id="rideTheBus" style="background-color: darkcyan">
   <body>
-  <h1 id="rideTheBus_title">Ride The Bus!</h1>
+
+  <div class="Row" style="top:5vh; position: absolute">
+    <div class="Column" style="font-family: LobsterRegular; text-align: center; font-size: 15vw;
+        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white;
+        white-space: nowrap;   text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        1px 1px 0 #000;">Ride The Bus!</div>
+  </div>
 
   <!-- display the round number and name -->
-  <h1 id="correctOrWrong">{{correctOrWrong}}</h1>
-  <h1 id="takeOrGive">{{takeOrGive}}</h1>
+  <h1 id="correctOrWrong" style="position: absolute; top: 80vh; font-size: 10vw;">{{correctOrWrong}}</h1>
+  <h1 id="takeOrGive" style="position: absolute; top: 90vh; font-size: 8vw; white-space: nowrap">{{takeOrGive}}</h1>
   <button class="button" id="rtbTransButton" ng-click="loadNextRound()" style="width: 100vw;
     height: 100vh; background: transparent; position:absolute; z-index: 2"></button>
 
   <!-- cards images -->
   <div id="flipNextCard">
-    <div class="list list-inset" id = "givePlayerList" style = 'height: 40vh; background-color: darkcyan; top: 32vh'>
+    <div class="list list-inset" id = "givePlayerList" style = 'height: 70vh; background-color: darkcyan; top: 15vh'>
       <div class="Row">
         <div class="Column"style="border: 1vh darkcyan; background-color:darkcyan; text-align: center">
           <figure>
-            <img src='{{firstCard.image}}' style="height: 12vh">
-            <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
+            <img src='{{firstCard.image}}' style="height: 20vh">
+            <figcaption style="font-size: 3vh; font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
               RED OR</br> BLACK?</figcaption>
           </figure>
         </div>
         <div class="Column" style="border: 1vh darkcyan; background-color:darkcyan; text-align: center">
           <figure>
-            <img src='{{secondCard.image}}' style="height: 12vh">
-            <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
+            <img src='{{secondCard.image}}' style="height: 20vh">
+            <figcaption style="font-size: 3vh; font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
               HIGHER OR</br> LOWER?</figcaption>
           </figure>
         </div>
@@ -37,15 +43,15 @@
       <div class="Row">
         <div class="Column" style="border: 1vh darkcyan; background-color:darkcyan; text-align: center">
           <figure>
-            <img src='{{thirdCard.image}}' style="height: 12vh">
-            <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
-              INSIDE OR</br>OUTSIDE?</figcaption>
+            <img src='{{thirdCard.image}}' style="height: 20vh">
+            <figcaption style="font-size: 3vh; font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
+              INSIDE OR</br> OUTSIDE?</figcaption>
           </figure>
         </div>
         <div class="Column" style="border: 1vh darkcyan; background-color:darkcyan; text-align: center">
           <figure>
-            <img src='{{fourthCard.image}}' style="height: 12vh">
-            <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
+            <img src='{{fourthCard.image}}' style="height: 20vh">
+            <figcaption style="font-size: 3vh; font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
               GUESS THE</br> SUIT!</figcaption>
           </figure>
         </div>
@@ -54,7 +60,6 @@
   </div>
 
   <!-- red or black buttons -->
-  <div>
     <div class="list list-inset" id = "colorOptions" style = 'height: 10vh; background-color: darkcyan; top: 80vh; position: absolute'>
       <div class="Row">
         <div class="Column" id="red_button" ng-click="guessColor('red')" style=" font-family: Helvetica;
@@ -65,10 +70,8 @@
         vertical-align: middle; border: 1vw solid white; background-color: black; color: white">BLACK</div>
       </div>
     </div>
-  </div>
 
   <!-- higher or lower buttons -->
-  <div>
     <div class="list list-inset" id = "overOrUnderOptions" style = 'height: 10vh; background-color: darkcyan; top: 80vh; position: absolute'>
       <div class="Row">
         <div class="Column" id="over_button" ng-click="overOrUnder('over')" style=" font-family: Helvetica;
@@ -79,10 +82,8 @@
         vertical-align: middle; border: 1vw solid black; background-color: white; color: black">LOWER</div>
       </div>
     </div>
-  </div>
 
   <!-- inside or outside buttons -->
-  <div>
     <div class="list list-inset" id = "insideOrOutsideOptions" style = 'height: 10vh; background-color: darkcyan; top: 80vh; position: absolute'>
       <div class="Row">
         <div class="Column" id="inside_button" ng-click="inOrOut('inside')" style=" font-family: Helvetica;
@@ -93,10 +94,8 @@
         vertical-align: middle; border: 1vw solid black; background-color: white; color: black">OUTSIDE</div>
       </div>
     </div>
-  </div>
 
   <!-- suit buttons -->
-  <div>
     <div class="list list-inset" id = "suitOptions" style = 'height: 20vh; background-color: darkcyan; top: 75vh; position: absolute'>
       <div class="Row">
         <div class="Column" id="spades_button" ng-click="guessSuit('spades')" style=" font-family: Helvetica;
@@ -115,7 +114,7 @@
         vertical-align: middle; border: 1vw solid white; background-color: black; color: white">CLUBS</div>
       </div>
     </div>
-  </div>
+
   </body>
 </ion-view>
 </html>

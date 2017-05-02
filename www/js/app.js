@@ -1055,10 +1055,6 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
 starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player) {
 
-  /* enable next player button and hide red/black */
-  $scope.enableNext = function () {
-  };
-
   /* disable next player button and show red/black */
   $scope.loadRTB = function () {
     /* new card deck for Riding the Bus */
@@ -1069,52 +1065,47 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     $scope.thirdCard = $rootScope.cardBack;
     $scope.fourthCard = $rootScope.cardBack;
     $scope.currentCard = 0;
-    document.getElementById("red_button").style.visibility = "visible";
-    document.getElementById("black_button").style.visibility = "visible";
-    document.getElementById("over_button").style.visibility = "hidden";
-    document.getElementById("under_button").style.visibility = "hidden";
-    document.getElementById("inside_button").style.visibility = "hidden";
-    document.getElementById("outside_button").style.visibility = "hidden";
-    document.getElementById("diamonds_button").style.visibility = "hidden";
-    document.getElementById("hearts_button").style.visibility = "hidden";
-    document.getElementById("spades_button").style.visibility = "hidden";
-    document.getElementById("clubs_button").style.visibility = "hidden";
+    document.getElementById("colorOptions").style.visibility = "visible";
+    document.getElementById("overOrUnderOptions").style.visibility = "hidden";
+    document.getElementById("insideOrOutsideOptions").style.visibility = "hidden";
+    document.getElementById("suitOptions").style.visibility = "hidden";
     document.getElementById("rtbTransButton").disabled = true;
 
-    $rootScope.correctOrWrong = "";
-    $rootScope.takeOrGive = "";
+    $scope.correctOrWrong = "";
+    $scope.takeOrGive = "";
   };
 
   /* load the next RTB round */
   $scope.loadNextRound = function() {
-    $rootScope.correctOrWrong = "";
-    $rootScope.takeOrGive = "";
-    document.getElementById("rtbTransButton").disabled = true;
+    $scope.correctOrWrong = "";
+    $scope.takeOrGive = "";
+    $scope.disableNext();
 
     if($scope.currentCard == 0) {
       $scope.loadRTB();
     }
     else if($scope.currentCard == 1) {
-      document.getElementById("over_button").style.visibility = "hidden";
-      document.getElementById("under_button").style.visibility = "hidden";
+      document.getElementById("overOrUnderOptions").style.visibility = "visible";
     }
     else if($scope.currentCard == 2) {
-      document.getElementById("inside_button").style.visibility = "hidden";
-      document.getElementById("outside_button").style.visibility = "hidden";
+      document.getElementById("insideOrOutsideOptions").style.visibility = "visible";
     }
     else if($scope.currentCard == 3) {
-      document.getElementById("diamonds_button").style.visibility = "hidden";
-      document.getElementById("hearts_button").style.visibility = "hidden";
-      document.getElementById("spades_button").style.visibility = "hidden";
-      document.getElementById("clubs_button").style.visibility = "hidden";
+      document.getElementById("suitOptions").style.visibility = "visible";
     }
     else {
 
     }
   };
 
+  /* enable next state */
   $scope.enableNext = function() {
     document.getElementById("rtbTransButton").disabled = false;
+  };
+
+  /* disable next state */
+  $scope.disableNext = function() {
+    document.getElementById("rtbTransButton").disabled = true;
   };
 
   /* every time the page loads, create a deck and four cards */
@@ -1128,32 +1119,31 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
   /* first card, red or black */
   $scope.guessColor = function (color) {
     /* hide red/black buttons */
-    document.getElementById("red_button").style.visibility = "hidden";
-    document.getElementById("black_button").style.visibility = "hidden";
+    document.getElementById("colorOptions").style.visibility = "hidden";
 
     /* get the next card and set first card to it */
     $scope.getCard();
     $scope.firstCard = $scope.nextCard;
 
     /* check if the guess is correct and set prompt */
-    if(color == $rootScope.nextCard.color) {
-      $rootScope.correctOrWrong = "CORRECT!";
-      $rootScope.takeOrGive = "Tap to Continue";
+    if(color == $scope.firstCard.color) {
+      $scope.correctOrWrong = "CORRECT!";
+      $scope.takeOrGive = "Tap to Continue";
       $scope.currentCard++;
     }
     else {
       $rootScope.currentPlayer.takeDrinks(1);
-      $rootScope.correctOrWrong = "WRONG!";
-      $rootScope.takeOrGive = "Take A Drink and Restart!";
+      $scope.correctOrWrong = "WRONG!";
+      $scope.takeOrGive = "Take A Drink and Restart!";
       $scope.currentCard = 0;
     }
+    $scope.enableNext();
   };
 
   /* second card, over or under */
   $scope.overOrUnder = function(guess) {
     /* hide over/under buttons */
-    document.getElementById("over_button").style.visibility = "hidden";
-    document.getElementById("under_button").style.visibility = "hidden";
+    document.getElementById("overOrUnderOptions").style.visibility = "hidden";
 
     /* get the next card and set second card to it */
     $scope.getCard();
@@ -1165,30 +1155,30 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     /* check if the guess is correct and set prompt */
     if((guess == "over" && $scope.secondCard.number > firstCardNumber) ||
       (guess == "under" && $scope.secondCard.number < firstCardNumber)) {
-      $rootScope.correctOrWrong = "CORRECT!";
-      $rootScope.takeOrGive = "Tap to Continue";
+      $scope.correctOrWrong = "CORRECT!";
+      $scope.takeOrGive = "Tap to Continue";
       $scope.currentCard++;
     }
     else if($scope.secondCard.number == firstCardNumber) {
       $rootScope.currentPlayer.takeDrinks(2);
-      $rootScope.correctOrWrong = "WRONG!";
-      $rootScope.takeOrGive = "Take 2 Drinks and Restart!";
+      $scope.correctOrWrong = "WRONG!";
+      $scope.takeOrGive = "Take 2 Drinks and Restart!";
       $scope.currentCard = 0;
     }
     else {
       $rootScope.currentPlayer.takeDrinks(1);
-      $rootScope.correctOrWrong = "WRONG!";
-      $rootScope.takeOrGive = "Take A Drink!";
+      $scope.correctOrWrong = "WRONG!";
+      $scope.takeOrGive = "Take A Drink and Restart!";
       $scope.currentCard = 0;
     }
+    $scope.enableNext();
   };
 
 
   /* third card, inside or outside */
   $scope.inOrOut = function(guess) {
     /* hide red/black buttons */
-    document.getElementById("inside_button").style.visibility = "hidden";
-    document.getElementById("outside_button").style.visibility = "hidden";
+    document.getElementById("insideOrOutsideOptions").style.visibility = "hidden";
 
     /* get the next card and set third card to it */
     $scope.getCard();
@@ -1203,37 +1193,34 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     var lower = Math.min(firstCardNumber, secondCardNumber);
 
     /* check if the guess is correct and set prompt */
-    /* check if the guess is correct and set prompt */
     if(guess == "outside" && ($scope.thirdCard.number < lower || $scope.thirdCard.number > upper)) {
-      $rootScope.correctOrWrong = "CORRECT!";
-      $rootScope.takeOrGive = "Tap to Continue";
+      $scope.correctOrWrong = "CORRECT!";
+      $scope.takeOrGive = "Tap to Continue";
       $scope.currentCard++;
     }
     else if((guess == "inside" && ($scope.thirdCard.number > lower && $scope.thirdCard.number < upper))) {
-      $rootScope.correctOrWrong = "CORRECT!";
-      $rootScope.takeOrGive = "Tap to Continue";
+      $scope.correctOrWrong = "CORRECT!";
+      $scope.takeOrGive = "Tap to Continue";
       $scope.currentCard++;
     }
     else if($scope.thirdCard.number == lower || $scope.thirdCard.number == upper) {
       $rootScope.currentPlayer.takeDrinks(2);
-      $rootScope.correctOrWrong = "WRONG!";
-      $rootScope.takeOrGive = "Take 2 Drinks and Restart!";
+      $scope.correctOrWrong = "WRONG!";
+      $scope.takeOrGive = "Take 2 Drinks and Restart!";
       $scope.currentCard = 0;
     }
     else {
       $rootScope.currentPlayer.takeDrinks(1);
-      $rootScope.correctOrWrong = "WRONG!";
-      $rootScope.takeOrGive = "Take A Drink and Restart!";
+      $scope.correctOrWrong = "WRONG!";
+      $scope.takeOrGive = "Take A Drink and Restart!";
       $scope.currentCard = 0;
     }
+    $scope.enableNext();
   };
 
   /* fourth card, over or under */
   $scope.guessSuit = function(suit) {
-    document.getElementById("diamonds_button").style.visibility = "hidden";
-    document.getElementById("hearts_button").style.visibility = "hidden";
-    document.getElementById("spades_button").style.visibility = "hidden";
-    document.getElementById("clubs_button").style.visibility = "hidden";
+    document.getElementById("suitOptions").style.visibility = "hidden";
 
     /* get the next card and set fourth card to it */
     $scope.getCard();
@@ -1241,15 +1228,16 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
 
     /* check if the guess is correct and set prompt */
     if(suit == $scope.fourthCard.suit) {
-      $rootScope.correctOrWrong = "CONGRATS!";
-      $rootScope.takeOrGive = "You Have Finished Riding the Bus!";
+      $scope.correctOrWrong = "CONGRATS!";
+      $scope.takeOrGive = "You Have Finished Riding the Bus!";
       $scope.currentCard++;
     }
     else {
       $rootScope.currentPlayer.takeDrinks(1);
       $rootScope.correctOrWrong = "WRONG!";
-      $rootScope.takeOrGive = "Take A Drink and Restart!";
+      $scope.takeOrGive = "Take A Drink and Restart!";
       $scope.currentCard = 0;
     }
+    $scope.enableNext();
   };
 });
