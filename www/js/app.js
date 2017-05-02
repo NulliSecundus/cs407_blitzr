@@ -876,6 +876,51 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
 /* match cards controller */
 starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player) {
+
+  /* get the next card from the deck */
+  $scope.getCard = function() {
+    $rootScope.nextCard = $rootScope.deck.getTopCard();
+    if($rootScope.nextCard == null)
+      $rootScope.nextCard = $rootScope.cardBack;
+  };
+
+  /* function to initial wild card round */
+  $scope.init = function() {
+    /* track that it has been initialized */
+    $scope.initialized = true;
+
+    /* cards to be matched, prompts */
+    $scope.matchCards = [];
+    $scope.matchCardsPrompt = [];
+
+    /* store card images */
+    $scope.cardImages = [];
+
+    /* get the number of cards to be flipped over, initialize image to card back */
+    for(var i = 0; i < 8; i++) {
+      $scope.getCard();
+      $scope.cardImages[i] = $rootScope.nextCard.image;
+      $scope.matchCards[i] = $rootScope.nextCard;
+      $scope.matchCards[i].image = $rootScope.cardBack.image;
+      var drinks = (Math.floor(i/2 + 1)).toString();
+      if(i == 0) {
+        $scope.matchCardsPrompt[i] = "Give " + drinks + "\nDrink"
+      }
+      else if(i == 1) {
+        $scope.matchCardsPrompt[i] = "Take " + drinks + "\nDrink"
+      }
+      else if(i % 2 == 0) {
+        $scope.matchCardsPrompt[i] = "Give " + drinks + "\nDrinks"
+      }
+      else {
+        $scope.matchCardsPrompt[i] = "Take " + drinks + "\nDrinks"
+      }
+    }
+
+    /* track current card index */
+    $scope.currentCard = 0;
+  };
+
   /* reset display */
   $scope.resetDisplay = function() {
     /* matched players list */
@@ -899,6 +944,10 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
     /* disable the continue button */
     document.getElementById("giveTransButton").disabled = true;
     document.getElementById("takeOrGivePlayers").disabled = true;
+
+    /* initialize the wild card round if necessary */
+    if($scope.initialized != true)
+      $scope.init();
   };
 
   /* enable the next state transition */
@@ -910,44 +959,6 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
 
   /* every time the page loads, reset the display */
   window.onload = $scope.resetDisplay();
-
-  /* get the next card from the deck */
-  $scope.getCard = function() {
-    $rootScope.nextCard = $rootScope.deck.getTopCard();
-    if($rootScope.nextCard == null)
-      $rootScope.nextCard = $rootScope.cardBack;
-  };
-
-  /* cards to be matched, prompts */
-  $scope.matchCards = [];
-  $scope.matchCardsPrompt = [];
-
-  /* store card images */
-  $scope.cardImages = [];
-
-  /* get the number of cards to be flipped over, initialize image to card back */
-  for(var i = 0; i < 8; i++) {
-    $scope.getCard();
-    $scope.cardImages[i] = $rootScope.nextCard.image;
-    $scope.matchCards[i] = $rootScope.nextCard;
-    $scope.matchCards[i].image = $rootScope.cardBack.image;
-    var drinks = (Math.floor(i/2 + 1)).toString();
-    if(i == 0) {
-      $scope.matchCardsPrompt[i] = "Give " + drinks + "\nDrink"
-    }
-    else if(i == 1) {
-      $scope.matchCardsPrompt[i] = "Take " + drinks + "\nDrink"
-    }
-    else if(i % 2 == 0) {
-      $scope.matchCardsPrompt[i] = "Give " + drinks + "\nDrinks"
-    }
-    else {
-      $scope.matchCardsPrompt[i] = "Take " + drinks + "\nDrinks"
-    }
-  }
-
-  /* track current card index */
-  $scope.currentCard = 0;
 
   /* flip the next card */
   $scope.flipCard = function() {
