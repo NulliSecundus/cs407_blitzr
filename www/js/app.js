@@ -299,7 +299,32 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       controller: 'rideTheBusCtrl',
       templateUrl: 'rideTheBus.html',
       cache: false
+    })
+    .state('settings', {
+      url: '/settings',
+      controller: 'settingsCtrl',
+      templateUrl: 'settings.html',
+      cache: false
+  })
+    .state('instructions', {
+    url: '/instructions',
+      controller: 'instructionsCtrl',
+      templateUrl: 'instructions.html',
+      cache: false
+  })
+    .state('gameSettings', {
+      url: '/gameSettings',
+      controller: 'gameSettingsCtrl',
+      templateUrl: 'gameSettings.html',
+      cache: false
+  })
+    .state('aboutUs', {
+      url: '/aboutUs',
+      controller: 'aboutUsCtrl',
+      templateUrl: 'aboutUs.html',
+      cache: false
     });
+
   $urlRouterProvider.otherwise('/blizr');
 });
 
@@ -308,6 +333,50 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
   $scope.toPlayersState = function() {
     $state.go("players");
   }
+  $scope.toSettings = function() {
+    $state.go("settings");
+  }
+});
+
+/* settings controller */
+starter.controller('settingsCtrl', function($scope, $state, $ionicModal, $ionicLoading, $ionicViewSwitcher) {
+
+  $scope.toHome = function() {
+    $state.go("home");
+  };
+  $scope.toInstructions = function() {
+    $state.go("instructions");
+  };
+  $scope.toGameSettings = function() {
+    $state.go("gameSettings")
+  };
+  $scope.toAboutUs = function() {
+    $state.go("aboutUs");
+  }
+});
+
+/* instructions controller */
+starter.controller('instructionsCtrl', function($scope, $state, $ionicModal, $ionicLoading, $ionicViewSwitcher) {
+
+  $scope.toSettings = function() {
+    $state.go('settings');
+  };
+});
+
+/* game settings controller */
+starter.controller('gameSettingsCtrl', function($scope, $state, $ionicModal, $ionicLoading, $ionicViewSwitcher) {
+
+  $scope.toSettings = function() {
+    $state.go('settings');
+  };
+});
+
+/* about us controller */
+starter.controller('aboutUsCtrl', function($scope, $state, $ionicModal, $ionicLoading, $ionicViewSwitcher) {
+
+  $scope.toSettings = function() {
+    $state.go('settings');
+  };
 });
 
 /* players pane controller */
