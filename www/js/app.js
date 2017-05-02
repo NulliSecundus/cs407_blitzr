@@ -1148,14 +1148,42 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     document.getElementById("hearts_button").style.visibility = "hidden";
     document.getElementById("spades_button").style.visibility = "hidden";
     document.getElementById("clubs_button").style.visibility = "hidden";
+    document.getElementById("rtbTransButton").disabled = true;
+
     $rootScope.correctOrWrong = "";
     $rootScope.takeOrGive = "";
   };
 
   /* load the next RTB round */
   $scope.loadNextRound = function() {
-    $scope.currentCard++;
+    $rootScope.correctOrWrong = "";
+    $rootScope.takeOrGive = "";
+    document.getElementById("rtbTransButton").disabled = true;
 
+    if($scope.currentCard == 0) {
+      $scope.loadRTB();
+    }
+    else if($scope.currentCard == 1) {
+      document.getElementById("over_button").style.visibility = "hidden";
+      document.getElementById("under_button").style.visibility = "hidden";
+    }
+    else if($scope.currentCard == 2) {
+      document.getElementById("inside_button").style.visibility = "hidden";
+      document.getElementById("outside_button").style.visibility = "hidden";
+    }
+    else if($scope.currentCard == 3) {
+      document.getElementById("diamonds_button").style.visibility = "hidden";
+      document.getElementById("hearts_button").style.visibility = "hidden";
+      document.getElementById("spades_button").style.visibility = "hidden";
+      document.getElementById("clubs_button").style.visibility = "hidden";
+    }
+    else {
+
+    }
+  };
+
+  $scope.enableNext = function() {
+    document.getElementById("rtbTransButton").disabled = false;
   };
 
   /* every time the page loads, create a deck and four cards */
@@ -1180,12 +1208,13 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     if(color == $rootScope.nextCard.color) {
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Tap to Continue";
+      $scope.currentCard++;
     }
     else {
       $rootScope.currentPlayer.takeDrinks(1);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take A Drink and Restart!";
-      $scope.loadRTB();
+      $scope.currentCard = 0;
     }
   };
 
@@ -1207,18 +1236,19 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       (guess == "under" && $scope.secondCard.number < firstCardNumber)) {
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Tap to Continue";
+      $scope.currentCard++;
     }
     else if($scope.secondCard.number == firstCardNumber) {
       $rootScope.currentPlayer.takeDrinks(2);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take 2 Drinks and Restart!";
-      $scope.loadRTB();
+      $scope.currentCard = 0;
     }
     else {
       $rootScope.currentPlayer.takeDrinks(1);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take A Drink!";
-      $scope.loadRTB();
+      $scope.currentCard = 0;
     }
   };
 
@@ -1246,22 +1276,24 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     if(guess == "outside" && ($scope.thirdCard.number < lower || $scope.thirdCard.number > upper)) {
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Tap to Continue";
+      $scope.currentCard++;
     }
     else if((guess == "inside" && ($scope.thirdCard.number > lower && $scope.thirdCard.number < upper))) {
       $rootScope.correctOrWrong = "CORRECT!";
       $rootScope.takeOrGive = "Tap to Continue";
+      $scope.currentCard++;
     }
     else if($scope.thirdCard.number == lower || $scope.thirdCard.number == upper) {
       $rootScope.currentPlayer.takeDrinks(2);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take 2 Drinks and Restart!";
-      $scope.loadRTB();
+      $scope.currentCard = 0;
     }
     else {
       $rootScope.currentPlayer.takeDrinks(1);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take A Drink and Restart!";
-      $scope.loadRTB();
+      $scope.currentCard = 0;
     }
   };
 
@@ -1280,12 +1312,13 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     if(suit == $scope.fourthCard.suit) {
       $rootScope.correctOrWrong = "CONGRATS!";
       $rootScope.takeOrGive = "You Have Finished Riding the Bus!";
+      $scope.currentCard++;
     }
     else {
       $rootScope.currentPlayer.takeDrinks(1);
       $rootScope.correctOrWrong = "WRONG!";
       $rootScope.takeOrGive = "Take A Drink and Restart!";
-      $scope.loadRTB();
+      $scope.currentCard = 0;
     }
   };
 });
