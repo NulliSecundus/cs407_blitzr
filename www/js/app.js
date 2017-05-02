@@ -144,6 +144,7 @@ starter.factory('Player', function() {
     var drinksGiven = 0;
     var drinksToGive = 0;
     var takenFromGiven = 0;
+    var numCards = 0;
 
     /* constructor */
     function init() {
@@ -153,6 +154,7 @@ starter.factory('Player', function() {
       drinksGiven = 0;
       drinksToGive = 0;
       takenFromGiven = 0;
+      numCards = 0;
     }
 
     /* call constructor */
@@ -188,6 +190,7 @@ starter.factory('Player', function() {
     /* add card */
     function addCard(card) {
       cards.push(card);
+      numCards++;
     }
 
     /* get cards */
@@ -207,14 +210,16 @@ starter.factory('Player', function() {
 
     /* return if a player has a certain card value and remove the card from their deck */
     function matchedCard(_card) {
+      console.log("entered matchedCard");
+      var numMatches = 0;
       for (var i = 0; i < cards.length; i++) {
         if (cards[i].number == _card.number) {
-          cards.splice(i, 1);
-          return true;
+          console.log("true", cards[i].number, _card.number);
+          numCards--;
+          numMatches++;
         }
-        else
-          return false;
       }
+      return numMatches;
     }
 
     /* accessible functions */
@@ -840,6 +845,7 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
     $scope.getCard();
     $scope.cardImages[i] = $rootScope.nextCard.image;
     $scope.matchCards[i] = $rootScope.nextCard;
+    console.log($scope.matchCards[i]);
     $scope.matchCards[i].image = $rootScope.cardBack.image;
     var drinks = (Math.floor(i/2 + 1)).toString();
     if(i == 0) {
@@ -869,15 +875,18 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
 
     /* determine which player has the card and add them to the list if they do */
     for(var i = 0; i < $rootScope.players.length; i++) {
-      if(players[i].matchedCard($scope.matchCards[$scope.currentCard])) {
-        $rootScope.matchedPlayers.push(players[i]);
+      if($rootScope.players[i].matchedCard($scope.matchCards[$scope.currentCard])) {
+        console.log("matched");
+        $rootScope.matchedPlayers.push($rootScope.players[i]);
         /* if the round is even, the player has drinks to give, otherwise they have drinks to take */
         if($scope.currentCard % 2 == 0)
-          players[i].giveDrinks(Math.floor(i/2 + 1));
+          $rootScope.players[i].giveDrinks(Math.floor(i/2 + 1));
         else
-          players[i].takeDrinks(Math.floor(i/2 + 1));
+          $rootScope.players[i].takeDrinks(Math.floor(i/2 + 1));
       }
     }
+
+    console.log($rootScope.matchedPlayers);
 
     /* increment current card index */
     $scope.currentCard++;
