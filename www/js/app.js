@@ -144,7 +144,6 @@ starter.factory('Player', function() {
     var drinksGiven = 0;
     var drinksToGive = 0;
     var takenFromGiven = 0;
-    var numCards = 0;
 
     /* constructor */
     function init() {
@@ -208,17 +207,22 @@ starter.factory('Player', function() {
       return drinksGiven;
     }
 
-    /* return if a player has a certain card value and remove the card from their deck */
+    /* return number of matches if a player has a certain card value and remove the card from their deck */
     function matchedCard(_card) {
-      console.log("entered matchedCard");
       var numMatches = 0;
-      for (var i = 0; i < cards.length; i++) {
+      var indices = [];
+      for(var i = 0; i < cards.length; i++) {
         if (cards[i].number == _card.number) {
-          console.log("true", cards[i].number, _card.number);
-          numCards--;
+          indices.push(i);
           numMatches++;
         }
       }
+
+      /* remove matches from their hand */
+      for(var index = 0; i < indices.length; i++)
+        cards.splice(indices[index], 1);
+
+      /* return number of matches */
       return numMatches;
     }
 
@@ -826,6 +830,39 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
 /* match cards controller */
 starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player) {
+  /* reset display */
+  $scope.resetDisplay = function() {
+    /* matched players list */
+    $rootScope.matchedPlayers = [];
+
+    /* matched players drinks */
+    $scope.matchedPlayersDrinks = [];
+
+    /* matched player display */
+    $scope.matchedPlayersDisplay = [];
+
+    /* give or take display */
+    $scope.giveOrTakeDisplay = "";
+
+    /* placeholder for continue message */
+    $scope.continueMessage = "";
+
+    /* boolean to tell if a card can be flipped */
+    $scope.canFlip = true;
+
+    /* disable the continue button */
+    document.getElementById("giveTransButton").disabled = true;
+  };
+
+  /* enable the next state transition */
+  $scope.enableNext = function() {
+    document.getElementById("giveTransButton").disabled = false;
+    $scope.canFlip = false;
+  };
+
+  /* every time the page loads, reset the display */
+  window.onload = $scope.resetDisplay();
+
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
@@ -845,7 +882,6 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
     $scope.getCard();
     $scope.cardImages[i] = $rootScope.nextCard.image;
     $scope.matchCards[i] = $rootScope.nextCard;
-    console.log($scope.matchCards[i]);
     $scope.matchCards[i].image = $rootScope.cardBack.image;
     var drinks = (Math.floor(i/2 + 1)).toString();
     if(i == 0) {
@@ -867,29 +903,57 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
 
   /* flip the next card */
   $scope.flipCard = function() {
-    /* get the next card and assign to flipped card */
-    $scope.matchCards[$scope.currentCard].image = $scope.cardImages[$scope.currentCard];
+    /* only flip another card if it can be flipped */
+    if($scope.canFlip) {
+      /* get the next card and assign to flipped card */
+      $scope.matchCards[$scope.currentCard].image = $scope.cardImages[$scope.currentCard];
 
-    /* matched player list */
-    $rootScope.matchedPlayers = [];
+      /* determine which player has the card and add them to the list if they do */
+      for (var i = 0; i < $rootScope.players.length; i++) {
+        /* get the number of matches and drinks for a round and player */
+        var numMatches = $rootScope.players[i].matchedCard($scope.matchCards[$scope.currentCard]);
+        var numDrinks = numMatches * Math.floor($scope.currentCard / 2 + 1);
 
-    /* determine which player has the card and add them to the list if they do */
-    for(var i = 0; i < $rootScope.players.length; i++) {
-      if($rootScope.players[i].matchedCard($scope.matchCards[$scope.currentCard])) {
-        console.log("matched");
-        $rootScope.matchedPlayers.push($rootScope.players[i]);
-        /* if the round is even, the player has drinks to give, otherwise they have drinks to take */
-        if($scope.currentCard % 2 == 0)
-          $rootScope.players[i].giveDrinks(Math.floor(i/2 + 1));
-        else
-          $rootScope.players[i].takeDrinks(Math.floor(i/2 + 1));
+        /* if the number of matches is greater than zero, give or take drinks appropriately */
+        if (numMatches > 0) {
+          /* add the player that matched to the list, and the number of drinks to take/give */
+          $rootScope.matchedPlayers.push($rootScope.players[i]);
+          $scope.matchedPlayersDrinks.push(numDrinks);
+
+          /* if the round is even, the player has drinks to give, otherwise they have drinks to take */
+          if ($scope.currentCard % 2 == 0)
+            $rootScope.players[i].giveDrinks(numDrinks);
+          else
+            $rootScope.players[i].takeDrinks(numDrinks);
+        }
       }
+
+      /* set the proper give/take display */
+      if ($scope.currentCard % 2 == 0)
+        $scope.giveOrTakeDisplay = " Give ";
+      else
+        $scope.giveOrTakeDisplay = " Take ";
+
+      /* set the proper display for each player */
+      for (i = 0; i < $rootScope.matchedPlayers.length; i++) {
+        if ($scope.matchedPlayersDrinks[i] == 1) {
+          $scope.matchedPlayersDisplay[i] = $rootScope.matchedPlayers[i].getName() + $scope.giveOrTakeDisplay +
+            $scope.matchedPlayersDrinks[i].toString() + " Drink!";
+        }
+        else {
+          $scope.matchedPlayersDisplay[i] = $rootScope.matchedPlayers[i].getName() + $scope.giveOrTakeDisplay +
+            $scope.matchedPlayersDrinks[i].toString() + " Drinks!"
+        }
+      }
+
+      $scope.continueMessage = "Tap Here to Continue";
+
+      /* enable next state */
+      $scope.enableNext();
+
+      /* increment current card index */
+      $scope.currentCard++;
     }
-
-    console.log($rootScope.matchedPlayers);
-
-    /* increment current card index */
-    $scope.currentCard++;
   };
 
   $scope.toNextCard = function(){
@@ -897,7 +961,19 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
     if($scope.currentCard >= $scope.matchCards.length) {
       $rootScope.roundNumber++;
     }
-  }
+
+    /* go to give drinks page if there are drinks to give, otherwise reset display (more cards) or go to round transition
+     * (no more cards) */
+    if($rootScope.matchedPlayers[0].getDrinksToGive() > 0) {
+      $state.go("giveDrinksToGive");
+    }
+    else if($rootScope.roundNumber == 5) {
+      $scope.resetDisplay();
+    }
+    else {
+      $state.go("roundTransition");
+    }
+  };
 });
 
 /* ride the bus controller */

@@ -9,8 +9,8 @@
   <body>
 
   <!-- cards images -->
-  <div ng-click="flipCard()">
-    <div class="list list-inset" id = "givePlayerList" style = 'height: 60vh; background-color: darkcyan'>
+  <div ng-click="flipCard()" id="flipNextCard">
+    <div class="list list-inset" id = "givePlayerList" style = 'height: 55vh; background-color: darkcyan'>
       <div class="Row" ng-repeat="card in matchCards" ng-if="$index%4 == 0">
         <div class="Column" ng-if="matchCards[$index] != null" style="border: 1vh darkcyan; background-color:darkcyan;
               text-align: center">
@@ -50,9 +50,30 @@
     </div>
   </div>
 
-  <h1 id="playerToDrink">{{playerDisplay}}</h1>
-  <h1 id="giveDrinksContinue">{{continueMessage}}</h1>
-  <button class="button" id="giveTransButton" ng-click="toNextPlayer()" style="width: 100vw;
+  <!-- drink display -->
+    <div class="list list-inset" id = "takeOrGivePlayers" style = 'height: 30vh; background-color: darkcyan'>
+      <div class="Row">
+        <div class="Column" style="font-family: LobsterRegular; text-align: center; font-size: 8vw;
+        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white;
+        white-space: nowrap;   text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        1px 1px 0 #000;">{{matchedPlayersDisplay[0]}}</div>
+      </div>
+      <div class="Row">
+        <div class="Column" style="font-family: LobsterRegular; text-align: center; font-size: 8vw;
+        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white;
+        white-space: nowrap;   text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        1px 1px 0 #000;">{{matchedPlayersDisplay[1]}}</div>
+      </div>
+      <div class="Row">
+        <div class="Column" style="font-family: LobsterRegular; text-align: center; font-size: 8vw;
+        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white;
+        white-space: nowrap;   text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        1px 1px 0 #000;">{{matchedPlayersDisplay[2]}}</div>
+      </div>
+    </div>
+
+  <h1 id="giveDrinksContinue" style="text-size:10vw ">{{continueMessage}}</h1>
+  <button class="button" id="giveTransButton" ng-click="toNextCard()" style="width: 100vw;
     height: 100vh; background: transparent; position:absolute; z-index: 2"></button>
   </body>
 </ion-view>
