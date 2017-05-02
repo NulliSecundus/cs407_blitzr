@@ -898,11 +898,13 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
 
     /* disable the continue button */
     document.getElementById("giveTransButton").disabled = true;
+    document.getElementById("takeOrGivePlayers").disabled = true;
   };
 
   /* enable the next state transition */
   $scope.enableNext = function() {
     document.getElementById("giveTransButton").disabled = false;
+    document.getElementById("takeOrGivePlayers").disabled = false;
     $scope.canFlip = false;
   };
 
