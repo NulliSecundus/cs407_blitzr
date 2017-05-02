@@ -698,15 +698,15 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
   /* enable next player button and hide in/out buttons*/
   $scope.enableNext = function() {
     document.getElementById("inOrOutTransButton").disabled = false;
-    document.getElementById("over_button").style.visibility = "hidden";
-    document.getElementById("under_button").style.visibility = "hidden";
+    document.getElementById("inside_button").style.visibility = "hidden";
+    document.getElementById("outside_button").style.visibility = "hidden";
   };
 
   /* disable next player button and show in/out buttons */
   $scope.disableNext = function() {
     document.getElementById("inOrOutTransButton").disabled = true;
-    document.getElementById("over_button").style.visibility = "visible";
-    document.getElementById("under_button").style.visibility = "visible";
+    document.getElementById("inside_button").style.visibility = "visible";
+    document.getElementById("outside_button").style.visibility = "visible";
   };
 
   /* every time the page loads, the next player button begins disabled */

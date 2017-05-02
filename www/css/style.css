@@ -513,44 +513,6 @@
     1px 1px 0 #000;
   }
 
-  #red_button {
-    position: absolute;
-    height: 10vh;
-    width: 40vw;
-    margin-left: 5vw;
-    top: 45vh;
-    font-family: Helvetica;
-    font-style: italic;
-    font-weight: bold;
-    font-size: 3vh;
-    background-color: red;
-    color: white;
-    border: 1vh solid white;
-    vertical-align: middle;
-    align-content: center;
-    white-space: nowrap;
-    text-align: center;
-  }
-
-  #black_button {
-    position: absolute;
-    height: 10vh;
-    width: 40vw;
-    margin-left: 55vw;
-    top: 45vh;
-    font-family: Helvetica;
-    font-style: italic;
-    font-weight: bold;
-    font-size: 3vh;
-    background-color: black;
-    color: white;
-    border: 1vh solid white;
-    vertical-align: middle;
-    align-content: center;
-    white-space: nowrap;
-    text-align: center;
-  }
-
   #cardBack1 {
     position: absolute;
     height: 30vh;
@@ -598,44 +560,6 @@
   }
 }
 
-/* over or under */
-#over_button {
-  position: absolute;
-  height: 10vh;
-  width: 40vw;
-  margin-left: 5vw;
-  top: 45vh;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 3vh;
-  background-color: white;
-  color: black;
-  border: 1vh solid black;
-  white-space: nowrap;
-  vertical-align: middle;
-  align-content: center;
-  text-align: center;
-}
-
-#under_button {
-  position: absolute;
-  height: 10vh;
-  width: 40vw;
-  margin-left: 55vw;
-  top: 45vh;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 3vh;
-  background-color: white;
-  color: black;
-  border: 1vh solid black;
-  white-space: nowrap;
-  /*vertical-align: middle;*/
-  /*align-content: center;*/
-  /*text-align: center;*/
-}
 
 #cardBack2 {
   position: absolute;
@@ -660,82 +584,6 @@
   margin-left: 11vw;
 }
 
-/* guess suit */
-#spades_button {
-  position: absolute;
-  height: 10vh;
-  width: 35vw;
-  margin-left: 5vw;
-  top: 43vh;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 4vw;
-  background-color: white;
-  color: black;
-  border: 1vh solid black;
-  vertical-align: middle;
-  align-content: center;
-  white-space: nowrap;
-  text-align: center;
-}
-
-#hearts_button {
-  position: absolute;
-  height: 10vh;
-  width: 35vw;
-  top: 43vh;
-  margin-left: 60vw;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 4vw;
-  background-color: white;
-  color: red;
-  border: 1vh solid red;
-  vertical-align: middle;
-  align-content: center;
-  white-space: nowrap;
-  text-align: center;
-}
-
-#clubs_button {
-  position: absolute;
-  height: 10vh;
-  width: 35vw;
-  margin-left: 60vw;
-  top: 55vh;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 4vw;
-  background-color: white;
-  color: black;
-  border: 1vh solid black;
-  vertical-align: middle;
-  align-content: center;
-  white-space: nowrap;
-  text-align: center;
-}
-
-#diamonds_button {
-  position: absolute;
-  height: 10vh;
-  width: 35vw;
-  margin-left: 5vw;
-  top: 55vh;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 3vw;
-  background-color: white;
-  color: red;
-  border: 1vh solid red;
-  vertical-align: middle;
-  align-content: center;
-  white-space: nowrap;
-  text-align: center;
-}
 
 #hand3 {
   position: absolute;
