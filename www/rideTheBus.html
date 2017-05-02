@@ -20,19 +20,107 @@
   <button class="button" id="rtbTransButton" ng-click="toNextPlayer()" style="width: 100vw;
     height: 100vh; background: transparent; position:absolute; z-index: 2"></button>
 
-  <!-- red and black display -->
-  <button class ="button-balanced" id="red_button" ng-click="guessColor('red')">RED</button>
-  <button class ="button-balanced" id="black_button" ng-click="guessColor('black')">BLACK</button>
+  <!-- red or black buttons -->
+  <div>
+    <div class="list list-inset" id = "colorOptions" style = 'height: 10vh; background-color: darkcyan; top: 45vh'>
+      <div class="Row">
+        <div class="Column" id="red_button" ng-click="guessColor('red')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 5vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid white; background-color: red; color: white">RED</div>
+        <div class="Column" id="black_button" ng-click="guessColor('black')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 5vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid white; background-color: black; color: white">BLACK</div>
+      </div>
+    </div>
+  </div>
 
-  <!-- over or under and in or out display -->
-  <button class ="button-balanced" id="over_button" ng-click="overOrUnder('over')">{{higherOrInside}}</button>
-  <button class ="button-balanced" id="under_button" ng-click="overOrUnder('under')">{{lowerOrOutside}}</button>
+  <!-- higher or lower buttons -->
+  <div>
+    <div class="list list-inset" id = "overOrUnderOptions" style = 'height: 10vh; background-color: darkcyan; top: 45vh'>
+      <div class="Row">
+        <div class="Column" id="over_button" ng-click="overOrUnder('over')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid black; background-color: white; color: black">HIGHER</div>
+        <div class="Column" id="under_button" ng-click="overOrUnder('under')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid black; background-color: white; color: black">LOWER</div>
+      </div>
+    </div>
+  </div>
 
-  <!-- suit display -->
-  <button class ="button-balanced" id="spades_button" ng-click="guessSuit('spades')">SPADES</button>
-  <button class ="button-balanced" id="hearts_button" ng-click="guessSuit('hearts')">HEARTS</button>
-  <button class ="button-balanced" id="clubs_button" ng-click="guessSuit('clubs')">CLUBS</button>
-  <button class ="button-balanced" id="diamonds_button" ng-click="guessSuit('diamonds')">DIAMONDS</button>
+  <!-- inside or outside buttons -->
+  <div>
+    <div class="list list-inset" id = "insideOrOutsideOptions" style = 'height: 10vh; background-color: darkcyan; top: 40vh'>
+      <div class="Row">
+        <div class="Column" id="inside_button" ng-click="inOrOut('inside')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid black; background-color: white; color: black">INSIDE</div>
+        <div class="Column" id="outside_button" ng-click="inOrOut('outside')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid black; background-color: white; color: black">OUTSIDE</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- suit buttons -->
+  <div>
+    <div class="list list-inset" id = "suitOptions" style = 'height: 20vh; background-color: darkcyan; top: 40vh'>
+      <div class="Row">
+        <div class="Column" id="spades_button" ng-click="guessSuit('spades')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid white; background-color: black; color: white">SPADES</div>
+        <div class="Column" id="hearts_button" ng-click="guessSuit('hearts')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid white; background-color: red; color: white">HEARTS</div>
+      </div>
+      <div class="Row">
+        <div class="Column" id="diamonds_button" ng-click="guessSuit('diamonds')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid white; background-color: red; color: white">DIAMONDS</div>
+        <div class="Column" id="clubs_button" ng-click="guessSuit('clubs')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid white; background-color: black; color: white">CLUBS</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- cards images -->
+  <div id="flipNextCard" ng-click="onClick()">
+    <div class="list list-inset" id = "givePlayerList" style = 'height: 40vh; background-color: darkcyan; top: 55vh'>
+      <div class="Row">
+        <div class="Column"style="border: 1vh darkcyan; background-color:darkcyan; text-align: center">
+          <figure>
+            <img src='{{firstCard.image}}' style="height: 12vh">
+            <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
+              RED OR</br> BLACK?</figcaption>
+          </figure>
+        </div>
+        <div class="Column" style="border: 1vh darkcyan; background-color:darkcyan; text-align: center">
+          <figure>
+            <img src='{{secondCard.image}}' style="height: 12vh">
+            <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
+              HIGHER OR</br> LOWER?</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="Row">
+        <div class="Column" style="border: 1vh darkcyan; background-color:darkcyan; text-align: center">
+          <figure>
+            <img src='{{thirdCard.image}}' style="height: 12vh">
+            <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
+              INSIDE OR</br>OUTSIDE?</figcaption>
+          </figure>
+        </div>
+        <div class="Column" style="border: 1vh darkcyan; background-color:darkcyan; text-align: center">
+          <figure>
+            <img src='{{fourthCard.image}}' style="height: 12vh">
+            <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
+            GUESS THE</br> SUIT!</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <img src ="{{firstCard.image}}" id = "rtb1">
   <img src ="{{secondCard.image}}" id = "rtb2">

@@ -292,7 +292,7 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       url: '/matchCards',
       controller: 'matchCardsCtrl',
       templateUrl: 'matchCards.html',
-      cache: false
+      cache: true
     })
     .state('rideTheBus', {
       url: '/rideTheBus',
@@ -348,6 +348,9 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
 
     /* create array for matched player, will be used in wild card round */
     $rootScope.matchedPlayers = [];
+
+    /* reset the match cards display */
+    $rootScope.matchedPlayersDisplay = [];
 
     /* initialize current player to first player */
     $rootScope.currentPlayer = $rootScope.players[0];
@@ -454,6 +457,9 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
 
     /* placeholder for continue message */
     $scope.continueMessage = "";
+
+    /* reset the match cards display */
+    $rootScope.matchedPlayersDisplay = [];
   };
 
   /* every time the page loads, the next player button begins disabled */
@@ -901,6 +907,7 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
       $scope.getCard();
       $scope.cardImages[i] = $rootScope.nextCard.image;
       $scope.matchCards[i] = $rootScope.nextCard;
+
       $scope.matchCards[i].image = $rootScope.cardBack.image;
       var drinks = (Math.floor(i/2 + 1)).toString();
       if(i == 0) {
@@ -921,6 +928,10 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
     $scope.currentCard = 0;
   };
 
+  /* initialize the wild card round if necessary */
+  if($scope.initialized != true)
+    $scope.init();
+
   /* reset display */
   $scope.resetDisplay = function() {
     /* matched players list */
@@ -930,40 +941,44 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
     $scope.matchedPlayersDrinks = [];
 
     /* matched player display */
-    $scope.matchedPlayersDisplay = [];
+    $rootScope.matchedPlayersDisplay = [];
 
     /* give or take display */
     $scope.giveOrTakeDisplay = "";
 
     /* placeholder for continue message */
-    $scope.continueMessage = "";
+    $scope.continueMessage = "Tap to Flip";
 
     /* boolean to tell if a card can be flipped */
     $scope.canFlip = true;
 
     /* disable the continue button */
-    document.getElementById("giveTransButton").disabled = true;
-    document.getElementById("takeOrGivePlayers").disabled = true;
-
-    /* initialize the wild card round if necessary */
-    if($scope.initialized != true)
-      $scope.init();
+    //document.getElementById("giveTransButton").disabled = true;
+    //document.getElementById("takeOrGivePlayers").disabled = true;
   };
 
   /* enable the next state transition */
   $scope.enableNext = function() {
-    document.getElementById("giveTransButton").disabled = false;
-    document.getElementById("takeOrGivePlayers").disabled = false;
+    //document.getElementById("giveTransButton").disabled = false;
+    //document.getElementById("takeOrGivePlayers").disabled = false;
     $scope.canFlip = false;
   };
 
   /* every time the page loads, reset the display */
   window.onload = $scope.resetDisplay();
 
+  /* interpret click */
+  $scope.onClick = function() {
+    if($scope.canFlip) {
+      $scope.flipCard();
+    }
+    else {
+      $scope.toNextCard()
+    }
+  };
+
   /* flip the next card */
   $scope.flipCard = function() {
-    /* only flip another card if it can be flipped */
-    if($scope.canFlip) {
       /* get the next card and assign to flipped card */
       $scope.matchCards[$scope.currentCard].image = $scope.cardImages[$scope.currentCard];
 
@@ -996,37 +1011,44 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
       /* set the proper display for each player */
       for (i = 0; i < $rootScope.matchedPlayers.length; i++) {
         if ($scope.matchedPlayersDrinks[i] == 1) {
-          $scope.matchedPlayersDisplay[i] = $rootScope.matchedPlayers[i].getName() + $scope.giveOrTakeDisplay +
+          $rootScope.matchedPlayersDisplay[i] = $rootScope.matchedPlayers[i].getName() + $scope.giveOrTakeDisplay +
             $scope.matchedPlayersDrinks[i].toString() + " Drink!";
         }
         else {
-          $scope.matchedPlayersDisplay[i] = $rootScope.matchedPlayers[i].getName() + $scope.giveOrTakeDisplay +
+          $rootScope.matchedPlayersDisplay[i] = $rootScope.matchedPlayers[i].getName() + $scope.giveOrTakeDisplay +
             $scope.matchedPlayersDrinks[i].toString() + " Drinks!"
         }
       }
 
-      $scope.continueMessage = "Tap Here to Continue";
+      /* display continue message */
+      $scope.continueMessage = "Tap to Continue";
+
+      /* set display if no one last card */
+      if($rootScope.matchedPlayers.length == 0) {
+        if ($scope.matchCards[$scope.currentCard].number == 1 || $scope.matchCards[$scope.currentCard].number == 8)
+          $rootScope.matchedPlayersDisplay[0] = "No one has an " + $scope.matchCards[$scope.currentCard].rank.toUpperCase();
+        else
+          $rootScope.matchedPlayersDisplay[0] = "No one has a " + $scope.matchCards[$scope.currentCard].rank.toUpperCase();
+      }
 
       /* enable next state */
       $scope.enableNext();
 
       /* increment current card index */
       $scope.currentCard++;
-    }
-  };
+    };
 
   $scope.toNextCard = function(){
     /* if the last card has been turned over, increment the round number */
-    if($scope.currentCard >= $scope.matchCards.length) {
+    if ($scope.currentCard >= $scope.matchCards.length) {
       $rootScope.roundNumber++;
     }
-
     /* go to give drinks page if there are drinks to give, otherwise reset display (more cards) or go to round transition
-     * (no more cards) */
-    if(($rootScope.matchedPlayers[0] != null) && (($scope.currentCard - 1) % 2 == 0)) {
+      * (no more cards) */
+    if (($rootScope.matchedPlayers[0] != null) && (($scope.currentCard - 1) % 2 == 0)) {
       $state.go("givePlayersDrinks");
     }
-    else if($rootScope.roundNumber == 5) {
+    else if ($rootScope.roundNumber == 5) {
       $scope.resetDisplay();
     }
     else {
