@@ -522,7 +522,7 @@
     font-family: Helvetica;
     font-style: italic;
     font-weight: bold;
-    font-size: 5vh;
+    font-size: 3vh;
     background-color: red;
     color: white;
     border: 1vh solid white;
@@ -541,7 +541,7 @@
     font-family: Helvetica;
     font-style: italic;
     font-weight: bold;
-    font-size: 5vh;
+    font-size: 3vh;
     background-color: black;
     color: white;
     border: 1vh solid white;
@@ -608,13 +608,13 @@
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 4vh;
+  font-size: 3vh;
   background-color: white;
   color: black;
   border: 1vh solid black;
+  white-space: nowrap;
   vertical-align: middle;
   align-content: center;
-  white-space: nowrap;
   text-align: center;
 }
 
@@ -627,14 +627,14 @@
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 4vh;
+  font-size: 3vh;
   background-color: white;
   color: black;
   border: 1vh solid black;
-  vertical-align: middle;
-  align-content: center;
   white-space: nowrap;
-  text-align: center;
+  /*vertical-align: middle;*/
+  /*align-content: center;*/
+  /*text-align: center;*/
 }
 
 #cardBack2 {
@@ -670,7 +670,7 @@
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 6vw;
+  font-size: 4vw;
   background-color: white;
   color: black;
   border: 1vh solid black;
@@ -689,7 +689,7 @@
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 6vw;
+  font-size: 4vw;
   background-color: white;
   color: red;
   border: 1vh solid red;
@@ -708,7 +708,7 @@
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 6vw;
+  font-size: 4vw;
   background-color: white;
   color: black;
   border: 1vh solid black;
@@ -727,7 +727,7 @@
   font-family: Helvetica;
   font-style: italic;
   font-weight: bold;
-  font-size: 5vw;
+  font-size: 3vw;
   background-color: white;
   color: red;
   border: 1vh solid red;

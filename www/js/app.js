@@ -270,7 +270,7 @@ starter.config(function($stateProvider, $urlRouterProvider) {
     })
     .state('rideTheBus', {
       url: '/rideTheBus',
-      controller: 'rideTheBus',
+      controller: 'rideTheBusCtrl',
       templateUrl: 'rideTheBus.html',
       cache: false
     });
@@ -368,7 +368,7 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
     else if ($rootScope.roundNumber == 4)
       $state.go("guessSuit");
     else if ($rootScope.roundNumber == 5)
-      $state.go();
+      $state.go("rideTheBus");
   };
 });
 
@@ -511,12 +511,8 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
     /* update round name */
     if($rootScope.roundNumber == 1)
       $rootScope.roundName = "Red or Black?";
-    else if($rootScope.roundNumber == 2)
+    else
       $rootScope.roundName = "Higher or Lower?";
-    else if($rootScope.roundNumber == 3)
-      $rootScope.roundName = "Inside or Outside?";
-    else if($rootScope.roundNumber == 4)
-      $rootScope.roundName = "Guess the Suit!";
 
     /* go to the give drinks page if there are drinks to give, otherwise the transition page */
     if($rootScope.previousPlayer.getDrinksToGive() > 0)
@@ -605,14 +601,10 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
     }
 
     /* update round name */
-    if($rootScope.roundNumber == 1)
-      $rootScope.roundName = "Red or Black?";
-    else if($rootScope.roundNumber == 2)
+    if($rootScope.roundNumber == 2)
       $rootScope.roundName = "Higher or Lower?";
-    else if($rootScope.roundNumber == 3)
+    else
       $rootScope.roundName = "Inside or Outside?";
-    else if($rootScope.roundNumber == 4)
-      $rootScope.roundName = "Guess the Suit!";
 
     /* go to the give drinks page if there are drinks to give, otherwise the transition page */
     if($rootScope.previousPlayer.getDrinksToGive() > 0)
@@ -710,13 +702,9 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
     }
 
     /* update round name */
-    if($rootScope.roundNumber == 1)
-      $rootScope.roundName = "Red or Black?";
-    else if($rootScope.roundNumber == 2)
-      $rootScope.roundName = "Higher or Lower?";
-    else if($rootScope.roundNumber == 3)
+    if($rootScope.roundNumber == 3)
       $rootScope.roundName = "Inside or Outside?";
-    else if($rootScope.roundNumber == 4)
+    else
       $rootScope.roundName = "Guess the Suit!";
 
     /* go to the give drinks page if there are drinks to give, otherwise the transition page */
@@ -801,14 +789,12 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
     }
 
     /* update round name */
-    if($rootScope.roundNumber == 1)
-      $rootScope.roundName = "Red or Black?";
-    else if($rootScope.roundNumber == 2)
-      $rootScope.roundName = "Higher or Lower?";
-    else if($rootScope.roundNumber == 3)
-      $rootScope.roundName = "Inside or Outside?";
-    else if($rootScope.roundNumber == 4)
+    if($rootScope.roundNumber == 4)
       $rootScope.roundName = "Guess the Suit!";
+    else {
+      $rootScope.roundName = "Ride the Bus!";
+      $rootScope.currentPlayer = $rootScope.players[0];
+    }
 
     /* go to the give drinks page if there are drinks to give, otherwise the transition page */
     if($rootScope.previousPlayer.getDrinksToGive() > 0)

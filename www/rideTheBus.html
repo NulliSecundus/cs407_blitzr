@@ -1,10 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="starter">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
-<body>
 
-</body>
+<ion-view ion-title="rideTheBus" id="rideTheBus" style="background-color: darkcyan">
+  <body>
+  <h1 id="rideTheBus_title">Ride The Bus!</h1>
+
+  <!-- display the current player information -->
+  <h1 id="displayName">Current Player: {{currentPlayer.getName()}}</h1>
+  <h1 id="displayTaken">Drinks Taken: {{currentPlayer.getTaken()}}</h1>
+  <h1 id="displayGiven">Drinks Given: {{currentPlayer.getGiven()}}</h1>
+
+  <!-- display the round number and name -->
+  <h1 id="correctOrWrong">{{correctOrWrong}}</h1>
+  <h1 id="takeOrGive">{{takeOrGive}}</h1>
+  <button class="button" id="rtbTransButton" ng-click="toNextPlayer()" style="width: 100vw;
+    height: 100vh; background: transparent; position:absolute; z-index: 2"></button>
+
+  <!-- red and black display -->
+  <button class ="button-balanced" id="red_button" ng-click="guessColor('red')">RED</button>
+  <button class ="button-balanced" id="black_button" ng-click="guessColor('black')">BLACK</button>
+
+  <!-- over or under and in or out display -->
+  <button class ="button-balanced" id="over_button" ng-click="overOrUnder('over')">{{higherOrInside}}</button>
+  <button class ="button-balanced" id="under_button" ng-click="overOrUnder('under')">{{lowerOrOutside}}</button>
+
+  <!-- suit display -->
+  <button class ="button-balanced" id="spades_button" ng-click="guessSuit('spades')">SPADES</button>
+  <button class ="button-balanced" id="hearts_button" ng-click="guessSuit('hearts')">HEARTS</button>
+  <button class ="button-balanced" id="clubs_button" ng-click="guessSuit('clubs')">CLUBS</button>
+  <button class ="button-balanced" id="diamonds_button" ng-click="guessSuit('diamonds')">DIAMONDS</button>
+
+  <img src ="{{firstCard.image}}" id = "rtb1">
+  <img src ="{{secondCard.image}}" id = "rtb2">
+  <img src ="{{thirdCard.image}}" id="rtb3">
+  <img src ="{{fourthCard.image}}" id="rtb4">
+  </body>
+</ion-view>
 </html>
