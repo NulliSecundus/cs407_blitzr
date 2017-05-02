@@ -492,7 +492,7 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
     else if($scope.remainingDrinks == 0 && $scope.matchingRound == true) {
       /* if the last player has picked drinks, remove them from the list */
       if($rootScope.matchedPlayers.length == 1) {
-        $rootScope.matchedPlayers.parse(0, 1);
+        $rootScope.matchedPlayers.splice(0, 1);
         /* if the last card was flipped in matchCards, go to the round transition page */
         if($rootScope.roundNumber == 6)
           $state.go("roundTransition");
@@ -502,7 +502,7 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
       }
       /* there is another player left to pick drinks, remove the most recent player and reset the page */
       else {
-        $rootScope.matchedPlayers.parse(0, 1);
+        $rootScope.matchedPlayers.splice(0, 1);
         $scope.resetPage();
       }
     }
