@@ -1124,10 +1124,11 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
 starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player) {
 
+  /* new card deck for Riding the Bus */
+  $scope.deck = new CardDeck();
+
   /* disable next player button and show red/black */
   $scope.loadRTB = function () {
-    /* new card deck for Riding the Bus */
-    $scope.deck = new CardDeck();
     /* initialize cards to back of cards */
     $scope.firstCard = $rootScope.cardBack;
     $scope.secondCard = $rootScope.cardBack;
@@ -1183,6 +1184,11 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
   /* get the next card from the deck */
   $scope.getCard = function() {
     $scope.nextCard = $scope.deck.getTopCard();
+    /* create new deck if deck is out of cards */
+    if($scope.nextCard == null) {
+      $scope.deck = new CardDeck()
+      $scope.nextCard = $scope.deck.getTopCard();
+    }
   };
 
   /* first card, red or black */
@@ -1303,7 +1309,7 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     }
     else {
       $rootScope.currentPlayer.takeDrinks(1);
-      $rootScope.correctOrWrong = "WRONG!";
+      $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
       $scope.currentCard = 0;
     }
