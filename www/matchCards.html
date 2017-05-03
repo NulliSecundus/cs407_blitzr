@@ -8,10 +8,10 @@
 <ion-view ion-title="matchCards" id="matchCards" style="background-color: darkcyan">
   <body>
   <i class="icon ion-ios-home" style= "position: absolute; font-size: 4vh; color: white;
-      margin-left: 2vw; margin-top: 1vh" ng-click="toPopUp()"></i>
+      margin-left: 2vw; margin-top: 3vh" ng-click="toPopUp()"></i>
   <!-- cards images -->
   <div id="flipNextCard" ng-click="onClick()">
-    <div class="list list-inset" id = "givePlayerList" style = 'height: 55vh; top: 2vh; background-color: darkcyan'>
+    <div class="list list-inset" id = "givePlayerList" style = 'height: 55vh; top: 4vh; background-color: darkcyan'>
       <div class="Row" ng-repeat="card in matchCards" ng-if="$index%4 == 0">
         <div class="Column" ng-if="matchCards[$index] != null" style="border: 1vh darkcyan; background-color:darkcyan;
               text-align: center">
