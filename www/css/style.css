@@ -74,6 +74,33 @@
     border-radius: 50%;
     z-index: 2;
   }
+  #twitter {
+    margin-top: 52vw;
+    margin-left: 30vw;
+    background-color: #eeeeee;
+    color: deepskyblue;
+    z-index: 4;
+  }
+
+  i.ion-social-twitter {
+    font-size: 45px;
+  }
+
+  #fb {
+    margin-top: -13vw;
+    margin-left: 54vw;
+    background-color: #4b8bf4;
+    color: white;
+    z-index: 4;
+  }
+
+  i2.ion-social-facebook {
+    font-size: 35px;
+  }
+
+  .popup-container {
+    background-color: palegoldenrod;
+  }
 }
 
 @media screen and (orientation: landscape) {
@@ -613,4 +640,18 @@
   top: 70%;
   margin-left: 17vw;
 }
+
+/* Game Settings */
+
+#emailButton {
+  margin-top: 20vw;
+  margin-left: 40vw;
+  background-color: #eeeeee;
+  z-index: 3;
+}
+
+i.ion-email {
+  font-size: 60px;
+}
+
 

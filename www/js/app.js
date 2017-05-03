@@ -357,6 +357,28 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
     $ionicViewSwitcher.nextDirection('forward');
     $state.go("settings");
   }
+
+  $scope.sendFeedback= function() {
+    if(window.plugins && window.plugins.emailComposer) {
+      window.plugins.emailComposer.showEmailComposerWithCallback(function(result) {
+          console.log("Response -> " + result);
+        },
+        "Feedback for your App", // Subject
+        "",                      // Body
+        ["cdekeyser@wisc.edu"],    // To
+        null,                    // CC
+        null,                    // BCC
+        false,                   // isHTML
+        null,                    // Attachments
+        null);                   // Attachment Data
+    }
+  }
+  $scope.twitterShare = function(){
+    window.plugins.socialsharing.shareViaTwitter('@Blitzr_Dev_Team', null, null, null, null);
+  }
+  $scope.fbShare = function(){
+    window.plugins.socialsharing.shareViaFacebook("", null, null, null);
+  }
 });
 
 /* settings controller */
@@ -409,7 +431,7 @@ starter.controller('aboutUsCtrl', function($scope, $state, $ionicModal, $ionicLo
 
 /* players pane controller */
 starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading,
-                                           Card, CardDeck, Player, $ionicViewSwitcher) {
+                                           Card, CardDeck, Player, $ionicViewSwitcher, $ionicPopup) {
   /* back to home page */
   $scope.toHome = function() {
     $ionicViewSwitcher.nextDirection('back');
@@ -470,8 +492,15 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     $rootScope.nextCard = $rootScope.cardBack;
 
     /* go to RTB */
-    $ionicViewSwitcher.nextDirection('forward');
-    $state.go("roundTransition");
+    var alertPopup = $ionicPopup.alert({
+      title: 'Warning!',
+      template: 'Please drink responsibly.'
+    });
+
+    alertPopup.then(function(res) {
+      $ionicViewSwitcher.nextDirection('forward');
+      $state.go("roundTransition");
+    });
   };
 });
 
