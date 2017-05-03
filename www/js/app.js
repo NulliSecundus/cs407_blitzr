@@ -144,6 +144,7 @@ starter.factory('Player', function() {
     var drinksGiven = 0;
     var drinksToGive = 0;
     var takenFromGiven = 0;
+    var numCards = 0;
 
     /* constructor */
     function init() {
@@ -153,6 +154,7 @@ starter.factory('Player', function() {
       drinksGiven = 0;
       drinksToGive = 0;
       takenFromGiven = 0;
+      numCards = 0;
     }
 
     /* call constructor */
@@ -188,6 +190,7 @@ starter.factory('Player', function() {
     /* add card */
     function addCard(card) {
       cards.push(card);
+      numCards++;
     }
 
     /* get cards */
@@ -205,6 +208,11 @@ starter.factory('Player', function() {
       return drinksGiven;
     }
 
+    /* get number of cards */
+    function getNumCards() {
+      return numCards;
+    }
+
     /* return number of matches if a player has a certain card value and remove the card from their deck */
     function matchedCard(_card) {
       var numMatches = 0;
@@ -213,12 +221,15 @@ starter.factory('Player', function() {
         if (cards[i].number == _card.number) {
           indices.push(i);
           numMatches++;
+          numCards--;
         }
       }
 
       /* remove matches from their hand */
       for(var index = 0; i < indices.length; i++)
         cards.splice(indices[index], 1);
+
+      console.log(this.getName(), this.getNumCards());
 
       /* return number of matches */
       return numMatches;
@@ -236,6 +247,7 @@ starter.factory('Player', function() {
       getDrinksToGive: getDrinksToGive,
       givePlayerADrink: givePlayerADrink,
       matchedCard: matchedCard,
+      getNumCards: getNumCards,
       takenFromGiven: takenFromGiven
     }
   }
@@ -250,7 +262,8 @@ starter.config(function($stateProvider, $urlRouterProvider) {
    .state('players', {
      url: '/players',
      controller: 'playersCtrl',
-     templateUrl: 'players.html'
+     templateUrl: 'players.html',
+     cache: false
    })
     .state('roundTransition', {
       url: '/roundTransition',
@@ -298,6 +311,12 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       url: '/rideTheBus',
       controller: 'rideTheBusCtrl',
       templateUrl: 'rideTheBus.html',
+      cache: false
+    })
+    .state('finalResults', {
+      url: '/finalResults',
+      controller: 'finalResultsCtrl',
+      templateUrl: 'finalResults.html',
       cache: false
     })
     .state('settings', {
@@ -450,17 +469,64 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
 starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                                    Player) {
 
+  /* find the players to ride the bus */
+  $scope.findPlayerToRide = function() {
+    var mostCards = 0;
+    $rootScope.playersToRide = [];
+
+    /* find the most cards */
+    for(var i = 0; i < $rootScope.players.length; i++) {
+      console.log($rootScope.players[i].getName(), $rootScope.players[i].getNumCards());
+      if($rootScope.players[i].getNumCards() > mostCards) {
+        console.log("has most");
+        mostCards = $rootScope.players[i].getNumCards();
+        $rootScope.playersToRide = [];
+        $rootScope.playersToRide.push($rootScope.players[i]);
+      }
+      else if($rootScope.players[i].getNumCards() == mostCards) {
+        console.log("tied most");
+        $rootScope.playersToRide.push($rootScope.players[i]);
+      }
+    }
+
+    console.log($rootScope.playersToRide, mostCards);
+
+    /* rtb display */
+    $rootScope.rtbDisplay = "";
+
+    if($rootScope.playersToRide.length == 1)
+      $rootScope.rtbDisplay = $rootScope.playersToRide[0].getName() + " is Riding the Bus!";
+    else if($rootScope.playersToRide.length == 2) {
+      $rootScope.rtbDisplay = $rootScope.playersToRide[0].getName() + " and " + $rootScope.playersToRide[1].getName()
+        + " are Riding the Bus!";
+    }
+    else {
+      for(i = 0; i < $rootScope.playersToRide.length - 1; i++)
+        $rootScope.rtbDisplay += $rootScope.playersToRide[i].getName() + ", ";
+      $rootScope.rtbDisplay += " and " + $rootScope.playersToRide[$rootScope.playersToRide.length - 1].getName();
+      $rootScope.rtbDisplay += " are Riding the Bus!"
+    }
+  };
+
   /* check the round to set special displays */
   $scope.checkRound = function () {
     if($rootScope.roundNumber == 5) {
       document.getElementById("roundNumber").style.visibility = "hidden";
       document.getElementById("nextPlayer").style.visibility = "hidden";
+      document.getElementById("rtbPlayers").style.visibility = "hidden";
       $rootScope.roundName = "Wild Card Round!"
     }
-
-    if($rootScope.roundNumber == 6) {
+    else if($rootScope.roundNumber == 6) {
+      $scope.findPlayerToRide();
       document.getElementById("roundNumber").style.visibility = "hidden";
+      document.getElementById("nextPlayer").style.visibility = "hidden";
+      document.getElementById("rtbPlayers").style.visibility = "visible";
       $rootScope.roundName = "Ride The Bus!"
+    }
+    else {
+      document.getElementById("roundNumber").style.visibility = "visible";
+      document.getElementById("nextPlayer").style.visibility = "visible";
+      document.getElementById("rtbPlayers").style.visibility = "hidden";
     }
   };
 
@@ -1127,6 +1193,9 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
   /* new card deck for Riding the Bus */
   $scope.deck = new CardDeck();
 
+  /* get the display */
+  $scope.rtbDisplay = $rootScope.rtbDisplay;
+
   /* disable next player button and show red/black */
   $scope.loadRTB = function () {
     /* initialize cards to back of cards */
@@ -1164,7 +1233,7 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       document.getElementById("suitOptions").style.visibility = "visible";
     }
     else {
-
+      $state.go("finalResults");
     }
   };
 
@@ -1186,7 +1255,7 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     $scope.nextCard = $scope.deck.getTopCard();
     /* create new deck if deck is out of cards */
     if($scope.nextCard == null) {
-      $scope.deck = new CardDeck()
+      $scope.deck = new CardDeck();
       $scope.nextCard = $scope.deck.getTopCard();
     }
   };
@@ -1207,7 +1276,8 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       $scope.currentCard++;
     }
     else {
-      $rootScope.currentPlayer.takeDrinks(1);
+      for(var i = 0; i < $rootScope.playersToRide; i++)
+        $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
       $scope.currentCard = 0;
@@ -1235,13 +1305,15 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       $scope.currentCard++;
     }
     else if($scope.secondCard.number == firstCardNumber) {
-      $rootScope.currentPlayer.takeDrinks(2);
+      for(var i = 0; i < $rootScope.playersToRide; i++)
+        $rootScope.playersToRide[i].takeDrinks(2);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take 2 Drinks and Restart!";
       $scope.currentCard = 0;
     }
     else {
-      $rootScope.currentPlayer.takeDrinks(1);
+      for(var i = 0; i < $rootScope.playersToRide; i++)
+        $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
       $scope.currentCard = 0;
@@ -1279,13 +1351,15 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       $scope.currentCard++;
     }
     else if($scope.thirdCard.number == lower || $scope.thirdCard.number == upper) {
-      $rootScope.currentPlayer.takeDrinks(2);
+      for(var i = 0; i < $rootScope.playersToRide; i++)
+        $rootScope.playersToRide[i].takeDrinks(2);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take 2 Drinks and Restart!";
       $scope.currentCard = 0;
     }
     else {
-      $rootScope.currentPlayer.takeDrinks(1);
+      for(var i = 0; i < $rootScope.playersToRide; i++)
+        $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
       $scope.currentCard = 0;
@@ -1308,11 +1382,24 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       $scope.currentCard++;
     }
     else {
-      $rootScope.currentPlayer.takeDrinks(1);
+      for(var i = 0; i < $rootScope.playersToRide; i++)
+        $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
       $scope.currentCard = 0;
     }
     $scope.enableNext();
   };
+});
+
+/* final results controller */
+starter.controller('finalResultsCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                              Player) {
+  /* list of players on this controller */
+  $scope.listOfPlayers = $rootScope.players;
+
+  /* go to the home page*/
+  $scope.onClick = function() {
+    $state.go("home");
+  }
 });

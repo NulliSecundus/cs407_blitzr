@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="starter">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
-<body>
 
-</body>
+<ion-view ion-title="finalResults" id="Results" style="background-color: darkcyan">
+  <body>
+  <div class="Row" style="top:3vh; position: absolute">
+    <div class="Column" style="font-family: LobsterRegular; text-align: center; font-size: 15vw;
+        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white;
+        white-space: normal;   text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        1px 1px 0 #000;">Final Results!</div>
+  </div>
+
+  <!-- player results -->
+  <div class="list list-inset" id = "playerResults" style = 'height: 80vh; background-color: darkcyan;
+    position: absolute; top:10vh'>
+    <div class="Row" style="height: 8vh">
+      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
+        white-space: normal;">Player Name</div>
+      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
+        white-space: normal;">Drinks Taken</div>
+      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
+        white-space: normal;">Drinks Given</div>
+    </div>
+    <div class="Row" ng-repeat="player in listOfPlayers" style="height: 7vh">
+      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
+        white-space: normal;">{{listOfPlayers[$index].getName()}}</div>
+      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
+        white-space: normal;">{{listOfPlayers[$index].getTaken()}}</div>
+      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
+        white-space: normal;">{{listOfPlayers[$index].getGiven()}}</div>
+    </div>
+  </div>
+
+    <!-- red or black buttons -->
+    <button class="button" id="goToRideTheBus" ng-click="onClick()" style>Home</button>
+
+  </body>
+</ion-view>
 </html>
