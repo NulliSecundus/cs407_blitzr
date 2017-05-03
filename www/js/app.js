@@ -381,7 +381,7 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
 
   $scope.fbShare = function(){
     window.plugins.socialsharing.shareViaFacebook("", null, null, null);
-  }
+  };
 
   $scope.toPopUp = function() {
     var confirmPopup = $ionicPopup.confirm({
@@ -1493,19 +1493,25 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
 /* final results controller */
 starter.controller('finalResultsCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player, $ionicViewSwitcher) {
-  /* list of players on this controller */
-  $scope.listOfPlayers = $rootScope.players;
 
   console.log("entered sorting");
-  for (var i = 0; i < $scope.listOfPlayers.length; i++) {
-    for (var k = i+1; k < $scope.listOfPlayers.length; k++) {
-      if($scope.listOfPlayers[k].getTaken() > $scope.listOfPlayers[i].getTaken()){
-        var tempPlayer = $scope.listOfPlayers[i];
-        $scope.listOfPlayers[i] = $scope.listOfPlayers[k];
-        $scope.listOfPlayers[k] = tempPlayer;
+  /* sort the list by drinks taken */
+  $scope.sortList = function() {
+    /* list of players on this controller */
+    $scope.listOfPlayers = $rootScope.players;
+    for (var i = 0; i < $scope.listOfPlayers.length; i++) {
+      for (var k = i + 1; k < $scope.listOfPlayers.length; k++) {
+        if ($scope.listOfPlayers[k].getTaken() > $scope.listOfPlayers[i].getTaken()) {
+          var tempPlayer = $scope.listOfPlayers[i];
+          $scope.listOfPlayers[i] = $scope.listOfPlayers[k];
+          $scope.listOfPlayers[k] = tempPlayer;
+        }
       }
     }
-  }
+  };
+
+  /* sort the list */
+  window.onload = $scope.sortList();
 
   /* go to the home page*/
   $scope.onClick = function() {
