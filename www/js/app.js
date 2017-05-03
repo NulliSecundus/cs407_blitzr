@@ -482,21 +482,6 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
         $rootScope.players.push(new Player($scope.listOfPlayers[i].value));
     }
 
-    /* create array for matched player, will be used in wild card round */
-    $rootScope.matchedPlayers = [];
-
-    /* reset the match cards display */
-    $rootScope.matchedPlayersDisplay = [];
-
-    /* cards to be matched */
-    $rootScope.matchCards = [];
-
-    /* store card images for matched cards */
-    $rootScope.cardImages = [];
-
-    /* track current card index for matched round */
-    $rootScope.currentCard = 0;
-
     /* initialize current player to first player */
     $rootScope.currentPlayer = $rootScope.players[0];
 
@@ -515,6 +500,25 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     /* create a new back of card */
     $rootScope.cardBack = new Card("", 0);
     $rootScope.nextCard = $rootScope.cardBack;
+
+    /* VALUES FOR WILD CARD DISPLAY */
+    /* create array for matched player, will be used in wild card round */
+    $rootScope.matchedPlayers = [];
+
+    /* reset the match cards display */
+    $rootScope.matchedPlayersDisplay = [];
+
+    /* cards to be matched */
+    $rootScope.matchCards = [];
+
+    /* store card images for matched cards */
+    $rootScope.cardImages = [];
+
+    /* track current card index for matched round */
+    $rootScope.currentCard = 0;
+
+    /* cards to be prompts match cards are initialized to zero when game starts */
+    $rootScope.matchCardsPrompt = [];
 
     /* only start if at least 1 player has been entered */
     if ($rootScope.players.length > 0) {
@@ -547,13 +551,11 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
     for(var i = 0; i < $rootScope.players.length; i++) {
       console.log($rootScope.players[i].getName(), $rootScope.players[i].getNumCards());
       if($rootScope.players[i].getNumCards() > mostCards) {
-        console.log("has most");
         mostCards = $rootScope.players[i].getNumCards();
         $rootScope.playersToRide = [];
         $rootScope.playersToRide.push($rootScope.players[i]);
       }
       else if($rootScope.players[i].getNumCards() == mostCards) {
-        console.log("tied most");
         $rootScope.playersToRide.push($rootScope.players[i]);
       }
     }
@@ -582,20 +584,17 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
     if($rootScope.roundNumber == 5) {
       document.getElementById("roundNumber").style.visibility = "hidden";
       document.getElementById("nextPlayer").style.visibility = "hidden";
-      document.getElementById("rtbPlayers").style.visibility = "hidden";
       $rootScope.roundName = "Wild Card Round!"
     }
     else if($rootScope.roundNumber == 6) {
       $scope.findPlayerToRide();
       document.getElementById("roundNumber").style.visibility = "hidden";
       document.getElementById("nextPlayer").style.visibility = "hidden";
-      document.getElementById("rtbPlayers").style.visibility = "visible";
-      $rootScope.roundName = "Ride The Bus!"
+      $rootScope.roundName = $rootScope.rtbDisplay;
     }
     else {
       document.getElementById("roundNumber").style.visibility = "visible";
       document.getElementById("nextPlayer").style.visibility = "visible";
-      document.getElementById("rtbPlayers").style.visibility = "hidden";
     }
   };
 
@@ -1109,7 +1108,7 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
     $scope.initialized = true;
 
     /* cards to be prompts match cards are initialized to zero when game starts */
-    $scope.matchCardsPrompt = [];
+    $rootScope.matchCardsPrompt = [];
 
     /* store card images */
     $rootScope.cardImages = [];
@@ -1135,16 +1134,16 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
           $rootScope.matchCards[i].image = $rootScope.cardBack.image;
           var drinks = (Math.floor(i / 2 + 1)).toString();
           if (i == 0) {
-            $scope.matchCardsPrompt[i] = "Give " + drinks + "\nDrink"
+            $rootScope.matchCardsPrompt[i] = "Give " + drinks + "\nDrink"
           }
           else if (i == 1) {
-            $scope.matchCardsPrompt[i] = "Take " + drinks + "\nDrink"
+            $rootScope.matchCardsPrompt[i] = "Take " + drinks + "\nDrink"
           }
           else if (i % 2 == 0) {
-            $scope.matchCardsPrompt[i] = "Give " + drinks + "\nDrinks"
+            $rootScope.matchCardsPrompt[i] = "Give " + drinks + "\nDrinks"
           }
           else {
-            $scope.matchCardsPrompt[i] = "Take " + drinks + "\nDrinks"
+            $rootScope.matchCardsPrompt[i] = "Take " + drinks + "\nDrinks"
           }
       }
       /* card is a duplicate, do not add it and get another card */
