@@ -329,11 +329,13 @@ starter.config(function($stateProvider, $urlRouterProvider) {
 });
 
 /* main page controller */
-starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoading) {
+starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoading, $ionicViewSwitcher) {
   $scope.toPlayersState = function() {
+    $ionicViewSwitcher.nextDirection('forward');
     $state.go("players");
   }
   $scope.toSettings = function() {
+    $ionicViewSwitcher.nextDirection('forward');
     $state.go("settings");
   }
 });
@@ -342,15 +344,19 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
 starter.controller('settingsCtrl', function($scope, $state, $ionicModal, $ionicLoading, $ionicViewSwitcher) {
 
   $scope.toHome = function() {
+    $ionicViewSwitcher.nextDirection('back');
     $state.go("home");
   };
   $scope.toInstructions = function() {
+    $ionicViewSwitcher.nextDirection('forward');
     $state.go("instructions");
   };
   $scope.toGameSettings = function() {
+    $ionicViewSwitcher.nextDirection('forward');
     $state.go("gameSettings")
   };
   $scope.toAboutUs = function() {
+    $ionicViewSwitcher.nextDirection('forward');
     $state.go("aboutUs");
   }
 });
@@ -359,6 +365,7 @@ starter.controller('settingsCtrl', function($scope, $state, $ionicModal, $ionicL
 starter.controller('instructionsCtrl', function($scope, $state, $ionicModal, $ionicLoading, $ionicViewSwitcher) {
 
   $scope.toSettings = function() {
+    $ionicViewSwitcher.nextDirection('back');
     $state.go('settings');
   };
 });
@@ -367,6 +374,7 @@ starter.controller('instructionsCtrl', function($scope, $state, $ionicModal, $io
 starter.controller('gameSettingsCtrl', function($scope, $state, $ionicModal, $ionicLoading, $ionicViewSwitcher) {
 
   $scope.toSettings = function() {
+    $ionicViewSwitcher.nextDirection('back');
     $state.go('settings');
   };
 });
@@ -375,15 +383,17 @@ starter.controller('gameSettingsCtrl', function($scope, $state, $ionicModal, $io
 starter.controller('aboutUsCtrl', function($scope, $state, $ionicModal, $ionicLoading, $ionicViewSwitcher) {
 
   $scope.toSettings = function() {
+    $ionicViewSwitcher.nextDirection('back');
     $state.go('settings');
   };
 });
 
 /* players pane controller */
 starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading,
-                                           Card, CardDeck, Player) {
+                                           Card, CardDeck, Player, $ionicViewSwitcher) {
   /* back to home page */
   $scope.toHome = function() {
+    $ionicViewSwitcher.nextDirection('back');
     $state.go("home");
   };
 
@@ -448,7 +458,7 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
 
 /* correct or wrong controller, also determines next state based on round */
 starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                                   Player) {
+                                                   Player, $ionicViewSwitcher) {
 
   /* check the round to set special displays */
   $scope.checkRound = function () {
@@ -493,7 +503,7 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
 });
 
 starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                                     Player) {
+                                                     Player, $ionicViewSwitcher) {
   /* enable next player button and disable player buttons */
   $scope.enableNext = function() {
     document.getElementById("giveTransButton").disabled = false;
@@ -586,7 +596,7 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
 
 /* first round (guess color) controller */
 starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                              Player){
+                                              Player, $ionicViewSwitcher){
 
   /* get the next card from the deck */
   $scope.getCard = function() {
@@ -669,7 +679,7 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
 
 /* second round (guess higher or lower) controller */
 starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                              Player) {
+                                              Player, $ionicViewSwitcher) {
 
   /* get the next card from the deck */
   $scope.getCard = function() {
@@ -761,7 +771,7 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
 
 /* third round (guess in or out) controller */
 starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                             Player) {
+                                             Player, $ionicViewSwitcher) {
 
   /* get the next card from the deck */
   $scope.getCard = function() {
@@ -862,7 +872,7 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
 
 /* fourth round (guess suit) controller */
 starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                             Player) {
+                                             Player, $ionicViewSwitcher) {
 
   /* get the next card from the deck */
   $scope.getCard = function() {
@@ -950,7 +960,7 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
 
 /* match cards controller */
 starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                              Player) {
+                                              Player, $ionicViewSwitcher) {
 
   /* get the next card from the deck */
   $scope.getCard = function() {
@@ -1122,7 +1132,7 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
 
 /* ride the bus controller */
 starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                              Player) {
+                                              Player, $ionicViewSwitcher) {
 
   /* new card deck for Riding the Bus */
   $scope.deck = new CardDeck();
