@@ -3,6 +3,7 @@
 
   #home_title {
     font-family: LobsterRegular;
+    margin-top: 5vh;
     font-size: 35vw;
     font-weight: bold;
     font-style: normal;
@@ -74,15 +75,32 @@
     z-index: 2;
   }
 
-  #fbButton {
-    margin-top: 54vw;
-    margin-left: 25vw;
-    width: 50vw;
-    z-index: 2;
+  #twitter {
+    margin-top: 52vw;
+    margin-left: 30vw;
+    background-color: #eeeeee;
+    color: deepskyblue;
+    z-index: 4;
+  }
+
+  i.ion-social-twitter {
+    font-size: 45px;
+  }
+
+  #fb {
+    margin-top: -13vw;
+    margin-left: 54vw;
+    background-color: #4b8bf4;
+    color: white;
+    z-index: 4;
+  }
+
+  i2.ion-social-facebook {
+    font-size: 35px;
   }
 
   .popup-container {
-    background-color: darkcyan;
+    background-color: palegoldenrod;
   }
 }
 
@@ -163,10 +181,8 @@
 }
 
 /* Players Screen */
-
 #playerList {
   margin-top: 40vh;
-
 }
 
 @media screen and (orientation: portrait) {
@@ -175,34 +191,21 @@
     font-size: 8vh;
     color: white;
     margin-left: 4vw;
+    margin-top: 2vh;
   }
 
-  #players_title {
-    font-family: LobsterRegular;
-    font-size: 35vw;
-    font-weight: bold;
-    font-style: normal;
+  #playerList {
     margin-top: 0vh;
-    text-align: center;
-    color: white;
-    text-shadow: 3px 3px 0 #000,
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
+    background-color: darkcyan;
   }
-
-#playerList {
-  margin-top: 0vh;
-  background-color: darkcyan;
-}
 
   #goToRideTheBus {
     position: absolute;
     width: 50vw;
+    height: 5vh;
     left: 50%;
     transform: translate(-50%);
-    bottom: 5vh;
+    bottom: 3vh;
     font-family: Helvetica;
     font-style: italic;
     font-weight: bold;
@@ -294,7 +297,6 @@
   1px 1px 0 #000;
   clear: both;
   display: inline-block;
-  overflow: hidden;
   white-space: nowrap;
 }
 
@@ -315,7 +317,26 @@
   1px 1px 0 #000;
   clear: both;
   display: inline-block;
-  overflow: hidden;
+  white-space: nowrap;
+}
+
+#rtbPlayers {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 7vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 60vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
   white-space: nowrap;
 }
 
@@ -336,7 +357,6 @@
   1px 1px 0 #000;
   clear: both;
   display: inline-block;
-  overflow: hidden;
   white-space: nowrap;
 }
 
@@ -350,12 +370,13 @@
   color: white;
   left: 50%;
   transform: translate(-50%);
-  top: 35vh;
+  top: 40vh;
   text-shadow: 3px 3px 0 #000,
   -1px -1px 0 #000,
   1px -1px 0 #000,
   -1px 1px 0 #000,
   1px 1px 0 #000;
+  z-index: 2;
 }
 
 #takeOrGive {
@@ -367,7 +388,7 @@
   color: white;
   left: 50%;
   transform: translate(-50%);
-  top: 45vh;
+  top: 50vh;
   text-shadow: 3px 3px 0 #000,
   -1px -1px 0 #000,
   1px -1px 0 #000,
@@ -375,7 +396,104 @@
   1px 1px 0 #000;
   clear: both;
   display: inline-block;
-  overflow: hidden;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+/* give drinks */
+.Row {
+  height: 10vh;
+  display: table;
+  width: 100%; /*Optional*/
+  table-layout: fixed; /*Optional*/
+  border-spacing: 1vh; /*Optional*/
+}
+.Column {
+  display: table-cell;
+  background-color: white; /*Optional*/
+  border: 1vh solid black;
+}
+
+#player_list_title {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 10vw;
+  font-weight: bold;
+  font-style: normal;
+  margin-top: 5vh;
+  text-align: center;
+  color: white;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}
+
+#player_list_disp {
+  margin-left: 15vw;
+  width: 70vw;
+  font-family: Helvetica;
+  font-style: italic;
+  font-weight: bold;
+  background-color: white;
+  color: black;
+  border: 1vh solid black;
+}
+
+#give_drink_counter {
+  font-family: LobsterRegular;
+  font-size: 7vw;
+  font-weight: bold;
+  font-style: normal;
+  margin-top: 20vh;
+  margin-bottom: 2vh;
+  text-align: center;
+  color: white;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+}
+
+#playerToDrink {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 10vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 77vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+#giveDrinksContinue {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 12vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 87vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
   white-space: nowrap;
 }
 
@@ -386,6 +504,7 @@
     position: absolute;
     font-family: LobsterRegular;
     font-size: 20vw;
+    margin-top: 5vh;
     font-weight: bold;
     font-style: normal;
     text-align: center;
@@ -444,36 +563,6 @@
     1px 1px 0 #000;
   }
 
-  #red_button {
-    position: absolute;
-    height: 10vh;
-    width: 40vw;
-    margin-left: 5vw;
-    top: 45vh;
-    font-family: Helvetica;
-    font-style: italic;
-    font-weight: bold;
-    font-size: 5vh;
-    background-color: red;
-    color: white;
-    border: 1vh solid white;
-  }
-
-  #black_button {
-    position: absolute;
-    height: 10vh;
-    width: 40vw;
-    margin-left: 55vw;
-    top: 45vh;
-    font-family: Helvetica;
-    font-style: italic;
-    font-weight: bold;
-    font-size: 5vh;
-    background-color: black;
-    color: white;
-    border: 1vh solid white;
-  }
-
   #cardBack1 {
     position: absolute;
     height: 30vh;
@@ -521,36 +610,6 @@
   }
 }
 
-/* over or under */
-#over_button {
-  position: absolute;
-  height: 10vh;
-  width: 40vw;
-  margin-left: 5vw;
-  top: 45vh;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 4vh;
-  background-color: white;
-  color: black;
-  border: 1vh solid black;
-}
-
-#under_button {
-  position: absolute;
-  height: 10vh;
-  width: 40vw;
-  margin-left: 55vw;
-  top: 45vh;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 4vh;
-  background-color: white;
-  color: black;
-  border: 1vh solid black;
-}
 
 #cardBack2 {
   position: absolute;
@@ -575,70 +634,23 @@
   margin-left: 11vw;
 }
 
-/* guess suit */
-#spades_button {
-  position: absolute;
-  height: 10vh;
-  width: 35vw;
-  margin-left: 5vw;
-  top: 43vh;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 6vw;
-  background-color: white;
-  color: black;
-  border: 1vh solid black;
-}
-
-#hearts_button {
-  position: absolute;
-  height: 10vh;
-  width: 35vw;
-  top: 43vh;
-  margin-left: 60vw;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 6vw;
-  background-color: white;
-  color: red;
-  border: 1vh solid red;
-}
-
-#clubs_button {
-  position: absolute;
-  height: 10vh;
-  width: 35vw;
-  margin-left: 60vw;
-  top: 55vh;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 6vw;
-  background-color: white;
-  color: black;
-  border: 1vh solid black;
-}
-
-#diamonds_button {
-  position: absolute;
-  height: 10vh;
-  width: 35vw;
-  margin-left: 5vw;
-  top: 55vh;
-  font-family: Helvetica;
-  font-style: italic;
-  font-weight: bold;
-  font-size: 5vw;
-  background-color: white;
-  color: red;
-  border: 1vh solid red;
-}
 
 #hand3 {
   position: absolute;
   height: 20vh;
   top: 70%;
   margin-left: 17vw;
+}
+
+/* Game Settings */
+
+#emailButton {
+  margin-top: 20vw;
+  margin-left: 40vw;
+  background-color: #eeeeee;
+  z-index: 3;
+}
+
+i.ion-email {
+  font-size: 60px;
 }

@@ -7,15 +7,6 @@
 
   <link rel="manifest" href="manifest.json">
 
-  <!-- un-comment this code to enable service worker
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('service-worker.js')
-        .then(() => console.log('service worker installed'))
-        .catch(err => console.log('Error', err));
-    }
-  </script>-->
-
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
   <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/lobster" type="text/css">
@@ -34,10 +25,18 @@
   <!-- your app's js -->
   <script src="js/app.js"></script>
 </head>
-<ion-view ion-title="players" id="players">
+<ion-view ion-title="gameSettings" id="gameSettings" style="background-color: darkcyan">
   <body>
-    <h1>players</h1>
-    <button class="button" id="players_to_home" ng-click="toHome()">Home</button>
+  <i class="icon ion-ios-arrow-back" id="players_back" ng-click="toSettings()" style="margin-top: 2vh"></i>
+  <h1 id = "home_title" style="font-size: 10vh; margin-top: 7vh">Game Settings</h1>
+  <br>
+  <p style="align-content: center; text-align: center; font-size: 3vh; margin-right: 3vw; color: white">
+  Game settings coming soon!
+  </p>
+  <p style="align-content: center; text-align: center; font-size: 3vh; margin-right: 3vw; color: white">
+    If you have any suggestions, let us know!
+  </p>
+  <i class="button ion-email" id="emailButton" ng-click="sendFeedback()"></i>
   </body>
 </ion-view>
 </html>

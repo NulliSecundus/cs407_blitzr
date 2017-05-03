@@ -25,14 +25,15 @@
     <ion-content>
     <body style="background-color: darkcyan">
       <ion-nav-view></ion-nav-view>
+      <i class="icon ion-ios-information" style= "position: absolute; font-size: 4vh; color: white;
+      margin-left: 90vw;" ng-click="toSettings()" style="margin-top: 2vh" ng-click=toSettings()"></i>
       <div class="rectangle" id="home_background_shape1"></div>
       <div class="rectangle" id="home_background_shape2"></div>
       <h1 id="home_title">Blitzr</h1>
       <button class="button" id="start_ride_the_bus" ng-click="toPlayersState()">Ride The Bus</button>
       <button class="button" id="home_fake_button">Get Blitz'd</button>
-      <button class="button button-block button-positive" id ="fbButton" ng-click="fbLogin()">
-        Login with Facebook
-      </button>
+      <i class="button ion-social-twitter" id="twitter" ng-click="twitterShare()"></i>
+      <i2 class="button ion-social-facebook" id="fb" ng-click="fbShare()"></i2>
     </body>
     </ion-content>
 </ion-view>

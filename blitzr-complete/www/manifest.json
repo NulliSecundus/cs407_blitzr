@@ -1,7 +1,7 @@
 {
-  "name": "My Ionic App",
-  "short_name": "My Ionic App",
-  "start_url": "index.html",
+  "name": "Blitzr",
+  "short_name": "Blitzr",
+  "start_url": "home.html",
   "display": "standalone",
   "icons": [{
     "src": "icon.png",

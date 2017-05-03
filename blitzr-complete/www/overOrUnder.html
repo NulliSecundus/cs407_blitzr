@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="starter">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+
+<ion-view ion-title="overOrUnder" id="overOrUnder" style="background-color: darkcyan">
+  <body>
+  <h1 id="rideTheBus_title">Ride The Bus!</h1>
+
+  <!-- display the current player information -->
+  <h1 id="displayName">Current Player: {{currentPlayer.getName()}}</h1>
+  <h1 id="displayTaken">Drinks Taken: {{currentPlayer.getTaken()}}</h1>
+  <h1 id="displayGiven">Drinks Given: {{currentPlayer.getGiven()}}</h1>
+
+  <!-- higher or lower buttons -->
+  <div>
+    <div class="list list-inset" id = "overOrUnderOptions" style = 'height: 10vh; background-color: darkcyan; top: 45vh'>
+      <div class="Row">
+        <div class="Column" id="over_button" ng-click="overOrUnder('over')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid black; background-color: white; color: black">HIGHER</div>
+        <div class="Column" id="under_button" ng-click="overOrUnder('under')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid black; background-color: white; color: black">LOWER</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- display the round number and name -->
+  <h1 id="correctOrWrong">{{correctOrWrong}}</h1>
+  <h1 id="takeOrGive">{{takeOrGive}}</h1>
+  <button class="button" id="overOrUnderTransButton" ng-click="toNextPlayer()" style="width: 100vw;
+    height: 100vh; background: transparent; position:absolute; z-index: 2"></button>
+
+  <!-- over or under display
+  <button class ="button-balanced" id="over_button" ng-click="overOrUnder('over')">HIGHER</button>
+  <button class ="button-balanced" id="under_button" ng-click="overOrUnder('under')">LOWER</button> -->
+
+  <img src= "{{nextCard.image}}" id= "cardBack2">
+  <img src ="{{currentPlayer.getCards()[0].image}}" id= "hand1">
+
+  </body>
+</ion-view>
+</html>
