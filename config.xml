@@ -49,4 +49,5 @@
     <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
   </platform>
   <icon src="resources/ios/icon/icon-small@3x.png"/>
+  <allow-navigation href="http://10.140.26.21:8100"/>
 </widget>
