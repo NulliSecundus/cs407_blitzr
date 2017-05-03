@@ -352,11 +352,12 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
   $scope.toPlayersState = function() {
     $ionicViewSwitcher.nextDirection('forward');
     $state.go("players");
-  }
+  };
+
   $scope.toSettings = function() {
     $ionicViewSwitcher.nextDirection('forward');
     $state.go("settings");
-  }
+  };
 
   $scope.sendFeedback= function() {
     if(window.plugins && window.plugins.emailComposer) {
@@ -372,10 +373,12 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
         null,                    // Attachments
         null);                   // Attachment Data
     }
-  }
+  };
+
   $scope.twitterShare = function(){
     window.plugins.socialsharing.shareViaTwitter('@Blitzr_Dev_Team', null, null, null, null);
-  }
+  };
+
   $scope.fbShare = function(){
     window.plugins.socialsharing.shareViaFacebook("", null, null, null);
   }
@@ -460,9 +463,9 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
 
     /* create a player for each user input */
     $rootScope.players = [];
-    for(var i = 0; i < $scope.listOfPlayers.length; i++) {
+    for (var i = 0; i < $scope.listOfPlayers.length; i++) {
       /* if the next player isn't null, add it to the list of players */
-      if($scope.listOfPlayers[i].value != null)
+      if ($scope.listOfPlayers[i].value != null)
         $rootScope.players.push(new Player($scope.listOfPlayers[i].value));
     }
 
@@ -491,16 +494,19 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     $rootScope.cardBack = new Card("", 0);
     $rootScope.nextCard = $rootScope.cardBack;
 
+    /* only start if at least 1 player has been entered */
+    if ($rootScope.players.length > 0) {
     /* go to RTB */
     var alertPopup = $ionicPopup.alert({
       title: 'Warning!',
       template: 'Please drink responsibly.'
     });
 
-    alertPopup.then(function(res) {
+    alertPopup.then(function (res) {
       $ionicViewSwitcher.nextDirection('forward');
       $state.go("roundTransition");
     });
+  }
   };
 });
 
