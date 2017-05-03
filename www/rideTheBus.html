@@ -1,7 +1,9 @@
 <ion-view ion-title="rideTheBus" id="rideTheBus" style="background-color: darkcyan">
   <body>
+  <i class="icon ion-ios-home" style= "position: absolute; font-size: 4vh; color: white;
+      margin-left: 2vw; margin-top: 3vh" ng-click="toPopUp()"></i>
 
-  <h1 style="margin-top: 3vh; font-family: LobsterRegular; text-align: center; font-size: 8vw;
+  <h1 style="margin-top: 5vh; font-family: LobsterRegular; text-align: center; font-size: 8vw;
   vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white;
   white-space: normal; text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
   1px 1px 0 #000;">{{rtbDisplay}}</h1>
@@ -9,8 +11,6 @@
   <!-- display the round number and name -->
   <h1 id="correctOrWrong" style="position: absolute; top: 80vh; font-size: 10vw;">{{correctOrWrong}}</h1>
   <h1 id="takeOrGive" style="position: absolute; top: 90vh; font-size: 8vw; white-space: nowrap">{{takeOrGive}}</h1>
-  <i class="icon ion-ios-home" style= "position: absolute; font-size: 4vh; color: white;
-      margin-left: 2vw; margin-top: 1vh" ng-click="toPopUp()"></i>
   <button class="button" id="rtbTransButton" ng-click="loadNextRound()" style="width: 100vw;
     height: 100vh; background: transparent; position:absolute; z-index: 2"></button>
 
