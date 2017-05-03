@@ -336,7 +336,7 @@
   1px 1px 0 #000;
   clear: both;
   display: inline-block;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 #transClick {
