@@ -16,6 +16,22 @@
     1px 1px 0 #000;
   }
 
+  #players_title {
+    font-family: LobsterRegular;
+    margin-top: 5vh;
+    font-size: 15vw;
+    font-weight: bold;
+    font-style: normal;
+    text-align: center;
+    color: white;
+    text-shadow: 3px 3px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;
+    white-space: nowrap;
+  }
+
   #home_background_shape1 {
     position: absolute;
     height: 70vh;

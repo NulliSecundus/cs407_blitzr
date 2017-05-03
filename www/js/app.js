@@ -251,6 +251,7 @@ starter.factory('Player', function() {
   }
 });
 
+/* states, turned off cache for dynamic html */
 starter.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
   .state('home', {
