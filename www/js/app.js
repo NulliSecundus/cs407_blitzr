@@ -1112,37 +1112,36 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
       $scope.getCard();
       $scope.cardImages[i] = $rootScope.nextCard.image;
 
-      //dsaf;kljfals;kfja;lksfjksjfkasjdfkasjdfksjfkajsdfjaksdfjdskafjaksdfjaskfjsadkfjdksajfaskdfjdsakfjdaskjfadskksdfjaksdjfkasd
-      if ( i > 0) {
+      /* if the card isn't the first, check if there is a duplicate */
+      if (i > 0) {
         for (var k = 0; k < $scope.matchCards.length; k++) {
           if ($scope.matchCards[k].number == $rootScope.nextCard.number) {
-            duplicates = true;
+            duplicates = true; // it is a duplicate
           }
         }
       }
+      /* if it isn't a duplicate, add it to the list of cards */
       if (!duplicates) {
-
           $scope.matchCards[i] = $rootScope.nextCard;
           console.log($scope.matchCards[i].number);
-
           $scope.matchCards[i].image = $rootScope.cardBack.image;
-        var drinks = (Math.floor(i / 2 + 1)).toString();
+          var drinks = (Math.floor(i / 2 + 1)).toString();
           if (i == 0) {
             $scope.matchCardsPrompt[i] = "Give " + drinks + "\nDrink"
-         }
-         else if (i == 1) {
-          $scope.matchCardsPrompt[i] = "Take " + drinks + "\nDrink"
-        }
-        else if (i % 2 == 0) {
-          $scope.matchCardsPrompt[i] = "Give " + drinks + "\nDrinks"
-        }
-        else {
-          $scope.matchCardsPrompt[i] = "Take " + drinks + "\nDrinks"
-        }
+          }
+          else if (i == 1) {
+            $scope.matchCardsPrompt[i] = "Take " + drinks + "\nDrink"
+          }
+          else if (i % 2 == 0) {
+            $scope.matchCardsPrompt[i] = "Give " + drinks + "\nDrinks"
+          }
+          else {
+            $scope.matchCardsPrompt[i] = "Take " + drinks + "\nDrinks"
+          }
       }
-
+      /* card is a duplicate, do not add it and get another card */
       else {
-        if (i> 0) {
+        if (i > 0) {
           duplicates = false;
           i--;
         }
