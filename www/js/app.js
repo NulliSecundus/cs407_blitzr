@@ -1496,6 +1496,17 @@ starter.controller('finalResultsCtrl', function($rootScope, $scope, $state, $ion
   /* list of players on this controller */
   $scope.listOfPlayers = $rootScope.players;
 
+  console.log("entered sorting");
+  for (var i = 0; i < $scope.listOfPlayers.length; i++) {
+    for (var k = i+1; k < $scope.listOfPlayers.length; k++) {
+      if($scope.listOfPlayers[k].getTaken() > $scope.listOfPlayers[i].getTaken()){
+        var tempPlayer = $scope.listOfPlayers[i];
+        $scope.listOfPlayers[i] = $scope.listOfPlayers[k];
+        $scope.listOfPlayers[k] = tempPlayer;
+      }
+    }
+  }
+
   /* go to the home page*/
   $scope.onClick = function() {
     $ionicViewSwitcher.nextDirection('forward');
