@@ -470,6 +470,7 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     $rootScope.nextCard = $rootScope.cardBack;
 
     /* go to RTB */
+    $ionicViewSwitcher.nextDirection('forward');
     $state.go("roundTransition");
   };
 });
@@ -551,6 +552,8 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
     /* reset correct/wrong and take/give displays */
     $rootScope.correctOrWrong = "";
     $rootScope.takeOrGive = "";
+
+    $ionicViewSwitcher.nextDirection('forward');
 
     /* go to the next round and/or player */
     if ($rootScope.roundNumber == 1)
@@ -636,6 +639,7 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
 
   /* go to the next page */
   $scope.toNextPlayer = function() {
+    $ionicViewSwitcher.nextDirection('forward');
     /* if there are no drinks left to give, and it isn't the matching round, go to the round transition page */
     if($scope.remainingDrinks == 0 && $scope.matchingRound == false)
       $state.go("roundTransition");
@@ -736,6 +740,7 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
       $rootScope.roundName = "Higher or Lower?";
 
     /* go to the give drinks page if there are drinks to give, otherwise the transition page */
+    $ionicViewSwitcher.nextDirection('forward');
     if($rootScope.previousPlayer.getDrinksToGive() > 0)
       $state.go("givePlayersDrinks");
     else
@@ -828,6 +833,7 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
       $rootScope.roundName = "Inside or Outside?";
 
     /* go to the give drinks page if there are drinks to give, otherwise the transition page */
+    $ionicViewSwitcher.nextDirection('forward');
     if($rootScope.previousPlayer.getDrinksToGive() > 0)
       $state.go("givePlayersDrinks");
     else
@@ -929,6 +935,7 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
       $rootScope.roundName = "Guess the Suit!";
 
     /* go to the give drinks page if there are drinks to give, otherwise the transition page */
+    $ionicViewSwitcher.nextDirection('forward');
     if($rootScope.previousPlayer.getDrinksToGive() > 0)
       $state.go("givePlayersDrinks");
     else
@@ -1017,6 +1024,7 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
     }
 
     /* go to the give drinks page if there are drinks to give, otherwise the transition page */
+    $ionicViewSwitcher.nextDirection('forward');
     if($rootScope.previousPlayer.getDrinksToGive() > 0)
       $state.go("givePlayersDrinks");
     else
@@ -1184,6 +1192,7 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
     }
     /* go to give drinks page if there are drinks to give, otherwise reset display (more cards) or go to round transition
       * (no more cards) */
+    $ionicViewSwitcher.nextDirection('forward');
     if (($rootScope.matchedPlayers[0] != null) && (($scope.currentCard - 1) % 2 == 0)) {
       $state.go("givePlayersDrinks");
     }
@@ -1243,6 +1252,7 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       document.getElementById("suitOptions").style.visibility = "visible";
     }
     else {
+      $ionicViewSwitcher.nextDirection('forward');
       $state.go("finalResults");
     }
   };
@@ -1404,12 +1414,13 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
 
 /* final results controller */
 starter.controller('finalResultsCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
-                                              Player) {
+                                              Player, $ionicViewSwitcher) {
   /* list of players on this controller */
   $scope.listOfPlayers = $rootScope.players;
 
   /* go to the home page*/
   $scope.onClick = function() {
+    $ionicViewSwitcher.nextDirection('forward');
     $state.go("home");
   }
 });
