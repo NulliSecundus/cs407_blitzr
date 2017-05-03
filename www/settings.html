@@ -31,13 +31,35 @@
   <h1 id = "home_title" style="font-size: 10vh; margin-top: 7vh">Settings</h1>
 
 
-  <div style = "align-content: center">
-  <button class="button" id="goToInstructions" ng-click="toInstructions()">Instructions</button>
-  <br><br>
-  <button class="button" id="goToGameSettings" ng-click="toGameSettings()">Game Settings</button>
-  <br><br>
-  <button class="button" id="goToAboutUs" ng-click="toAboutUs()">About us</button>
+  <!--<button class="button" id="goToInstructions" ng-click="toInstructions()" style="width: 50vw">Instructions</button>-->
+  <!--<br><br>-->
+  <!--<button class="button" id="goToGameSettings" ng-click="toGameSettings()">Game Settings</button>-->
+  <!--<br><br>-->
+  <!--<button class="button" id="goToAboutUs" ng-click="toAboutUs()">About us</button>-->
+
+
+  <div>
+    <div class="list list-inset" id = "colorOptions" style = 'height: 30vh; background-color: darkcyan; top: 5vh'>
+      <div class="Row">
+        <div class="Column" ng-click="toInstructions()" style=" font-family: Helvetica;
+        font-style: italic; font-weight: normal; text-align: center; font-size: 5vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid white; background-color: lightgreen; color: black; font-family: LobsterRegular;">Instructions</div>
+      </div>
+      <div class="Row">
+        <div class="Column" ng-click="toGameSettings()" style=" font-family: Helvetica;
+        font-style: italic; font-weight: normal; text-align: center; font-size: 5vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid white; background-color: lightgreen; color: black; font-family: LobsterRegular;">Game Settings</div>
+      </div>
+      <div class="Row">
+        <div class="Column" ng-click="toAboutUs()" style=" font-family: Helvetica;
+        font-style: italic; font-weight: normal; text-align: center; font-size: 5vh; white-space: nowrap;
+        vertical-align: middle; border: 1vw solid white; background-color: lightgreen; color: black; font-family: LobsterRegular;">About Us</div>
+      </div>
+    </div>
   </div>
+
+
+
   </body>
 </ion-view>
 </html>
