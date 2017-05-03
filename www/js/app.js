@@ -1296,7 +1296,7 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       $scope.currentCard++;
     }
     else {
-      for(var i = 0; i < $rootScope.playersToRide; i++)
+      for(var i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
@@ -1325,14 +1325,14 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       $scope.currentCard++;
     }
     else if($scope.secondCard.number == firstCardNumber) {
-      for(var i = 0; i < $rootScope.playersToRide; i++)
+      for(var i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(2);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take 2 Drinks and Restart!";
       $scope.currentCard = 0;
     }
     else {
-      for(var i = 0; i < $rootScope.playersToRide; i++)
+      for(i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
@@ -1371,14 +1371,14 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       $scope.currentCard++;
     }
     else if($scope.thirdCard.number == lower || $scope.thirdCard.number == upper) {
-      for(var i = 0; i < $rootScope.playersToRide; i++)
+      for(var i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(2);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take 2 Drinks and Restart!";
       $scope.currentCard = 0;
     }
     else {
-      for(var i = 0; i < $rootScope.playersToRide; i++)
+      for(var i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
@@ -1402,7 +1402,7 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       $scope.currentCard++;
     }
     else {
-      for(var i = 0; i < $rootScope.playersToRide; i++)
+      for(var i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
