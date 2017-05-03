@@ -455,7 +455,7 @@
 #playerToDrink {
   position: absolute;
   font-family: LobsterRegular;
-  font-size: 10vw;
+  font-size: 8vw;
   font-style: normal;
   text-align: center;
   color: white;
@@ -535,7 +535,7 @@
     text-align: left;
     margin-left: 5vw;
     color: white;
-    top: 35vh;
+    top: 37vh;
     text-shadow: 3px 3px 0 #000,
     -1px -1px 0 #000,
     1px -1px 0 #000,
@@ -550,7 +550,7 @@
     text-align: left;
     margin-left: 55vw;
     color: white;
-    top: 35vh;
+    top: 37vh;
     text-shadow: 3px 3px 0 #000,
     -1px -1px 0 #000,
     1px -1px 0 #000,

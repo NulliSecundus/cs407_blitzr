@@ -305,7 +305,7 @@ starter.config(function($stateProvider, $urlRouterProvider) {
       url: '/matchCards',
       controller: 'matchCardsCtrl',
       templateUrl: 'matchCards.html',
-      cache: true
+      cache: false
     })
     .state('rideTheBus', {
       url: '/rideTheBus',
@@ -468,7 +468,7 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
 
   /* remove player */
   $scope.removePlayer = function (index) {
-    $scope.listOfPlayers.splice(index, 1);
+      $scope.listOfPlayers.splice(index, 1);
   };
 
   /* start RTB, store player names */
@@ -487,6 +487,15 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
 
     /* reset the match cards display */
     $rootScope.matchedPlayersDisplay = [];
+
+    /* cards to be matched */
+    $rootScope.matchCards = [];
+
+    /* store card images for matched cards */
+    $rootScope.cardImages = [];
+
+    /* track current card index for matched round */
+    $rootScope.currentCard = 0;
 
     /* initialize current player to first player */
     $rootScope.currentPlayer = $rootScope.players[0];
@@ -1099,32 +1108,31 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
     /* track that it has been initialized */
     $scope.initialized = true;
 
-    /* cards to be matched, prompts */
-    $scope.matchCards = [];
+    /* cards to be prompts match cards are initialized to zero when game starts */
     $scope.matchCardsPrompt = [];
 
     /* store card images */
-    $scope.cardImages = [];
+    $rootScope.cardImages = [];
 
     /* get the number of cards to be flipped over, initialize image to card back */
     var duplicates = false;
     for(var i = 0; i < 8; i++) {
       $scope.getCard();
-      $scope.cardImages[i] = $rootScope.nextCard.image;
+      $rootScope.cardImages[i] = $rootScope.nextCard.image;
 
       /* if the card isn't the first, check if there is a duplicate */
       if (i > 0) {
-        for (var k = 0; k < $scope.matchCards.length; k++) {
-          if ($scope.matchCards[k].number == $rootScope.nextCard.number) {
+        for (var k = 0; k < $rootScope.matchCards.length; k++) {
+          if ($rootScope.matchCards[k].number == $rootScope.nextCard.number) {
             duplicates = true; // it is a duplicate
           }
         }
       }
       /* if it isn't a duplicate, add it to the list of cards */
       if (!duplicates) {
-          $scope.matchCards[i] = $rootScope.nextCard;
-          console.log($scope.matchCards[i].number);
-          $scope.matchCards[i].image = $rootScope.cardBack.image;
+          $rootScope.matchCards[i] = $rootScope.nextCard;
+          console.log($rootScope.matchCards[i].number);
+          $rootScope.matchCards[i].image = $rootScope.cardBack.image;
           var drinks = (Math.floor(i / 2 + 1)).toString();
           if (i == 0) {
             $scope.matchCardsPrompt[i] = "Give " + drinks + "\nDrink"
@@ -1148,12 +1156,12 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
       }
     }
 
-    /* track current card index */
-    $scope.currentCard = 0;
+    /* track current card index for matched round */
+    $rootScope.currentCard = 0;
   };
 
   /* initialize the wild card round if necessary */
-  if($scope.initialized != true)
+  if($scope.initialized != true &&  $rootScope.matchCards.length == 0)
     $scope.init();
 
   /* reset display */
@@ -1198,13 +1206,13 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
   /* flip the next card */
   $scope.flipCard = function() {
       /* get the next card and assign to flipped card */
-      $scope.matchCards[$scope.currentCard].image = $scope.cardImages[$scope.currentCard];
+      $rootScope.matchCards[$rootScope.currentCard].image = $rootScope.cardImages[$rootScope.currentCard];
 
       /* determine which player has the card and add them to the list if they do */
       for (var i = 0; i < $rootScope.players.length; i++) {
         /* get the number of matches and drinks for a round and player */
-        var numMatches = $rootScope.players[i].matchedCard($scope.matchCards[$scope.currentCard]);
-        var numDrinks = numMatches * Math.floor($scope.currentCard / 2 + 1);
+        var numMatches = $rootScope.players[i].matchedCard($rootScope.matchCards[$rootScope.currentCard]);
+        var numDrinks = numMatches * Math.floor($rootScope.currentCard / 2 + 1);
 
         /* if the number of matches is greater than zero, give or take drinks appropriately */
         if (numMatches > 0) {
@@ -1213,7 +1221,7 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
           $scope.matchedPlayersDrinks.push(numDrinks);
 
           /* if the round is even, the player has drinks to give, otherwise they have drinks to take */
-          if ($scope.currentCard % 2 == 0)
+          if ($rootScope.currentCard % 2 == 0)
             $rootScope.players[i].giveDrinks(numDrinks);
           else
             $rootScope.players[i].takeDrinks(numDrinks);
@@ -1221,7 +1229,7 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
       }
 
       /* set the proper give/take display */
-      if ($scope.currentCard % 2 == 0)
+      if ($rootScope.currentCard % 2 == 0)
         $scope.giveOrTakeDisplay = " Give ";
       else
         $scope.giveOrTakeDisplay = " Take ";
@@ -1243,28 +1251,28 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
 
       /* set display if no one last card */
       if($rootScope.matchedPlayers.length == 0) {
-        if ($scope.matchCards[$scope.currentCard].number == 1 || $scope.matchCards[$scope.currentCard].number == 8)
-          $rootScope.matchedPlayersDisplay[0] = "No one has an " + $scope.matchCards[$scope.currentCard].rank.toUpperCase();
+        if ($rootScope.matchCards[$rootScope.currentCard].number == 1 || $rootScope.matchCards[$rootScope.currentCard].number == 8)
+          $rootScope.matchedPlayersDisplay[0] = "No one has an " + $rootScope.matchCards[$rootScope.currentCard].rank.toUpperCase();
         else
-          $rootScope.matchedPlayersDisplay[0] = "No one has a " + $scope.matchCards[$scope.currentCard].rank.toUpperCase();
+          $rootScope.matchedPlayersDisplay[0] = "No one has a " + $rootScope.matchCards[$rootScope.currentCard].rank.toUpperCase();
       }
 
       /* enable next state */
       $scope.enableNext();
 
       /* increment current card index */
-      $scope.currentCard++;
+      $rootScope.currentCard++;
     };
 
   $scope.toNextCard = function(){
     /* if the last card has been turned over, increment the round number */
-    if ($scope.currentCard >= $scope.matchCards.length) {
+    if ($rootScope.currentCard >= $rootScope.matchCards.length) {
       $rootScope.roundNumber++;
     }
     /* go to give drinks page if there are drinks to give, otherwise reset display (more cards) or go to round transition
       * (no more cards) */
     $ionicViewSwitcher.nextDirection('forward');
-    if (($rootScope.matchedPlayers[0] != null) && (($scope.currentCard - 1) % 2 == 0)) {
+    if (($rootScope.matchedPlayers[0] != null) && (($rootScope.currentCard - 1) % 2 == 0)) {
       $state.go("givePlayersDrinks");
     }
     else if ($rootScope.roundNumber == 5) {
@@ -1293,7 +1301,7 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     $scope.secondCard = $rootScope.cardBack;
     $scope.thirdCard = $rootScope.cardBack;
     $scope.fourthCard = $rootScope.cardBack;
-    $scope.currentCard = 0;
+    $scope.currentCardRTB = 0;
     document.getElementById("colorOptions").style.visibility = "visible";
     document.getElementById("overOrUnderOptions").style.visibility = "hidden";
     document.getElementById("insideOrOutsideOptions").style.visibility = "hidden";
@@ -1310,16 +1318,16 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     $scope.takeOrGive = "";
     $scope.disableNext();
 
-    if($scope.currentCard == 0) {
+    if($scope.currentCardRTB == 0) {
       $scope.loadRTB();
     }
-    else if($scope.currentCard == 1) {
+    else if($scope.currentCardRTB == 1) {
       document.getElementById("overOrUnderOptions").style.visibility = "visible";
     }
-    else if($scope.currentCard == 2) {
+    else if($scope.currentCardRTB == 2) {
       document.getElementById("insideOrOutsideOptions").style.visibility = "visible";
     }
-    else if($scope.currentCard == 3) {
+    else if($scope.currentCardRTB == 3) {
       document.getElementById("suitOptions").style.visibility = "visible";
     }
     else {
@@ -1364,14 +1372,14 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     if(color == $scope.firstCard.color) {
       $scope.correctOrWrong = "CORRECT!";
       $scope.takeOrGive = "Tap to Continue";
-      $scope.currentCard++;
+      $scope.currentCardRTB++;
     }
     else {
       for(var i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
-      $scope.currentCard = 0;
+      $scope.currentCardRTB = 0;
     }
     $scope.enableNext();
   };
@@ -1393,21 +1401,21 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
       (guess == "under" && $scope.secondCard.number < firstCardNumber)) {
       $scope.correctOrWrong = "CORRECT!";
       $scope.takeOrGive = "Tap to Continue";
-      $scope.currentCard++;
+      $scope.currentCardRTB++;
     }
     else if($scope.secondCard.number == firstCardNumber) {
       for(var i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(2);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take 2 Drinks and Restart!";
-      $scope.currentCard = 0;
+      $scope.currentCardRTB = 0;
     }
     else {
       for(i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
-      $scope.currentCard = 0;
+      $scope.currentCardRTB = 0;
     }
     $scope.enableNext();
   };
@@ -1434,26 +1442,26 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     if(guess == "outside" && ($scope.thirdCard.number < lower || $scope.thirdCard.number > upper)) {
       $scope.correctOrWrong = "CORRECT!";
       $scope.takeOrGive = "Tap to Continue";
-      $scope.currentCard++;
+      $scope.currentCardRTB++;
     }
     else if((guess == "inside" && ($scope.thirdCard.number > lower && $scope.thirdCard.number < upper))) {
       $scope.correctOrWrong = "CORRECT!";
       $scope.takeOrGive = "Tap to Continue";
-      $scope.currentCard++;
+      $scope.currentCardRTB++;
     }
     else if($scope.thirdCard.number == lower || $scope.thirdCard.number == upper) {
       for(var i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(2);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take 2 Drinks and Restart!";
-      $scope.currentCard = 0;
+      $scope.currentCardRTB = 0;
     }
     else {
-      for(var i = 0; i < $rootScope.playersToRide.length; i++)
+      for(i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
-      $scope.currentCard = 0;
+      $scope.currentCardRTB = 0;
     }
     $scope.enableNext();
   };
@@ -1470,14 +1478,14 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
     if(suit == $scope.fourthCard.suit) {
       $scope.correctOrWrong = "CONGRATS!";
       $scope.takeOrGive = "You Have Rode the Bus!";
-      $scope.currentCard++;
+      $scope.currentCardRTB++;
     }
     else {
       for(var i = 0; i < $rootScope.playersToRide.length; i++)
         $rootScope.playersToRide[i].takeDrinks(1);
       $scope.correctOrWrong = "WRONG!";
       $scope.takeOrGive = "Take A Drink and Restart!";
-      $scope.currentCard = 0;
+      $scope.currentCardRTB = 0;
     }
     $scope.enableNext();
   };
