@@ -16,7 +16,7 @@
         <div class="Column" ng-if="matchCards[$index] != null" style="border: 1vh darkcyan; background-color:darkcyan;
               text-align: center">
           <figure>
-            <img src='{{matchCards[$index].image}}' style="height: 17vh">
+            <img ng-src='{{matchCards[$index].image}}' style="height: 17vh">
             <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
               {{matchCardsPrompt[$index]}}</figcaption>
           </figure>
@@ -24,7 +24,7 @@
         <div class="Column" ng-if="matchCards[$index + 1] != null" style="border: 1vh darkcyan;
          background-color:darkcyan; text-align: center">
           <figure>
-            <img src='{{matchCards[$index + 1].image}}' style="height: 17vh">
+            <img ng-src='{{matchCards[$index + 1].image}}' style="height: 17vh">
             <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
               {{matchCardsPrompt[$index + 1]}}</figcaption>
           </figure>
@@ -32,7 +32,7 @@
         <div class="Column" ng-if="matchCards[$index + 2] != null" style="border: 1vh darkcyan;
         background-color:darkcyan; text-align: center">
           <figure>
-            <img src='{{matchCards[$index + 2].image}}' style="height: 17vh">
+            <img ng-src='{{matchCards[$index + 2].image}}' style="height: 17vh">
             <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
               {{matchCardsPrompt[$index + 2]}}</figcaption>
           </figure>
@@ -40,7 +40,7 @@
         <div class="Column" ng-if="matchCards[$index + 3] != null" style="border: 1vh darkcyan;
          background-color:darkcyan; text-align: center">
           <figure>
-            <img src='{{matchCards[$index + 3].image}}' style="height: 17vh">
+            <img ng-src='{{matchCards[$index + 3].image}}' style="height: 17vh">
             <figcaption style="font-family: Helvetica; font-style: italic; font-weight: bold; color: white;">
               {{matchCardsPrompt[$index + 3]}}</figcaption>
           </figure>
