@@ -348,7 +348,7 @@ starter.config(function($stateProvider, $urlRouterProvider) {
 });
 
 /* main page controller */
-starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoading, $ionicViewSwitcher) {
+starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoading, $ionicViewSwitcher, $ionicPopup) {
   $scope.toPlayersState = function() {
     $ionicViewSwitcher.nextDirection('forward');
     $state.go("players");
@@ -381,6 +381,19 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
 
   $scope.fbShare = function(){
     window.plugins.socialsharing.shareViaFacebook("", null, null, null);
+  }
+
+  $scope.toPopUp = function() {
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Quit game?',
+      template: 'Are you sure you want to quit the game? All data will be lost.'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+
+        $state.go('home');
+      }
+  });
   }
 });
 
@@ -499,7 +512,8 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     /* go to RTB */
     var alertPopup = $ionicPopup.alert({
       title: 'Warning!',
-      template: 'Please drink responsibly.'
+      template: 'Please drink responsibly. You and only you are responsible for any consequences that result from using ' +
+      'Blitzr.'
     });
 
     alertPopup.then(function (res) {

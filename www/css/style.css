@@ -97,10 +97,6 @@
   i2.ion-social-facebook {
     font-size: 35px;
   }
-
-  .popup-container {
-    background-color: palegoldenrod;
-  }
 }
 
 @media screen and (orientation: landscape) {
