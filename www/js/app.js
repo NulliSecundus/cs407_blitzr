@@ -1074,8 +1074,10 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
-    if($rootScope.nextCard == null)
-      $rootScope.nextCard = $rootScope.cardBack;
+    if($rootScope.nextCard == null) {
+      $rootScope.deck = new CardDeck();
+      $rootScope.nextCard = $rootScope.deck.getTopCard();
+    }
   };
 
   /* function to initial wild card round */
