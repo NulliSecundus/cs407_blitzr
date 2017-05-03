@@ -291,7 +291,8 @@
   -1px 1px 0 #000,
   1px 1px 0 #000;
   clear: both;
-  display: block;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 #nextPlayer {
@@ -312,6 +313,26 @@
   clear: both;
   display: inline-block;
   white-space: nowrap;
+}
+
+#rtbDisplay {
+  position: absolute;
+  font-family: LobsterRegular;
+  font-size: 10vw;
+  font-style: normal;
+  text-align: center;
+  color: white;
+  left: 50%;
+  transform: translate(-50%);
+  top: 45vh;
+  text-shadow: 3px 3px 0 #000,
+  -1px -1px 0 #000,
+  1px -1px 0 #000,
+  -1px 1px 0 #000,
+  1px 1px 0 #000;
+  clear: both;
+  display: inline-block;
+  white-space: normal;
 }
 
 #rtbPlayers {

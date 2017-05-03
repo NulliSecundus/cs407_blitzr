@@ -229,8 +229,6 @@ starter.factory('Player', function() {
       for(var index = 0; i < indices.length; i++)
         cards.splice(indices[index], 1);
 
-      console.log(this.getName(), this.getNumCards());
-
       /* return number of matches */
       return numMatches;
     }
@@ -478,8 +476,13 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     $rootScope.players = [];
     for (var i = 0; i < $scope.listOfPlayers.length; i++) {
       /* if the next player isn't null, add it to the list of players */
-      if ($scope.listOfPlayers[i].value != null)
+      if ($scope.listOfPlayers[i].value != null) {
+        /* limit the name to 12 characters */
+        if($scope.listOfPlayers[i].value.length > 12) {
+          $scope.listOfPlayers[i].value = $scope.listOfPlayers[i].value.substr(0, 12);
+        }
         $rootScope.players.push(new Player($scope.listOfPlayers[i].value));
+      }
     }
 
     /* initialize current player to first player */
@@ -549,7 +552,6 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
 
     /* find the most cards */
     for(var i = 0; i < $rootScope.players.length; i++) {
-      console.log($rootScope.players[i].getName(), $rootScope.players[i].getNumCards());
       if($rootScope.players[i].getNumCards() > mostCards) {
         mostCards = $rootScope.players[i].getNumCards();
         $rootScope.playersToRide = [];
@@ -559,8 +561,6 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
         $rootScope.playersToRide.push($rootScope.players[i]);
       }
     }
-
-    console.log($rootScope.playersToRide, mostCards);
 
     /* rtb display */
     $rootScope.rtbDisplay = "";
@@ -584,17 +584,20 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
     if($rootScope.roundNumber == 5) {
       document.getElementById("roundNumber").style.visibility = "hidden";
       document.getElementById("nextPlayer").style.visibility = "hidden";
+      document.getElementById("rtbDisplay").style.visibility = "hidden";
       $rootScope.roundName = "Wild Card Round!"
     }
     else if($rootScope.roundNumber == 6) {
       $scope.findPlayerToRide();
       document.getElementById("roundNumber").style.visibility = "hidden";
       document.getElementById("nextPlayer").style.visibility = "hidden";
-      $rootScope.roundName = $rootScope.rtbDisplay;
+      document.getElementById("roundName").style.visibility = "hidden";
+      document.getElementById("rtbDisplay").style.visibility = "visible";
     }
     else {
       document.getElementById("roundNumber").style.visibility = "visible";
       document.getElementById("nextPlayer").style.visibility = "visible";
+      document.getElementById("rtbDisplay").style.visibility = "hidden";
     }
   };
 
@@ -1130,7 +1133,6 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
       /* if it isn't a duplicate, add it to the list of cards */
       if (!duplicates) {
           $rootScope.matchCards[i] = $rootScope.nextCard;
-          console.log($rootScope.matchCards[i].number);
           $rootScope.matchCards[i].image = $rootScope.cardBack.image;
           var drinks = (Math.floor(i / 2 + 1)).toString();
           if (i == 0) {
@@ -1494,7 +1496,6 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
 starter.controller('finalResultsCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
                                               Player, $ionicViewSwitcher) {
 
-  console.log("entered sorting");
   /* sort the list by drinks taken */
   $scope.sortList = function() {
     /* list of players on this controller */
