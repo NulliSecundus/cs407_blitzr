@@ -479,8 +479,8 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
       /* if the next player isn't null, add it to the list of players */
       if ($scope.listOfPlayers[i].value != null) {
         /* limit the name to 12 characters */
-        if($scope.listOfPlayers[i].value.length > 12) {
-          $scope.listOfPlayers[i].value = $scope.listOfPlayers[i].value.substr(0, 12);
+        if($scope.listOfPlayers[i].value.length > 10) {
+          $scope.listOfPlayers[i].value = $scope.listOfPlayers[i].value.substr(0, 9);
         }
         $rootScope.players.push(new Player($scope.listOfPlayers[i].value));
       }
