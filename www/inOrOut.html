@@ -7,23 +7,23 @@
 
 <ion-view ion-title="inOrOut" id="inOrOut" style="background-color: darkcyan" transition="">
   <body>
-  <h1 id="rideTheBus_title">Ride The Bus!</h1>
   <i class="icon ion-ios-home" style= "position: absolute; font-size: 4vh; color: white;
       margin-left: 2vw; margin-top: 3vh" ng-click="toPopUp()"></i>
+  <h1 id="rideTheBus_title">Ride The Bus!</h1>
   <!-- display the current player information -->
-  <h1 id="displayName">Current Player: {{currentPlayer.getName()}}</h1>
-  <h1 id="displayTaken">Drinks Taken: {{currentPlayer.getTaken()}}</h1>
-  <h1 id="displayGiven">Drinks Given: {{currentPlayer.getGiven()}}</h1>
+  <h1 id="displayName">Current Player: {{displayPlayer.getName()}}</h1>
+  <h1 id="displayTaken">Drinks Taken: {{displayPlayer.getTaken()}}</h1>
+  <h1 id="displayGiven">Drinks Given: {{displayPlayer.getGiven()}}</h1>
 
   <!-- inside or outside buttons -->
   <div>
-    <div class="list list-inset" id = "insideOrOutsideOptions" style = 'height: 10vh; background-color: darkcyan; top: 45vh'>
+    <div class="list list-inset" id = "insideOrOutsideOptions">
       <div class="Row">
-        <div class="Column" id="inside_button" ng-click="inOrOut('inside')" style=" font-family: Helvetica;
-        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        <div class="Column button_font" id="inside_button" ng-click="inOrOut('inside')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; white-space: nowrap;
         vertical-align: middle; border: 1vw solid black; background-color: white; color: black">INSIDE</div>
-        <div class="Column" id="outside_button" ng-click="inOrOut('outside')" style=" font-family: Helvetica;
-        font-style: italic; font-weight: bold; text-align: center; font-size: 4vh; white-space: nowrap;
+        <div class="Column button_font" id="outside_button" ng-click="inOrOut('outside')" style=" font-family: Helvetica;
+        font-style: italic; font-weight: bold; text-align: center; white-space: nowrap;
         vertical-align: middle; border: 1vw solid black; background-color: white; color: black">OUTSIDE</div>
       </div>
     </div>
@@ -36,8 +36,8 @@
     height: 100vh; background: transparent; position:absolute; border: solid transparent; z-index: 2"></button>
 
   <img src= "{{nextCard.image}}" id = "cardBack2">
-  <img src ="{{currentPlayer.getCards()[0].image}}" id = "hand1">
-  <img src="{{currentPlayer.getCards()[1].image}}" id="hand2">
+  <img src ="{{displayPlayer.getCards()[0].image}}" id = "hand1">
+  <img src="{{displayPlayer.getCards()[1].image}}" id="hand2">
   </body>
 </ion-view>
 </html>

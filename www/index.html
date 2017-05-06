@@ -7,15 +7,6 @@
 
     <link rel="manifest" href="manifest.json">
 
-    <!-- un-comment this code to enable service worker
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(() => console.log('service worker installed'))
-          .catch(err => console.log('Error', err));
-      }
-    </script>-->
-
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/lobster" type="text/css">
@@ -34,11 +25,6 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
 
-
-    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
-
   </head>
   <body ng-app="starter">
   <div ng-controller="MainCtrl">
@@ -46,17 +32,3 @@
   </div>
   </body>
 </html>
-
-<script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-<script>
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyAzNs23ZNvi51IPlwLgdV6mzfImA8DFyNc",
-    authDomain: "blitzr-30b2c.firebaseapp.com",
-    databaseURL: "https://blitzr-30b2c.firebaseio.com",
-    projectId: "blitzr-30b2c",
-    storageBucket: "blitzr-30b2c.appspot.com",
-    messagingSenderId: "683622209591"
-  };
-  firebase.initializeApp(config);
-</script>

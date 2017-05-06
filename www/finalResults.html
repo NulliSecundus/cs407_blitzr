@@ -8,36 +8,33 @@
 <ion-view ion-title="finalResults" id="Results" style="background-color: darkcyan">
   <body>
   <div class="Row" style="top:3vh; position: absolute">
-    <div class="Column" style="font-family: LobsterRegular; text-align: center; font-size: 15vw;
-        vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white;
-        white-space: normal;   text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-        1px 1px 0 #000;">Final Results!</div>
+    <div class="Column" id="finalResultsTitle">Final Results!</div>
   </div>
 
   <!-- player results -->
-  <div class="list list-inset" id = "playerResults" style = 'height: 80vh; background-color: darkcyan;
-    position: absolute; top:10vh'>
+  <div class="list list-inset results_top" id = "playerResults" style = 'height: 80vh; background-color: darkcyan;
+    position: absolute'>
     <div class="Row" style="height: 8vh">
-      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+      <div class="Column results_font" style="font-family: Helvetica; text-align: center;
         vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
         white-space: normal;">Player Name</div>
-      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+      <div class="Column results_font" style="font-family: Helvetica; text-align: center;
         vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
         white-space: normal;">Drinks Taken</div>
-      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+      <div class="Column results_font" style="font-family: Helvetica; text-align: center;
         vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
         white-space: normal;">Drinks Given</div>
     </div>
 
     <!--Sorting the player list-->
-    <div class="Row" ng-repeat="player in listOfPlayers" style="height: 7vh">
-      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+    <div class="Row resultsRow" ng-repeat="player in listOfPlayers">
+      <div class="Column results_font" style="font-family: Helvetica; text-align: center;
         vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
         white-space: normal;">{{listOfPlayers[$index].getName()}}</div>
-      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+      <div class="Column results_font" style="font-family: Helvetica; text-align: center;
         vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
         white-space: normal;">{{listOfPlayers[$index].getTaken()}}</div>
-      <div class="Column" style="font-family: Helvetica; text-align: center; font-size: 5vw;
+      <div class="Column results_font" style="font-family: Helvetica; text-align: center;
         vertical-align: middle; background-color: darkcyan; border: 1vw darkcyan; color: white; font-weight: bold; font-style: italic;
         white-space: normal;">{{listOfPlayers[$index].getGiven()}}</div>
     </div>

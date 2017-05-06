@@ -12,8 +12,8 @@
 
   <!-- give drink buttons -->
   <div>
-    <div class="list list-inset" id = "givePlayerList" style = 'height: 55vh; background-color: darkcyan'>
-      <div class="Row" ng-repeat="player in listOfPlayers" ng-if="$index%2 == 0">
+    <div class="list list-inset" style = 'height: 55vh; background-color: darkcyan'>
+      <div class="giveRow" ng-repeat="player in listOfPlayers" ng-if="$index%2 == 0">
         <div class="Column" ng-if="listOfPlayers[$index] != null" ng-click="giveDrink(listOfPlayers[$index])"
              style=" font-family: Helvetica; font-style: italic; font-weight: bold; text-align: center; font-size: 3vh;
              white-space: nowrap; vertical-align: middle">{{listOfPlayers[$index].getName()}}: {{listOfPlayers[$index].takenFromGiven}}</div>

@@ -20,6 +20,7 @@ var starter = angular.module('starter', ['ionic'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+
   });
 });
 
@@ -389,7 +390,7 @@ starter.controller('MainCtrl', function($scope, $state, $ionicModal, $ionicLoadi
     });
     confirmPopup.then(function(res) {
       if(res) {
-
+        $ionicViewSwitcher.nextDirection('exit');
         $state.go('home');
       }
   });
@@ -445,12 +446,12 @@ starter.controller('aboutUsCtrl', function($scope, $state, $ionicModal, $ionicLo
 });
 
 /* players pane controller */
-starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading,
-                                           Card, CardDeck, Player, $ionicViewSwitcher, $ionicPopup) {
+starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicModal, $ionicLoading, Card, CardDeck,
+                                           Player, $ionicViewSwitcher, $ionicPopup) {
   /* back to home page */
   $scope.toHome = function() {
     $ionicViewSwitcher.nextDirection('back');
-    $state.go("home");
+    $state.go('home');
   };
 
   /* list of players */
@@ -478,9 +479,9 @@ starter.controller('playersCtrl', function($rootScope, $scope, $state, $ionicMod
     for (var i = 0; i < $scope.listOfPlayers.length; i++) {
       /* if the next player isn't null, add it to the list of players */
       if ($scope.listOfPlayers[i].value != null) {
-        /* limit the name to 12 characters */
+        /* limit the name to 10 characters */
         if($scope.listOfPlayers[i].value.length > 10) {
-          $scope.listOfPlayers[i].value = $scope.listOfPlayers[i].value.substr(0, 9);
+          $scope.listOfPlayers[i].value = $scope.listOfPlayers[i].value.substr(0, 10);
         }
         $rootScope.players.push(new Player($scope.listOfPlayers[i].value));
       }
@@ -582,6 +583,9 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
 
   /* check the round to set special displays */
   $scope.checkRound = function () {
+    /* update current player */
+    $rootScope.currentPlayer = $rootScope.players[$rootScope.currentPlayerNumber - 1];
+
     if($rootScope.roundNumber == 5) {
       document.getElementById("roundNumber").style.visibility = "hidden";
       document.getElementById("nextPlayer").style.visibility = "hidden";
@@ -615,7 +619,6 @@ starter.controller('roundTransitionCtrl', function($rootScope, $scope, $state, $
     $rootScope.takeOrGive = "";
 
     $ionicViewSwitcher.nextDirection('forward');
-
     /* go to the next round and/or player */
     if ($rootScope.roundNumber == 1)
       $state.go("guessColor");
@@ -700,21 +703,28 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
 
   /* go to the next page */
   $scope.toNextPlayer = function() {
+
     $ionicViewSwitcher.nextDirection('forward');
     /* if there are no drinks left to give, and it isn't the matching round, go to the round transition page */
-    if($scope.remainingDrinks == 0 && $scope.matchingRound == false)
+    if($scope.remainingDrinks == 0 && $scope.matchingRound == false) {
+      $ionicViewSwitcher.nextDirection('forward');
       $state.go("roundTransition");
+    }
     /* if there are no drinks left and it is the matching round */
     else if($scope.remainingDrinks == 0 && $scope.matchingRound == true) {
       /* if the last player has picked drinks, remove them from the list */
       if($rootScope.matchedPlayers.length == 1) {
         $rootScope.matchedPlayers.splice(0, 1);
         /* if the last card was flipped in matchCards, go to the round transition page */
-        if($rootScope.roundNumber == 6)
+        if($rootScope.roundNumber == 6) {
+          $ionicViewSwitcher.nextDirection('forward');
           $state.go("roundTransition");
+        }
         /* if the last card hasn't been flipped in matchCards, go to matchCards page */
-        else
+        else {
+          $ionicViewSwitcher.nextDirection('back');
           $state.go("matchCards");
+        }
       }
       /* there is another player left to pick drinks, remove the most recent player and reset the page */
       else {
@@ -748,6 +758,8 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
     document.getElementById("colorTransButton").disabled = true;
     document.getElementById("red_button").style.visibility = "visible";
     document.getElementById("black_button").style.visibility = "visible";
+    /* player to display, added so player does not change on transition */
+    $scope.displayPlayer = $rootScope.players[$rootScope.currentPlayerNumber - 1];
   };
 
   /* every time the page loads, the next player button begins disabled */
@@ -786,11 +798,9 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
     /* determine if the current player is the last in the round, set proper variables */
     if($rootScope.currentPlayerNumber == $rootScope.players.length) {
       $rootScope.currentPlayerNumber = 1;
-      $rootScope.currentPlayer = $rootScope.players[0];
       $rootScope.roundNumber++;
     }
     else {
-      $rootScope.currentPlayer = $rootScope.players[$rootScope.currentPlayerNumber];
       $rootScope.currentPlayerNumber++;
     }
 
@@ -832,6 +842,8 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
     document.getElementById("overOrUnderTransButton").disabled = true;
     document.getElementById("over_button").style.visibility = "visible";
     document.getElementById("under_button").style.visibility = "visible";
+    /* player to display, added so player does not change on transition */
+    $scope.displayPlayer = $rootScope.players[$rootScope.currentPlayerNumber - 1];
   };
 
   /* every time the page loads, the next player button begins disabled */
@@ -879,11 +891,9 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
     /* determine if the current player is the last in the round, set proper variables */
     if($rootScope.currentPlayerNumber == $rootScope.players.length) {
       $rootScope.currentPlayerNumber = 1;
-      $rootScope.currentPlayer = $rootScope.players[0];
       $rootScope.roundNumber++;
     }
     else {
-      $rootScope.currentPlayer = $rootScope.players[$rootScope.currentPlayerNumber];
       $rootScope.currentPlayerNumber++;
     }
 
@@ -925,6 +935,8 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
     document.getElementById("inOrOutTransButton").disabled = true;
     document.getElementById("inside_button").style.visibility = "visible";
     document.getElementById("outside_button").style.visibility = "visible";
+    /* player to display, added so player does not change on transition */
+    $scope.displayPlayer = $rootScope.players[$rootScope.currentPlayerNumber - 1];
   };
 
   /* every time the page loads, the next player button begins disabled */
@@ -981,11 +993,9 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
     /* determine if the current player is the last in the round, set proper variables */
     if($rootScope.currentPlayerNumber == $rootScope.players.length) {
       $rootScope.currentPlayerNumber = 1;
-      $rootScope.currentPlayer = $rootScope.players[0];
       $rootScope.roundNumber++;
     }
     else {
-      $rootScope.currentPlayer = $rootScope.players[$rootScope.currentPlayerNumber];
       $rootScope.currentPlayerNumber++;
     }
 
@@ -1031,6 +1041,8 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
     document.getElementById("hearts_button").style.visibility = "visible";
     document.getElementById("spades_button").style.visibility = "visible";
     document.getElementById("clubs_button").style.visibility = "visible";
+    /* player to display, added so player does not change on transition */
+    $scope.displayPlayer = $rootScope.players[$rootScope.currentPlayerNumber - 1];
   };
 
   /* every time the page loads, the next player button begins disabled */
@@ -1069,11 +1081,9 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
     /* determine if the current player is the last in the round, set proper variables */
     if($rootScope.currentPlayerNumber == $rootScope.players.length) {
       $rootScope.currentPlayerNumber = 1;
-      $rootScope.currentPlayer = $rootScope.players[0];
       $rootScope.roundNumber++;
     }
     else {
-      $rootScope.currentPlayer = $rootScope.players[$rootScope.currentPlayerNumber];
       $rootScope.currentPlayerNumber++;
     }
 
@@ -1517,7 +1527,7 @@ starter.controller('finalResultsCtrl', function($rootScope, $scope, $state, $ion
 
   /* go to the home page*/
   $scope.onClick = function() {
-    $ionicViewSwitcher.nextDirection('forward');
+    $ionicViewSwitcher.nextDirection('exit');
     $state.go("home");
   }
 });

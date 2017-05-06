@@ -13,20 +13,18 @@
 
   <div>
     <div class="list list-inset" id = "playerList" style = 'height: 70vh' style = 'background-color: darkcyan'>
-      <div class="item-input" ng-repeat="player in listOfPlayers"
-           style = 'background-color: darkcyan; height: 5.5vh; margin-bottom: 1vh'>
-
+      <div class="item-input" ng-repeat="player in listOfPlayers" id="playerInList">
         <label class="item-input-wrapper">
-          <input type="text" placeholder="Enter Name" ng-model="player.value"/>
+          <input type="text" id="enterPlayerText" placeholder="Enter Name" ng-model="player.value"/>
         </label>
         <button class="button button-small button-balanced"
                 ng-if="($index == listOfPlayers.length - 1) && listOfPlayers.length < 10" ng-click="addPlayer()">
-          <i class="icon ion-plus"></i>
+          <i class="icon ion-plus" id="plusButton"></i>
         </button>
 
         <button class="button button-small button-assertive" ng-if="$index != listOfPlayers.length && listOfPlayers.length > 1"
                 ng-click="removePlayer($index)">
-          <i class="icon ion-minus"></i>
+          <i class="icon ion-minus" id="minusButton"></i>
         </button>
       </div>
     </div>
