@@ -20,7 +20,6 @@ var starter = angular.module('starter', ['ionic'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
-
   });
 });
 
@@ -57,6 +56,7 @@ starter.factory('Card', function(){
         else
           rank = "back";
 
+        /* track if card has been used */
         used = false;
 
         /* get the image file */
@@ -254,6 +254,7 @@ starter.factory('Player', function() {
 
 /* states, turned off cache for dynamic html */
 starter.config(function($stateProvider, $urlRouterProvider) {
+
   $stateProvider
   .state('home', {
     url: '/blizr',

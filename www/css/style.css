@@ -1,3 +1,10 @@
+@font-face {
+  font-family: LobsterRegular;
+  font-style: normal;
+  font-weight: 400;
+  src: url("../lib/ionic/fonts/Lobster-Regular.ttf") format("truetype");
+}
+
 /* styling for mobile app */
 @media screen and (max-width: 600px) {
   /* HOME */
