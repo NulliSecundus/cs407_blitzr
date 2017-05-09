@@ -214,6 +214,12 @@ starter.factory('Player', function() {
       return numCards;
     }
 
+    /* reset the players cards */
+    function resetCards() {
+      cards = [];
+      numCards = 0;
+    }
+
     /* return number of matches if a player has a certain card value and remove the card from their deck */
     function matchedCard(_card) {
       var numMatches = 0;
@@ -247,6 +253,7 @@ starter.factory('Player', function() {
       givePlayerADrink: givePlayerADrink,
       matchedCard: matchedCard,
       getNumCards: getNumCards,
+      resetCards: resetCards,
       takenFromGiven: takenFromGiven
     }
   }
@@ -743,8 +750,11 @@ starter.controller('guessColorCtrl', function($rootScope, $scope, $state, $ionic
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
-    if($rootScope.nextCard == null)
-      $rootScope.nextCard = $rootScope.cardBack;
+    /* create new deck if deck is out of cards */
+    if($rootScope.nextCard == null) {
+      $rootScope.deck = new CardDeck();
+      $rootScope.nextCard = $rootScope.deck.getTopCard();
+    }
   };
 
   /* enable next player button and hide red/black */
@@ -827,8 +837,11 @@ starter.controller('overOrUnderCtrl', function($rootScope, $scope, $state, $ioni
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
-    if($rootScope.nextCard == null)
-      $rootScope.nextCard = $rootScope.cardBack;
+    /* create new deck if deck is out of cards */
+    if($rootScope.nextCard == null) {
+      $rootScope.deck = new CardDeck();
+      $rootScope.nextCard = $rootScope.deck.getTopCard();
+    }
   };
 
   /* enable next player button and hide over/under */
@@ -920,8 +933,11 @@ starter.controller('inOrOutCtrl', function($rootScope, $scope, $state, $ionicMod
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
-    if($rootScope.nextCard == null)
-      $rootScope.nextCard = $rootScope.cardBack;
+    /* create new deck if deck is out of cards */
+    if($rootScope.nextCard == null) {
+      $rootScope.deck = new CardDeck();
+      $rootScope.nextCard = $rootScope.deck.getTopCard();
+    }
   };
 
   /* enable next player button and hide in/out buttons*/
@@ -1022,8 +1038,11 @@ starter.controller('guessSuitCtrl', function($rootScope, $scope, $state, $ionicM
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
-    if($rootScope.nextCard == null)
-      $rootScope.nextCard = $rootScope.cardBack;
+    /* create new deck if deck is out of cards */
+    if($rootScope.nextCard == null) {
+      $rootScope.deck = new CardDeck();
+      $rootScope.nextCard = $rootScope.deck.getTopCard();
+    }
   };
 
   /* enable next player button and hide suit buttons */
@@ -1111,6 +1130,7 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
   /* get the next card from the deck */
   $scope.getCard = function() {
     $rootScope.nextCard = $rootScope.deck.getTopCard();
+    /* create new deck if deck is out of cards */
     if($rootScope.nextCard == null) {
       $rootScope.deck = new CardDeck();
       $rootScope.nextCard = $rootScope.deck.getTopCard();
@@ -1302,7 +1322,7 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
                                               Player, $ionicViewSwitcher) {
 
   /* new card deck for Riding the Bus */
-  $scope.deck = new CardDeck();
+  $rootScope.deck = new CardDeck();
 
   /* get the display */
   $scope.rtbDisplay = $rootScope.rtbDisplay;
@@ -1364,11 +1384,11 @@ starter.controller('rideTheBusCtrl', function($rootScope, $scope, $state, $ionic
 
   /* get the next card from the deck */
   $scope.getCard = function() {
-    $scope.nextCard = $scope.deck.getTopCard();
+    $rootScope.nextCard = $rootScope.deck.getTopCard();
     /* create new deck if deck is out of cards */
-    if($scope.nextCard == null) {
-      $scope.deck = new CardDeck();
-      $scope.nextCard = $scope.deck.getTopCard();
+    if($rootScope.nextCard == null) {
+      $rootScope.deck = new CardDeck();
+      $rootScope.nextCard = $rootScope.deck.getTopCard();
     }
   };
 
@@ -1526,9 +1546,66 @@ starter.controller('finalResultsCtrl', function($rootScope, $scope, $state, $ion
   /* sort the list */
   window.onload = $scope.sortList();
 
+  /* reset the gameplay, called by replayRTB */
+  $scope.resetRTB = function () {
+    /* initialize current player to first player */
+    $rootScope.currentPlayer = $rootScope.players[0];
+
+    /* initialize current player number to 1 */
+    $rootScope.currentPlayerNumber = 1;
+
+    /* initialize round number to 1 */
+    $rootScope.roundNumber = 1;
+
+    /* initialize round name to red or black */
+    $rootScope.roundName = "Red or Black?";
+
+    /* create a new deck */
+    $rootScope.deck = new CardDeck();
+
+    /* create a new back of card */
+    $rootScope.cardBack = new Card("", 0);
+    $rootScope.nextCard = $rootScope.cardBack;
+
+    /* VALUES FOR WILD CARD DISPLAY */
+    /* create array for matched player, will be used in wild card round */
+    $rootScope.matchedPlayers = [];
+
+    /* reset the match cards display */
+    $rootScope.matchedPlayersDisplay = [];
+
+    /* cards to be matched */
+    $rootScope.matchCards = [];
+
+    /* store card images for matched cards */
+    $rootScope.cardImages = [];
+
+    /* track current card index for matched round */
+    $rootScope.currentCard = 0;
+
+    /* cards to be prompts match cards are initialized to zero when game starts */
+    $rootScope.matchCardsPrompt = [];
+  };
+
   /* go to the home page*/
-  $scope.onClick = function() {
+  $scope.replayRTB = function() {
+
+    /* clear the cards */
+    for(var i = 0; i < $rootScope.players.length; i++) {
+      $rootScope.players[i].resetCards();
+    }
+
+    /* reset RTB */
+    $scope.resetRTB();
+
+    /* go to the round transition */
+    $ionicViewSwitcher.nextDirection('exit');
+    $state.go("roundTransition");
+  };
+
+  /* go to the home page*/
+  $scope.toHome = function() {
     $ionicViewSwitcher.nextDirection('exit');
     $state.go("home");
-  }
+  };
 });

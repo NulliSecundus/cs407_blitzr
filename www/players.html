@@ -15,7 +15,8 @@
     <div class="list list-inset" id = "playerList" style = 'height: 70vh' style = 'background-color: darkcyan'>
       <div class="item-input" ng-repeat="player in listOfPlayers" id="playerInList">
         <label class="item-input-wrapper">
-          <input type="text" id="enterPlayerText" placeholder="Enter Name" ng-model="player.value"/>
+          <input type="text" id="enterPlayerText" placeholder="Enter Name" ng-model="player.value"
+                 style="vertical-align: middle"/>
         </label>
         <button class="button button-small button-balanced"
                 ng-if="($index == listOfPlayers.length - 1) && listOfPlayers.length < 10" ng-click="addPlayer()">

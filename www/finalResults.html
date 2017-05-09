@@ -40,8 +40,17 @@
     </div>
   </div>
 
-    <!-- red or black buttons -->
-    <button class="button" id="goToRideTheBus" ng-click="onClick()" style>Home</button>
+    <!--&lt;!&ndash; red or black buttons &ndash;&gt;-->
+    <!--<button class="button" id="goToRideTheBus" ng-click="toHome()" style>Home</button>-->
+
+  <div class="Row playAgainOrReturnRow">
+    <div class="Column playAgainOrReturnCol" style="font-family: Helvetica; text-align: center; vertical-align: middle;
+    background-color: white; border: 1vw solid black; color: black; font-weight: bold; font-style: italic;
+    white-space: normal;" ng-click="replayRTB()">Play Again!</div>
+    <div class="Column playAgainOrReturnCol" style="font-family: Helvetica; text-align: center;
+    vertical-align: middle; background-color: white; border: 1vw solid black; color: black; font-weight: bold;
+    font-style: italic; white-space: normal;" ng-click="toHome()">Home</div>
+  </div>
 
   </body>
 </ion-view>
