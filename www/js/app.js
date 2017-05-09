@@ -680,6 +680,12 @@ starter.controller('givePlayersDrinksCtrl', function($rootScope, $scope, $state,
 
     /* reset the match cards display */
     $rootScope.matchedPlayersDisplay = [];
+
+    /* if there are no more drinks to give, prompt and enable next page */
+    if ($scope.remainingDrinks <= 0) {
+      $scope.continueMessage = "Tap Here to Continue";
+      $scope.enableNext();
+    }
   };
 
   /* every time the page loads, the next player button begins disabled */
@@ -1279,9 +1285,6 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
         }
       }
 
-      /* display continue message */
-      $scope.continueMessage = "Tap to Continue";
-
       /* set display if no one last card */
       if($rootScope.matchedPlayers.length == 0) {
         if ($rootScope.matchCards[$rootScope.currentCard].number == 1 || $rootScope.matchCards[$rootScope.currentCard].number == 8)
@@ -1290,28 +1293,45 @@ starter.controller('matchCardsCtrl', function($rootScope, $scope, $state, $ionic
           $rootScope.matchedPlayersDisplay[0] = "No one has a " + $rootScope.matchCards[$rootScope.currentCard].rank.toUpperCase();
       }
 
-      /* enable next state */
-      $scope.enableNext();
-
       /* increment current card index */
       $rootScope.currentCard++;
-    };
 
+      /* if the last card has been turned over, increment the round number */
+      if ($rootScope.currentCard >= $rootScope.matchCards.length) {
+        $rootScope.roundNumber++;
+        $scope.continueMessage = "Tap to Continue";
+        $scope.canFlip = false;
+      }
+      /* there are more cards */
+      else {
+        $scope.canFlip = true;
+      }
+
+      /* there are drinks to give */
+      if (($rootScope.matchedPlayers[0] != null) && (($rootScope.currentCard - 1) % 2 == 0)) {
+        $scope.continueMessage = "Tap to Give Drinks!";
+        $scope.canFlip = false;
+      }
+      /* there are no drinks to give */
+      else if($rootScope.roundNumber == 5) {
+        $scope.continueMessage = "Tap to Flip";
+        $scope.canFlip = true;
+        /* reset matched players list */
+        $rootScope.matchedPlayers = [];
+        /* reset matched players drinks */
+        $scope.matchedPlayersDrinks = [];
+      }
+  };
+
+  /* go to the give drinks or transition state */
   $scope.toNextCard = function(){
-    /* if the last card has been turned over, increment the round number */
-    if ($rootScope.currentCard >= $rootScope.matchCards.length) {
-      $rootScope.roundNumber++;
-    }
     /* go to give drinks page if there are drinks to give, otherwise reset display (more cards) or go to round transition
       * (no more cards) */
     $ionicViewSwitcher.nextDirection('forward');
     if (($rootScope.matchedPlayers[0] != null) && (($rootScope.currentCard - 1) % 2 == 0)) {
       $state.go("givePlayersDrinks");
     }
-    else if ($rootScope.roundNumber == 5) {
-      $scope.resetDisplay();
-    }
-    else {
+    else if ($rootScope.roundNumber == 6) {
       $state.go("roundTransition");
     }
   };

@@ -53,7 +53,7 @@
 
   <!-- drink display -->
     <div class="list list-inset" id = "takeOrGivePlayers" style = 'height: 30vh; background-color: darkcyan' ng-click="onClick()">
-      <div class="matchedPlayerRow" ng-repeat="player in matchedPlayersDisplay">
+      <div class="matchedPlayerRow" ng-repeat="player in matchedPlayersDisplay track by $index">
         <div class="Column matchedPlayer">{{matchedPlayersDisplay[$index]}}</div>
       </div>
     </div>
